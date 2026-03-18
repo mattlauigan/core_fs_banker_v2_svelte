@@ -1,0 +1,106 @@
+{
+  "tabs": [
+    {
+      "label": "Operational",
+      "key": "operational",
+      "sections": [
+        {
+          "section": "Transaction",
+          "groups": [
+            {
+              "title": "Open New Account",
+
+              "clickable": false,
+              "items": [
+                {
+                  "label": "Savings Account",
+                  "route": "/savings/open",
+                  "clickable": true
+                },
+                {
+                  "label": "Share Account",
+                  "route": "/share/open",
+                  "clickable": true
+                }
+              ]
+            },
+            {
+              "title": "Account Linking",
+              "route": "/account/link",
+              "clickable": true,
+              "items": []
+            }
+          ]
+        },
+        {
+          "section": "Loans",
+          "groups": [
+            {
+              "title": "Loans",
+
+              "clickable": false,
+              "items": [
+                {
+                  "label": "Loan Payment",
+                  "route": "/loans/payment",
+                  "clickable": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Accounting",
+      "key": "accounting",
+      "sections": [
+        {
+          "section": "General Ledger",
+          "groups": [
+            {
+              "title": "Chart of Accounts",
+              "route": "/accounting/chart-of-accounts",
+              "clickable": true,
+              "items": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Report",
+      "key": "report",
+      "sections": [
+        {
+          "section": "Financial Reports",
+          "groups": [
+            {
+              "title": "Balance Sheet",
+              "route": "/reports/balance-sheet",
+              "clickable": true,
+              "items": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Administrative",
+      "key": "administrative",
+      "sections": [
+        {
+          "section": "User Management",
+          "groups": [
+            {
+              "title": "Users",
+              "route": "/admin/users",
+              "clickable": true,
+              "items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
