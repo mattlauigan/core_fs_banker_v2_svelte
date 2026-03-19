@@ -4,29 +4,38 @@
 
   let megamenuTabs = megamenu.tabs;
   let { children } = $props();
-  let isOpen = $state(false);
-  let isModal = $state(false);
-  let toggleMenu:
-    | ""
-    | "operational"
-    | "accounting"
-    | "report"
-    | "administrative" = $state("");
+  let isOpen: boolean = $state(false);
+  let isSubmenu: boolean = $state(false);
+  let isMegamenu: boolean = $state(false);
 
-  const toggleMenuHandler = (event: MouseEvent) => {
+  let toggleCategory: MenuCategory = $state(undefined);
+
+  const isMenuCategory = (value: string): value is MenuCategory => {
+    return ["operational", "accounting", "report", "administrative"].includes(
+      value,
+    );
+  };
+
+  const toggleCategoryHandler = (event: MouseEvent) => {
     const element = event.target as HTMLElement;
-    toggleMenu = element.innerText.toLowerCase() as
-      | "operational"
-      | "accounting"
-      | "report"
-      | "administrative";
-    isModal = true;
+    const value = element.innerText.toLowerCase();
+
+    if (value && isMenuCategory(value)) {
+      toggleCategory = value;
+      isSubmenu = true;
+    }
   };
 
-  const closeModalHandler = () => {
-    isModal = false;
-    toggleMenu = "";
+  const closeSubMenuHandler = () => {
+    isSubmenu = false;
+    toggleCategory = undefined;
   };
+
+  const closeMegaMenuHandler = () => {
+    isSubmenu = false;
+    toggleCategory = undefined;
+  };
+  0;
 </script>
 
 <svelte:head>
@@ -34,7 +43,11 @@
 </svelte:head>
 
 <header>
-  <div class="header_container">
+  <div
+    class="header_container"
+    style:height={toggleCategory === "" ? "8vvh" : "auto"}
+  >
+    <!-- LEFT LOGO -->
     <div style:padding-top="10px">
       <img
         src="./src/lib/assets/ms-logo.png"
@@ -42,11 +55,15 @@
         style:height="50px"
       />
     </div>
+
+    <!-- CATEGORIES NAV -->
     <menu>
       {#each megamenuTabs as tab}
-        <p onmouseenter={toggleMenuHandler}>{tab.label}</p>
+        <p onmouseenter={toggleCategoryHandler}>{tab.label}</p>
       {/each}
     </menu>
+
+    <!-- USER PANEL -->
     <div class="user_panel" style:margin-top="10px">
       <div style:row-gap="5px">
         <p>User full name</p>
@@ -60,26 +77,35 @@
       />
     </div>
   </div>
-  <div class="sub_menu_container">
-    {#each megamenuTabs as tab}
-      {#if tab.label.toLowerCase() === toggleMenu}
-        {#each tab.sections as section}
-          <p>{section.section}</p>
-        {/each}
-      {/if}
-    {/each}
+
+  <!-- SUBMENU -->
+  <div
+    class="sub_menu_container {isSubmenu ? 'expanded' : ''}"
+    onmouseleave={closeSubMenuHandler}
+    role="button"
+    tabindex="0"
+  >
+    <div class="sub_menu_content">
+      {#each megamenuTabs as tab}
+        {#if tab.label.toLowerCase() === toggleCategory}
+          {#each tab.sections as section}
+            <p>{section.section}</p>
+          {/each}
+        {/if}
+      {/each}
+    </div>
   </div>
 </header>
 
-{#if isModal}
+{#if isMegamenu}
   <div
     class="megamenu_modal"
-    onmouseleave={closeModalHandler}
+    onmouseleave={closeMegaMenuHandler}
     role="button"
     tabindex="0"
   >
     <div class="modal_content">
-      <!-- <p>{toggleMenu}</p> -->
+      <!-- <p>{toggleCategory}</p> -->
     </div>
   </div>
 {/if}
@@ -121,14 +147,35 @@
     display: flex;
     justify-content: space-around;
     padding: 0 1.5rem;
-    /* height: 8vh; */
+    transition: height 0.3s ease;
   }
 
   header .sub_menu_container {
-    display: flex;
-    justify-content: space-around;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 3030;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.5s ease;
     background-color: #00101f;
     color: white;
+    margin: 0;
+  }
+
+  header .sub_menu_container.expanded {
+    grid-template-rows: 1fr;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  header .sub_menu_container .sub_menu_content {
+    display: hidden;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    font-size: 0.8rem;
   }
 
   menu {
@@ -141,12 +188,13 @@
   menu p {
     margin: 0 10px;
     padding: 0.5rem;
+    font-size: 10rem;
   }
 
-  menu p:hover {
+  menu p:hover,
+  menu p:focus {
     background-color: #00101f;
     color: white;
-
     border-radius: 5px 5px 0 0;
   }
 
