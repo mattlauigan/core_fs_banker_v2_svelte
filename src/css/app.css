@@ -1,3 +1,13 @@
+:root {
+  --bg-color:#ffffff;
+  --text-color:#000000;
+}  
+
+/* #isDarkMode:checked ~ body {
+  --bg-color:#000000;
+  --text-color: #ffffff;
+} */
+  
   html {
     font-family: Inter, Roboto, Arial, Helvetica, sans-serif;
     letter-spacing: .5px;
@@ -7,8 +17,15 @@
 
   }
 
+  html:has(#isDarkMode:checked){
+    --bg-color:#000000;
+    --text-color: #ffffff;
+  }
+
   body {
     position:relative;
     margin: 0;
     padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
   }

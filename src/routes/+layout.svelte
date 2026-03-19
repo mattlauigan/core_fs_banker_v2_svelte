@@ -62,6 +62,7 @@
       {#each megamenuTabs as tab}
         <p onmouseenter={toggleCategoryHandler}>{tab.label}</p>
       {/each}
+      <input type="checkbox" name="isDarkMode" id="isDarkMode">
     </menu>
 
     <!-- USER PANEL -->
