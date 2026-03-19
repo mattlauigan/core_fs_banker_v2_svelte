@@ -137,7 +137,7 @@
     display: flex;
     flex-direction: column;
     width: 100vw;
-    background-color: white;
+    background-color: var(--bg-color);
     z-index: 2020;
     transform: translateX(0);
     box-shadow:
@@ -161,7 +161,7 @@
     display: grid;
     grid-template-rows: 0fr;
     transition: grid-template-rows 0.5s ease;
-    background-color: #00101f;
+    background-color: #02213e;
     color: white;
     margin: 0;
   }
