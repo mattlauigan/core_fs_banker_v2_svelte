@@ -1,13 +1,16 @@
+import type { MenuCategory } from "./enum";
+
 type Menu = {
   tabs: Tab[];
 };
 
-type MenuCategory = {
-  name: undefined |"operational" | "accounting" | "report" | "administrative";
-};
+// type MenuCategory = {
+//   name:  "operational" | "accounting" | "report" | "administrative";
+// };
 
-type Tab = {
-  label: MenuCategory;
+interface Tab  {
+  // label: "operational" | "accounting" | "report" | "administrative";
+  name: MenuCategory
   sections: Section[];
 };
 

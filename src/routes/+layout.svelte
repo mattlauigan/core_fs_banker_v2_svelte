@@ -1,6 +1,7 @@
 <script lang="ts">
   import favicon from "$lib/assets/favicon.svg";
   import megamenu from "$lib/data/megamenu.json";
+    import { MenuCategory } from "../ts/enum";
 
   let megamenuTabs = megamenu.tabs;
   let { children } = $props();
@@ -8,7 +9,7 @@
   let isSubmenu: boolean = $state(false);
   let isMegamenu: boolean = $state(false);
 
-  let toggleCategory: MenuCategory = $state(undefined);
+  let toggleCategory: MenuCategory = $state<MenuCategory>(MenuCategory.default);
 
   const isMenuCategory = (value: string): value is MenuCategory => {
     return ["operational", "accounting", "report", "administrative"].includes(
@@ -28,12 +29,12 @@
 
   const closeSubMenuHandler = () => {
     isSubmenu = false;
-    toggleCategory = undefined;
+    toggleCategory = MenuCategory.default;
   };
 
   const closeMegaMenuHandler = () => {
     isSubmenu = false;
-    toggleCategory = undefined;
+    toggleCategory = MenuCategory.default;
   };
   0;
 </script>
@@ -45,7 +46,7 @@
 <header>
   <div
     class="header_container"
-    style:height={toggleCategory === "" ? "8vvh" : "auto"}
+    style:height={toggleCategory === MenuCategory.default ? "8vvh" : "auto"}
   >
     <!-- LEFT LOGO -->
     <div style:padding-top="10px">
@@ -188,7 +189,7 @@
   menu p {
     margin: 0 10px;
     padding: 0.5rem;
-    font-size: 10rem;
+    font-size: 1rem;
   }
 
   menu p:hover,
