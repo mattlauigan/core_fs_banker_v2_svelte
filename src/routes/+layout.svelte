@@ -1,7 +1,7 @@
 <script lang="ts">
   import favicon from "$lib/assets/favicon.svg";
   import megamenu from "$lib/data/megamenu.json";
-    import { MenuCategory } from "../ts/enum";
+  import { MenuCategory } from "../ts/enum";
 
   let megamenuTabs = megamenu.tabs;
   let { children } = $props();
@@ -62,7 +62,7 @@
       {#each megamenuTabs as tab}
         <p onmouseenter={toggleCategoryHandler}>{tab.label}</p>
       {/each}
-      <input type="checkbox" name="isDarkMode" id="isDarkMode">
+      <input type="checkbox" name="isDarkMode" id="isDarkMode" />
     </menu>
 
     <!-- USER PANEL -->
