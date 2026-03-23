@@ -10,6 +10,7 @@
   let isMegamenu: boolean = $state(false);
 
   let toggleCategory: MenuCategory = $state<MenuCategory>(MenuCategory.default);
+  let toggleSubMenu: string = $state<string>("");
 
   const isMenuCategory = (value: string): value is MenuCategory => {
     return ["operational", "accounting", "report", "administrative"].includes(
@@ -27,10 +28,20 @@
     }
   };
 
-  const closeSubMenuHandler = () => {
-    isSubmenu = false;
-    toggleCategory = MenuCategory.default;
+  const toggleSubMenuHandler = (event: MouseEvent) => {
+    const element = event.target as HTMLElement;
+    const value = element.innerText.toLowerCase();
+
+    if (value) {
+      toggleSubMenu = value;
+      isMegamenu = true;
+    }
   };
+
+  // const closeSubMenuHandler = () => {
+  //   isSubmenu = false;
+  //   toggleCategory = MenuCategory.default;
+  // };
 
   const closeMegaMenuHandler = () => {
     isSubmenu = false;
@@ -83,7 +94,8 @@
   <!-- SUBMENU -->
   <div
     class="sub_menu_container {isSubmenu ? 'expanded' : ''}"
-    onmouseleave={closeSubMenuHandler}
+    onmouseenter={toggleSubMenuHandler}
+    // onmouseleave={closeSubMenuHandler}
     role="button"
     tabindex="0"
   >
@@ -99,18 +111,39 @@
   </div>
 </header>
 
-{#if isMegamenu}
-  <div
-    class="megamenu_modal"
-    onmouseleave={closeMegaMenuHandler}
-    role="button"
-    tabindex="0"
-  >
-    <div class="modal_content">
-      <!-- <p>{toggleCategory}</p> -->
-    </div>
+<!-- {#if isMegamenu} -->
+<div
+  class="megamenu_modal"
+  onmouseleave={closeMegaMenuHandler}
+  role="button"
+  tabindex="0"
+>
+  <div class="modal_content">
+    <!-- <p>{toggleCategory}</p> -->
+    {#each megamenuTabs as tab}
+      {#if tab.label.toLowerCase() === toggleCategory}
+        {#each tab.sections as section}
+          <!-- {#if section.section.toLowerCase() === toggleSubMenu} -->
+          {#each section.groups as group}
+            <!-- <p>{group.group}</p> -->
+            {#if group.clickable === true}
+              <p style:cursor="pointer" style:color="pink">{group.title}</p>
+            {:else}
+              <p style:cursor="default">{group.title}</p>
+              {#each group.items as item}
+                <p style:cursor="pointer" style:text-indent=".5rem">
+                  {item.label}
+                </p>
+              {/each}
+            {/if}
+          {/each}
+          <!-- {/if} -->
+        {/each}
+      {/if}
+    {/each}
   </div>
-{/if}
+</div>
+<!-- {/if} -->
 
 <div class="content">
   {@render children()}
@@ -208,9 +241,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    top: 20vh;
+    top: 30%;
     left: 50%;
-    transform: translate(-50%, -20vh);
+    transform: translate(-50%, -30%);
     z-index: 9999;
     margin-inline: auto;
     border-radius: 1rem;
