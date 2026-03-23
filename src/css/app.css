@@ -1,6 +1,19 @@
 :root {
-  --bg-color: #ffffff;
-  --text-color: #00101f;
+  --bg-color: #F0F0F1;
+  --bg-color-02: #F0F0F1;
+  --text-color: #000810;
+  --panel-header:#00101F;
+
+  --primary-color-500: #00101F;
+
+  --secondary-color-500:#D1526D;
+
+  --tertiary-color-500: #E0E0E0;
+
+  --accent-001:#424141;
+  --accent-002:#424141;
+  --accent-003:#9C9C9C;
+  
 }
 
 html {
@@ -14,8 +27,21 @@ html {
 }
 
 html:has(#isDarkMode:checked) {
-  --bg-color: #00101f;
-  --text-color: #ffffff;
+  --bg-color-01: #000810;
+  --bg-color-02: #00101F;
+  --text-color: #F0F0F1;
+  --panel-header:#D1526D;
+
+  --primary-color-500: #00101F;
+
+  --secondary-color-500:#D1526D;
+
+  --tertiary-color-500: #00101F;
+
+  --accent-001:#404C57;
+  --accent-002:#D1526D;
+  --accent-003:#7F878F;
+  
 }
 
 body {
