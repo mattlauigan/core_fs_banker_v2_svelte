@@ -1,49 +1,98 @@
 {
-  "tabs": [
+  "categories": [
     {
-      "label": "Operational",
-      "key": "operational",
-      "sections": [
+      "code": 1,
+      "type": 0,
+      "name": "Operational",
+      "roots": [
         {
-          "section": "Transaction",
-          "groups": [
+          "code": 1100,
+          "type": 1,
+          "parentCode": 1000,
+          "name": "Transaction",
+          "menus": [
             {
-              "title": "Open New Account",
-
-              "clickable": false,
-              "items": [
+              "code": 1200,
+              "type": 2,
+              "parentCode": 1100,
+              "name": "Open New Account",
+              "modules": [
                 {
-                  "label": "Savings Account",
+                  "code": 1400,
+                  "type": 4,
+                  "parentCode": 1200,
+                  "name": "Savings Account",
                   "route": "/savings/open",
-                  "clickable": true
+                  "submodules": []
                 },
                 {
-                  "label": "Share Account",
+                  "code": 1401,
+                  "type": 4,
+                  "parentCode": 1200,
+                  "name": "Share Account",
                   "route": "/share/open",
-                  "clickable": true
+                  "submodules": []
                 }
               ]
             },
             {
-              "title": "Account Linking",
-              "route": "/account/link",
-              "clickable": true,
-              "items": []
-            }
-          ]
-        },
-        {
-          "section": "Loans",
-          "groups": [
-            {
-              "title": "Loans",
-
-              "clickable": false,
-              "items": [
+              "code": 1201,
+              "type": 2,
+              "parentCode": 1100,
+              "name": "Collection Payment",
+              "modules": [
                 {
-                  "label": "Loan Payment",
-                  "route": "/loans/payment",
-                  "clickable": true
+                  "code": 1402,
+                  "type": 4,
+                  "parentCode": 1201,
+                  "name": "List of Approved Collection Payments",
+                  "route": "/collection/approved",
+                  "submodules": []
+                }
+              ]
+            },
+            {
+              "code": 1300,
+              "type": 3,
+              "parentCode": 1100,
+              "name": "Account Linking",
+              "route": "/account/link"
+            },
+            {
+              "code": 1500,
+              "type": 2,
+              "parentCode": 1100,
+              "name": "Loans",
+              "modules": [
+                {
+                  "code": 1600,
+                  "type": 4,
+                  "parentCode": 1500,
+                  "name": "Account Inquiry",
+                  "route": "/loans/inquiry",
+                  "submodules": []
+                },
+                {
+                  "code": 1601,
+                  "type": 4,
+                  "parentCode": 1500,
+                  "name": "Loan Release",
+                  "submodules": [
+                    {
+                      "code": 1700,
+                      "type": 5,
+                      "parentCode": 1601,
+                      "name": "Pending Disbursement via Cash",
+                      "route": "/loans/pending"
+                    },
+                    {
+                      "code": 1701,
+                      "type": 5,
+                      "parentCode": 1601,
+                      "name": "Disbursed Loans via Cash",
+                      "route": "/loans/disbursed"
+                    }
+                  ]
                 }
               ]
             }
@@ -52,55 +101,22 @@
       ]
     },
     {
-      "label": "Accounting",
-      "key": "accounting",
-      "sections": [
-        {
-          "section": "General Ledger",
-          "groups": [
-            {
-              "title": "Chart of Accounts",
-              "route": "/accounting/chart-of-accounts",
-              "clickable": true,
-              "items": []
-            }
-          ]
-        }
-      ]
+      "code": 2,
+      "type": 0,
+      "name": "Accounting",
+      "roots": []
     },
     {
-      "label": "Report",
-      "key": "report",
-      "sections": [
-        {
-          "section": "Financial Reports",
-          "groups": [
-            {
-              "title": "Balance Sheet",
-              "route": "/reports/balance-sheet",
-              "clickable": true,
-              "items": []
-            }
-          ]
-        }
-      ]
+      "code": 3,
+      "type": 0,
+      "name": "Reports",
+      "roots": []
     },
     {
-      "label": "Administrative",
-      "key": "administrative",
-      "sections": [
-        {
-          "section": "User Management",
-          "groups": [
-            {
-              "title": "Users",
-              "route": "/admin/users",
-              "clickable": true,
-              "items": []
-            }
-          ]
-        }
-      ]
+      "code": 4,
+      "type": 0,
+      "name": "Administrative",
+      "roots": []
     }
   ]
 }

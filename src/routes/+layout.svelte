@@ -3,7 +3,7 @@
   import megamenu from "$lib/data/megamenu.json";
   import { MenuCategory } from "../ts/enum";
 
-  let megamenuTabs = megamenu.tabs;
+  let megamenuTabs = megamenu.categories;
   let { children } = $props();
   let isOpen: boolean = $state(false);
   let isSubmenu: boolean = $state(false);
@@ -69,15 +69,15 @@
     </div>
 
     <!-- CATEGORIES NAV -->
-    <menu>
+    <div class="_categories_nav">
       {#each megamenuTabs as tab}
-        <p onmouseenter={toggleCategoryHandler}>{tab.label}</p>
+        <p onmouseenter={toggleCategoryHandler}>{tab.name}</p>
       {/each}
       <input type="checkbox" name="isDarkMode" id="isDarkMode" />
-    </menu>
+    </div>
 
     <!-- USER PANEL -->
-    <div class="user_panel" style:margin-top="10px">
+    <div class="_user_panel" style:margin-top="10px">
       <div style:row-gap="5px">
         <p>User full name</p>
         <p>position</p>
@@ -101,9 +101,9 @@
   >
     <div class="sub_menu_content">
       {#each megamenuTabs as tab}
-        {#if tab.label.toLowerCase() === toggleCategory}
-          {#each tab.sections as section}
-            <p>{section.section}</p>
+        {#if tab.name.toLowerCase() === toggleCategory}
+          {#each tab.roots as root}
+            <p>{root.name}</p>
           {/each}
         {/if}
       {/each}
@@ -111,39 +111,68 @@
   </div>
 </header>
 
-<!-- {#if isMegamenu} -->
-<div
-  class="megamenu_modal"
-  onmouseleave={closeMegaMenuHandler}
-  role="button"
-  tabindex="0"
->
-  <div class="modal_content">
-    <!-- <p>{toggleCategory}</p> -->
-    {#each megamenuTabs as tab}
-      {#if tab.label.toLowerCase() === toggleCategory}
-        {#each tab.sections as section}
-          <!-- {#if section.section.toLowerCase() === toggleSubMenu} -->
-          {#each section.groups as group}
-            <!-- <p>{group.group}</p> -->
-            {#if group.clickable === true}
-              <p style:cursor="pointer" style:color="pink">{group.title}</p>
-            {:else}
-              <p style:cursor="default">{group.title}</p>
-              {#each group.items as item}
-                <p style:cursor="pointer" style:text-indent=".5rem">
-                  {item.label}
-                </p>
-              {/each}
-            {/if}
+{#if isMegamenu}
+  <div
+    class="_megamenu"
+    onmouseleave={closeMegaMenuHandler}
+    role="button"
+    tabindex="0"
+  >
+    <div class="_modal_content">
+      {#each megamenuTabs as tab}
+        {#if tab.name.toLowerCase() === toggleCategory}
+          {#each tab.roots as root}
+            {#each root.menus as menu}
+              <!-- LEVEL 1 -->
+              <p
+                class="_menu-item _menu-item--group _menu-item--lvl-1"
+                style:cursor={menu.modules?.length ? "default" : "pointer"}
+              >
+                {menu.name.toUpperCase()}
+              </p>
+
+              <!-- LEVEL 2 -->
+              {#if menu.modules?.length}
+                {#each menu.modules as module}
+                  {#if module.submodules?.length}
+                    <!-- NOT CLICKABLE -->
+                    <p
+                      class="_menu-item _menu-item--link _menu-item--lvl-2"
+                      style:cursor="default"
+                      style:text-indent=".5rem"
+                    >
+                      {module.name}
+                    </p>
+
+                    <!-- LEVEL 3 -->
+                    {#each module.submodules as sub}
+                      <p
+                        class="_menu-item _menu-item--link _menu-item--lvl-3"
+                        style:cursor="pointer"
+                        style:text-indent="1rem"
+                      >
+                        {sub.name}
+                      </p>
+                    {/each}
+                  {:else}
+                    <!-- CLICKABLE -->
+                    <p
+                      class="_menu-item _menu-item--link _menu-item--lvl-2"
+                      style:cursor="pointer"
+                      style:text-indent=".5rem"
+                    >
+                      {module.name}
+                    </p>
+                  {/if}
+                {/each}
+              {/if}
+            {/each}
           {/each}
-          <!-- {/if} -->
-        {/each}
-      {/if}
-    {/each}
+        {/if}
+      {/each}
+    </div>
   </div>
-</div>
-<!-- {/if} -->
+{/if}
 
 <div class="content">
   {@render children()}
@@ -154,7 +183,6 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
     margin-inline: auto;
     overflow: hidden;
     z-index: 1;
@@ -170,7 +198,7 @@
     display: flex;
     flex-direction: column;
     width: 100vw;
-    background-color: var(--bg-color);
+    background-color: var(--bg-color-01);
     z-index: 2020;
     transform: translateX(0);
     box-shadow:
@@ -194,7 +222,7 @@
     display: grid;
     grid-template-rows: 0fr;
     transition: grid-template-rows 0.5s ease;
-    background-color: #02213e;
+    background-color: var(--primary-color-300);
     color: white;
     margin: 0;
   }
@@ -213,70 +241,91 @@
     font-size: 0.8rem;
   }
 
-  menu {
+  ._categories_nav {
     display: flex;
     justify-content: space-around;
     margin: auto;
     padding-top: 1.7rem;
   }
 
-  menu p {
+  ._categories_nav p {
     margin: 0 10px;
     padding: 0.5rem;
     font-size: 1rem;
   }
 
-  menu p:hover,
-  menu p:focus {
-    background-color: #00101f;
+  ._categories_nav p:hover,
+  ._categories_nav p:focus {
+    background-color: var(--primary-color-300);
     color: white;
     border-radius: 5px 5px 0 0;
   }
 
-  .megamenu_modal {
+  ._megamenu {
     position: absolute;
     width: 50vw;
-    /* height: 30vh; */
-    background-color: #00101f;
+    height: 30vh;
+    background-color: var(--primary-color-300);
     display: flex;
     align-items: center;
     justify-content: center;
-    top: 30%;
+    bottom: 45%;
     left: 50%;
-    transform: translate(-50%, -30%);
+    transform: translate(-50%, -45%);
     z-index: 9999;
     margin-inline: auto;
     border-radius: 1rem;
   }
 
-  .megamenu_modal .modal_content {
-    color: white;
-    font-size: 1.5rem;
+  ._menu-item {
+    font-size: 0.9rem;
   }
 
-  .user_panel {
-    height: 3rem;
+  ._menu-item--group {
+    cursor: default;
+  }
+
+  ._menu-item--link {
+    cursor: pointer;
+  }
+
+  ._menu-item--lvl-1 {
+    color: var(--secondary-color-500);
+  }
+
+  ._menu-item--lvl-2 {
+    color: var(--white-color);
+  }
+
+  ._menu-item--lvl-3 {
+    color: var(--accent-001);
+  }
+
+  ._user_panel {
+    height: 2.5rem;
     padding-inline: 1rem;
     display: flex;
     align-items: center;
-    border: 1px solid gray;
+    background-color: var(--user-panel-bg);
+    border: 1px solid var(--accent-001);
     border-radius: 37px;
     gap: 10px;
   }
 
-  .user_panel div p {
+  ._user_panel div p {
     margin: 0;
+    font-size: 0.9rem;
   }
 
-  .user_panel div :last-child {
+  ._user_panel div :last-child {
     margin-top: -0.5rem;
-    font-size: 0.8rem;
-    color: gray;
+    font-size: 0.7rem;
+    color: var(--accent-002);
   }
 
-  .user_panel img {
-    width: 2rem;
-    height: 2rem;
+  ._user_panel img {
+    width: 1.5rem;
+    height: 1.5rem;
 
     border-radius: 50%;
   }
