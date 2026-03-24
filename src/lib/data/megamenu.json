@@ -22,7 +22,7 @@
                   "type": 4,
                   "parentCode": 1200,
                   "name": "Savings Account",
-                  "route": "/savings/open",
+                  "route": "/transaction/open/savings",
                   "submodules": []
                 },
                 {

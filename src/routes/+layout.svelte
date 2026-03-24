@@ -3,7 +3,7 @@
   import megamenu from "$lib/data/megamenu.json";
   import { MenuCategory } from "../ts/enum";
 
-  let megamenuTabs = megamenu.categories;
+  let Categories = megamenu.categories;
   let { children } = $props();
   let isOpen: boolean = $state(false);
   let isSubmenu: boolean = $state(false);
@@ -38,13 +38,9 @@
     }
   };
 
-  // const closeSubMenuHandler = () => {
-  //   isSubmenu = false;
-  //   toggleCategory = MenuCategory.default;
-  // };
-
   const closeMegaMenuHandler = () => {
     isSubmenu = false;
+    isMegamenu = false;
     toggleCategory = MenuCategory.default;
   };
   0;
@@ -61,17 +57,21 @@
   >
     <!-- LEFT LOGO -->
     <div style:padding-top="10px">
-      <img
-        src="./src/lib/assets/ms-logo.png"
-        alt="Organization"
-        style:height="50px"
-      />
+      <span>
+        <a href="/">
+          <img
+            src="./src/lib/assets/ms-logo.png"
+            alt="Organization"
+            style:height="50px"
+          />
+        </a>
+      </span>
     </div>
 
     <!-- CATEGORIES NAV -->
     <div class="_categories_nav">
-      {#each megamenuTabs as tab}
-        <p onmouseenter={toggleCategoryHandler}>{tab.name}</p>
+      {#each Categories as category}
+        <p onmouseenter={toggleCategoryHandler}>{category.name}</p>
       {/each}
       <input type="checkbox" name="isDarkMode" id="isDarkMode" />
     </div>
@@ -95,14 +95,13 @@
   <div
     class="sub_menu_container {isSubmenu ? 'expanded' : ''}"
     onmouseenter={toggleSubMenuHandler}
-    // onmouseleave={closeSubMenuHandler}
     role="button"
     tabindex="0"
   >
     <div class="sub_menu_content">
-      {#each megamenuTabs as tab}
-        {#if tab.name.toLowerCase() === toggleCategory}
-          {#each tab.roots as root}
+      {#each Categories as category}
+        {#if category.name.toLowerCase() === toggleCategory}
+          {#each category.roots as root}
             <p>{root.name}</p>
           {/each}
         {/if}
@@ -119,9 +118,9 @@
     tabindex="0"
   >
     <div class="_modal_content">
-      {#each megamenuTabs as tab}
-        {#if tab.name.toLowerCase() === toggleCategory}
-          {#each tab.roots as root}
+      {#each Categories as category}
+        {#if category.name.toLowerCase() === toggleCategory}
+          {#each category.roots as root}
             {#each root.menus as menu}
               <!-- LEVEL 1 -->
               <p
@@ -135,34 +134,35 @@
               {#if menu.modules?.length}
                 {#each menu.modules as module}
                   {#if module.submodules?.length}
-                    <!-- NOT CLICKABLE -->
-                    <p
+                    <a
+                      href={module.route}
                       class="_menu-item _menu-item--link _menu-item--lvl-2"
-                      style:cursor="default"
-                      style:text-indent=".5rem"
                     >
-                      {module.name}
-                    </p>
+                      <span>
+                        {module.name}
+                      </span>
+                    </a>
 
                     <!-- LEVEL 3 -->
                     {#each module.submodules as sub}
-                      <p
+                      <a
+                        href={sub.route}
                         class="_menu-item _menu-item--link _menu-item--lvl-3"
-                        style:cursor="pointer"
-                        style:text-indent="1rem"
                       >
-                        {sub.name}
-                      </p>
+                        <span>
+                          {sub.name}
+                        </span>
+                      </a>
                     {/each}
                   {:else}
-                    <!-- CLICKABLE -->
-                    <p
+                    <a
+                      href={module.route}
                       class="_menu-item _menu-item--link _menu-item--lvl-2"
-                      style:cursor="pointer"
-                      style:text-indent=".5rem"
                     >
-                      {module.name}
-                    </p>
+                      <span>
+                        {module.name}
+                      </span>
+                    </a>
                   {/if}
                 {/each}
               {/if}
@@ -264,21 +264,38 @@
   ._megamenu {
     position: absolute;
     width: 50vw;
-    height: 30vh;
+    height: 40vh;
     background-color: var(--primary-color-300);
     display: flex;
-    align-items: center;
-    justify-content: center;
-    bottom: 45%;
+    /* align-items: center;
+    justify-content: center; */
+    bottom: 20%;
     left: 50%;
-    transform: translate(-50%, -45%);
+    transform: translate(-50%, 50%);
     z-index: 9999;
     margin-inline: auto;
     border-radius: 1rem;
+    padding: 1.5rem 4rem;
+
+    box-shadow:
+      0 4px 8px 0 rgba(0, 0, 0, 0.2),
+      0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+
+  ._modal_content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+
+  ._modal_content * {
+    padding: 0.2rem 0;
+    margin: 0;
   }
 
   ._menu-item {
     font-size: 0.9rem;
+    text-decoration: none;
   }
 
   ._menu-item--group {
@@ -295,10 +312,12 @@
 
   ._menu-item--lvl-2 {
     color: var(--white-color);
+    padding-left: 0.5rem;
   }
 
   ._menu-item--lvl-3 {
-    color: var(--accent-001);
+    color: var(--accent-003);
+    padding-left: 1rem;
   }
 
   ._user_panel {
@@ -326,7 +345,6 @@
   ._user_panel img {
     width: 1.5rem;
     height: 1.5rem;
-
     border-radius: 50%;
   }
 </style>
