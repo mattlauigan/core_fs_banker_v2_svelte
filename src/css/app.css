@@ -1,3 +1,5 @@
+@import url("../components/header/header.css");
+
 :root {
   --bg-color: #F0F0F1;
   --bg-color-02: #F0F0F1;

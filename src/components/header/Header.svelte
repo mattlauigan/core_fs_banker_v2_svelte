@@ -1,67 +1,57 @@
 <script lang="ts">
-  // import
   import favicon from "$lib/assets/favicon.svg";
   import megamenu from "$lib/data/megamenu.json";
   import { MenuCategory } from "$lib/ts/enum";
+  import type { MenuState } from "$lib/ts/megamenu";
+  import companyLogo from "$lib/assets/ms-logo.png";
+  import userLogo from "$lib/assets/user.png";
+
+  let menuStates: MenuState = $state({
+    category: MenuCategory.default,
+    root: null,
+    online: false,
+  });
 
   let Categories = megamenu.categories;
 
-  let isOpen: boolean = $state(false);
-  let isSubmenu: boolean = $state(false);
-  let isMegamenu: boolean = $state(false);
+  let activeCategory = $derived(
+    Categories.find((c) => c.name.toLowerCase() === menuStates.category),
+  );
 
-  let openCategory: MenuCategory = $state<MenuCategory>(MenuCategory.default);
-  let openSubmenu: string = $state<string>("");
+  let activeRoot = $derived(
+    activeCategory?.roots.find((r) => r.name.toLowerCase() === menuStates.root),
+  );
 
-  const isMenuCategory = (value: string): value is MenuCategory => {
-    return ["operational", "accounting", "report", "administrative"].includes(
-      value,
-    );
-  };
+  function openCategory(name: string) {
+    menuStates.category = name.toLowerCase() as MenuCategory;
+    menuStates.root = null;
+  }
 
-  const openCategoryHandler = (event: MouseEvent) => {
-    const element = event.target as HTMLElement;
-    const value = element.innerText.toLowerCase();
+  function openRoot(name: string) {
+    menuStates.root = name.toLowerCase();
+  }
 
-    if (value && isMenuCategory(value)) {
-      openCategory = value;
-      isSubmenu = true;
-    }
-  };
-
-  const openSubmenuHandler = (event: MouseEvent) => {
-    const element = event.target as HTMLElement;
-    const value = element.innerText.toLowerCase();
-
-    if (value) {
-      openSubmenu = value;
-      isMegamenu = true;
-    }
-  };
-
-  const closeMegaMenuHandler = () => {
+  const closeMenu = () => {
     isSubmenu = false;
     isMegamenu = false;
-    openCategory = MenuCategory.default;
+    menuStates.category = MenuCategory.default;
   };
-  0;
+
+  let isSubmenu = $derived(menuStates.category !== MenuCategory.default);
+  let isMegamenu = $derived(!!menuStates.root);
 </script>
 
 <svelte:head>
   <link rel="icon" href={favicon} />
 </svelte:head>
 
-<header>
+<header class={menuStates.category !== "default" ? "_shadow" : ""}>
   <div class="_header_container">
     <!-- LEFT LOGO -->
     <div style:padding-top="10px">
       <span>
         <a href="/">
-          <img
-            src="./src/lib/assets/ms-logo.png"
-            alt="Organization"
-            style:height="50px"
-          />
+          <img src={companyLogo} alt="Organization" style:height="50px" />
         </a>
       </span>
     </div>
@@ -70,9 +60,9 @@
     <div class="_categories_nav">
       {#each Categories as category}
         <p
-          onmouseenter={openCategoryHandler}
+          onmouseenter={() => openCategory(category.name)}
           class="_category_item {category.name.toLowerCase() ===
-          openCategory.toLowerCase()
+          activeCategory?.name.toLowerCase()
             ? '_active'
             : ''}"
         >
@@ -89,101 +79,73 @@
         <p>position</p>
       </div>
       <img
-        src="./src/lib/assets/user.png"
+        src={userLogo}
         alt="user logo"
         class="user_logo"
-        style:border="2px solid {isOpen ? 'green' : 'red'}"
+        style:border="2px solid {menuStates.online ? 'green' : 'red'}"
       />
     </div>
   </div>
 
   <!-- SUBMENU -->
-  <div
-    class="_sub_menu_container {isSubmenu ? '_expanded' : ''}"
-    onmouseenter={openSubmenuHandler}
-    role="button"
-    tabindex="0"
-  >
-    <div class="_sub_menu_content">
-      {#each Categories as category}
-        {#if category.name.toLowerCase() === openCategory}
-          {#each category.roots as root}
-            <p
-              class="_sub_menu_item {root.name.trim().toLowerCase() ===
-              openSubmenu.toLowerCase()
-                ? '_active'
-                : ''}"
-            >
-              {root.name}
-            </p>
-          {/each}
-        {/if}
-      {/each}
+  {#if isSubmenu && activeCategory}
+    <div class="_sub_menu_container _expanded">
+      <div class="_sub_menu_content">
+        {#each activeCategory.roots as root}
+          <p onmouseenter={() => openRoot(root.name)}>
+            {root.name}
+          </p>
+        {/each}
+      </div>
     </div>
-  </div>
+  {/if}
 
-  {#if isMegamenu}
+  <!-- MEGA MENU -->
+
+  {#if isMegamenu && activeRoot}
     <div
       class="_modal_menu_container"
-      onmouseleave={closeMegaMenuHandler}
+      onmouseleave={closeMenu}
       role="button"
       tabindex="0"
     >
       <div class="_modal_content">
-        {#each Categories as category}
-          {#if category.name.toLowerCase() === openCategory}
-            {#each category.roots as root}
-              {#each root.menus as menu}
-                <!-- LEVEL 1 -->
-                <p class="_menu-item _menu-item--group _menu-item--lvl-1">
-                  {menu.name.toUpperCase()}
-                </p>
+        {#each activeRoot.menus as menu}
+          <div class="_menu-column">
+            <!-- LEVEL 1 -->
+            <a
+              href={menu.route}
+              class="_menu-item _menu-item--group _menu-item--lvl-1 {menu
+                .modules?.length !== 0
+                ? '_menu-item--link'
+                : ''}"
+            >
+              {menu.name}
+            </a>
 
-                <!-- LEVEL 2 -->
-                {#if menu.modules?.length}
-                  {#each menu.modules as module}
-                    {#if module.submodules?.length}
-                      <a
-                        href={module.route}
-                        class="_menu-item _menu-item--link _menu-item--lvl-2"
-                      >
-                        <span>
-                          {module.name}
-                        </span>
-                      </a>
+            <!-- LEVEL 2 + 3 -->
+            {#each menu.modules as module}
+              <a
+                href={module.route}
+                class="_menu-item _menu-item--link _menu-item--lvl-2"
+              >
+                {module.name}
+              </a>
 
-                      <!-- LEVEL 3 -->
-                      {#each module.submodules as sub}
-                        <a
-                          href={sub.route}
-                          class="_menu-item _menu-item--link _menu-item--lvl-3"
-                        >
-                          <span>
-                            {sub.name}
-                          </span>
-                        </a>
-                      {/each}
-                    {:else}
-                      <a
-                        href={module.route}
-                        class="_menu-item _menu-item--link _menu-item--lvl-2"
-                      >
-                        <span>
-                          {module.name}
-                        </span>
-                      </a>
-                    {/if}
-                  {/each}
-                {/if}
-              {/each}
+              {#if module.submodules}
+                {#each module.submodules as sub}
+                  <a
+                    href={sub.route}
+                    class="_menu-item _menu-item--link _menu-item--lvl-3"
+                  >
+                    {sub.name}
+                  </a>
+                {/each}
+              {/if}
             {/each}
-          {/if}
+          </div>
         {/each}
       </div>
     </div>
   {/if}
 </header>
-
-<style>
-  @import url("./header.css");
-</style>
