@@ -3,7 +3,8 @@
   --bg-color-02: #F0F0F1;
   --text-color: #000810;
   --panel-header: #00101F;
-  --user-panel-bg: #F0F0F1;
+  --backdrop-color: rgba(2, 33, 62, 0.7);
+  --user-panel-bg: rgb(255, 255, 255, .4);
 
   --white-color: #F0F0F1;
 

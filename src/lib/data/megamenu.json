@@ -22,6 +22,91 @@
                   "type": 4,
                   "parentCode": 1200,
                   "name": "Savings Account",
+                  "route": "/transaction/account/savings",
+                  "submodules": []
+                },
+                {
+                  "code": 1401,
+                  "type": 4,
+                  "parentCode": 1200,
+                  "name": "Share Account",
+                  "route": "/share/open",
+                  "submodules": []
+                }
+              ]
+            },
+            {
+              "code": 1201,
+              "type": 2,
+              "parentCode": 1100,
+              "name": "Collection Payment",
+              "modules": [
+                {
+                  "code": 1402,
+                  "type": 4,
+                  "parentCode": 1201,
+                  "name": "List of Approved Collection Payments",
+                  "route": "/collection/approved",
+                  "submodules": []
+                }
+              ]
+            },
+            {
+              "code": 1300,
+              "type": 3,
+              "parentCode": 1100,
+              "name": "Account Linking",
+              "route": "/account/link"
+            },
+            {
+              "code": 1500,
+              "type": 2,
+              "parentCode": 1100,
+              "name": "Loans",
+              "modules": [
+                {
+                  "code": 1600,
+                  "type": 4,
+                  "parentCode": 1500,
+                  "name": "Account Inquiry",
+                  "route": "/loans/inquiry",
+                  "submodules": []
+                },
+                {
+                  "code": 1601,
+                  "type": 4,
+                  "parentCode": 1500,
+                  "name": "Loan Release",
+                  "submodules": [
+                    {
+                      "code": 1700,
+                      "type": 5,
+                      "parentCode": 1601,
+                      "name": "Pending Disbursement via Cash",
+                      "route": "/loans/pending"
+                    },
+                    {
+                      "code": 1701,
+                      "type": 5,
+                      "parentCode": 1601,
+                      "name": "Disbursed Loans via Cash",
+                      "route": "/loans/disbursed"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "code": 1200,
+              "type": 2,
+              "parentCode": 1100,
+              "name": "Open New Account",
+              "modules": [
+                {
+                  "code": 1400,
+                  "type": 4,
+                  "parentCode": 1200,
+                  "name": "Savings Account",
                   "route": "/transaction/open/savings",
                   "submodules": []
                 },
