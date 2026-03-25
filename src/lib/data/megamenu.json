@@ -116,7 +116,36 @@
       "code": 4,
       "type": 0,
       "name": "Administrative",
-      "roots": []
+      "roots": [
+        {
+          "code": 4100,
+          "type": 1,
+          "parentCode": 4,
+          "name": "Supervisor",
+          "menus": []
+        },
+        {
+          "code": 4200,
+          "type": 1,
+          "parentCode": 4,
+          "name": "Access Management",
+          "menus": []
+        },
+        {
+          "code": 4300,
+          "type": 1,
+          "parentCode": 4,
+          "name": "System Configuration",
+          "menus": []
+        },
+        {
+          "code": 4400,
+          "type": 1,
+          "parentCode": 4,
+          "name": "Settings",
+          "menus": []
+        }
+      ]
     }
   ]
 }
