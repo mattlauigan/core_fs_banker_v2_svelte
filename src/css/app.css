@@ -7,10 +7,30 @@
 
   --white-color: #F0F0F1;
 
-  --primary-color-500: #00101F;
-  --primary-color-300: #02213e;
+  --primary-color-950: #00101F;
+  --primary-color-900: #00437a;
+  --primary-color-800: #005495;
+  --primary-color-700: #0065b4;
+  --primary-color-600: #0080df;
+  --primary-color-500: #009aff;
+  --primary-color-400: #20a8ff;
+  --primary-color-300: #6dc4ff;
+  --primary-color-200: #b2deff;
+  --primary-color-100: #dceeff;
+  --primary-color-50: #eef7ff;
 
+
+  --secondary-color-950: #401120;
+  --secondary-color-900: #742742;
+  --secondary-color-800: #862b48;
+  --secondary-color-700: #a03050;
+  --secondary-color-600: #bf3f60;
   --secondary-color-500: #D1526D;
+  --secondary-color-400: #e3899a;
+  --secondary-color-300: #edb4bd;
+  --secondary-color-200: #f5d6db;
+  --secondary-color-100: #fae9eb;
+  --secondary-color-50: #fdf3f4;
 
   --tertiary-color-500: #E0E0E0;
 
@@ -39,12 +59,12 @@ html:has(#isDarkMode:checked) {
 
   --white-color: #F0F0F1;
 
-  --primary-color-500: #00101F;
-  --primary-color-300: #02213e;
+  /* --primary-color-500: #00101F;
+  --primary-color-300: #02213e; */
 
-  --secondary-color-500: #D1526D;
+  /* --secondary-color-500: #D1526D; */
 
-  --tertiary-color-500: #00101F;
+  /* --tertiary-color-500: #00101F; */
 
   --accent-001: #404C57;
   --accent-002: #D1526D;
