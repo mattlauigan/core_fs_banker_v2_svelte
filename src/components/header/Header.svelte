@@ -45,7 +45,7 @@
   <link rel="icon" href={favicon} />
 </svelte:head>
 
-<header class={menuStates.category !== "default" ? "_shadow" : ""}>
+<header class={menuStates.category !== "default" ? "shadow-none" : ""}>
   <div class="_header_container">
     <!-- LEFT LOGO -->
     <div style:padding-top="10px">
@@ -75,27 +75,35 @@
     <!-- USER PANEL -->
     <div class="_user_panel" style:margin-top="10px">
       <div style:row-gap="5px">
-        <p>User full name</p>
-        <p>position</p>
+        <p class="_user_fullname">User full name</p>
+        <p class="_user_position">position</p>
       </div>
       <img
         src={userLogo}
         alt="user logo"
-        class="user_logo"
-        style:border="2px solid {menuStates.online ? 'green' : 'red'}"
+        class="_user_logo {menuStates.online
+          ? '_user_online'
+          : '_user_offline'}"
       />
     </div>
   </div>
 
   <!-- SUBMENU -->
-  {#if isSubmenu && activeCategory}
+  {#if isSubmenu && activeCategory && activeCategory.roots.length > 0}
     <div class="_sub_menu_container _expanded">
       <div class="_sub_menu_content">
-        {#each activeCategory.roots as root}
-          <p onmouseenter={() => openRoot(root.name)}>
-            {root.name}
-          </p>
-        {/each}
+
+          {#each activeCategory.roots as root}
+            <p
+              class="_sub_menu_item {root.name.toLowerCase() ===
+              activeRoot?.name.toLowerCase()
+                ? '_active'
+                : ''}"
+              onmouseenter={() => openRoot(root.name)}
+            >
+              {root.name}
+            </p>
+          {/each}
       </div>
     </div>
   {/if}
@@ -120,7 +128,7 @@
                 ? '_menu-item--link'
                 : ''}"
             >
-              {menu.name}
+              {menu.name.toUpperCase()}
             </a>
 
             <!-- LEVEL 2 + 3 -->
