@@ -143,10 +143,6 @@ header {
   @apply cursor-pointer hover:no-underline;
 }
 
-/* ._menu-item--link:hover {
-  @apply no-underline;
-} */
-
 ._menu-item--lvl-1 {
   @apply text-[var(--primary-color-900)];
 }
@@ -159,8 +155,26 @@ header {
   @apply text-[var(--primary-color-800)] indent-8;
 }
 
+._user_panel_container {
+  @apply relative flex flex-col mb-4;
+}
 ._user_panel {
   @apply flex items-center mt-8 px-4 h-10 border border-[var(--accent-001)] rounded-full gap-2.5 bg-[var(--user-panel-bg)] cursor-pointer;
+}
+._user_panel_drawer {
+  @apply absolute top-[110%] right-0 overflow-auto w-72;
+}
+
+._user_panel_drawer_content {
+  @apply bg-[var(--bg-color)] flex flex-col justify-end shadow-md p-4 rounded-lg text-[0.8rem];
+}
+
+._user_drawer_frequent_container {
+  @apply flex flex-col pl-4;
+}
+
+._user_panel_hr {
+  @apply border-none bg-[var(--accent-003)] h-px my-2;
 }
 
 ._user_fullname {

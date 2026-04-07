@@ -1,18 +1,24 @@
 <script lang="ts">
+  import ToggleSwitch from "$components/toggleSwitch/ToggleSwitch.svelte";
+  import companyLogo from "$lib/assets/ms-logo.png";
   import favicon from "$lib/assets/favicon.svg";
   import megamenu from "$lib/data/megamenu.json";
-  import { MenuCategory } from "$lib/ts/enum";
   import type { MenuState } from "$lib/ts/megamenu";
-  import companyLogo from "$lib/assets/ms-logo.png";
   import userLogo from "$lib/assets/user.png";
+  import { MenuCategory } from "$lib/ts/enum";
 
   let menuStates: MenuState = $state({
     category: MenuCategory.default,
     root: null,
     online: false,
+    darkmode: false,
+    popover: {
+      userPanel: false,
+    },
   });
 
   let Categories = megamenu.categories;
+  let frequentModules = megamenu.frequentModules;
 
   let activeCategory = $derived(
     Categories.find((c) => c.name.toLowerCase() === menuStates.category),
@@ -21,6 +27,14 @@
   let activeRoot = $derived(
     activeCategory?.roots.find((r) => r.name.toLowerCase() === menuStates.root),
   );
+
+  function toggelUserPanel() {
+    menuStates.popover.userPanel = !menuStates.popover.userPanel;
+  }
+
+  function closeUserPanel() {
+    menuStates.popover.userPanel = false;
+  }
 
   function openCategory(name: string) {
     menuStates.category = name.toLowerCase() as MenuCategory;
@@ -39,13 +53,16 @@
 
   let isSubmenu = $derived(menuStates.category !== MenuCategory.default);
   let isMegamenu = $derived(!!menuStates.root);
+  let isUserPanel = $derived(menuStates.popover.userPanel);
 </script>
 
 <svelte:head>
   <link rel="icon" href={favicon} />
 </svelte:head>
 
-<header class={menuStates.category !== "default" ? "shadow-none" : ""}>
+<header
+  class={menuStates.category !== "default" || isUserPanel ? "shadow-none" : ""}
+>
   <div class="_header_container">
     <!-- LEFT LOGO -->
     <div style:padding-top="10px">
@@ -69,22 +86,76 @@
           {category.name}
         </p>
       {/each}
-      <input type="checkbox" name="isDarkMode" id="isDarkMode" />
     </div>
 
     <!-- USER PANEL -->
-    <div class="_user_panel" style:margin-top="10px">
-      <div style:row-gap="5px">
-        <p class="_user_fullname">User full name</p>
-        <p class="_user_position">position</p>
+    <div class="_user_panel_container">
+      <div
+        class="_user_panel"
+        onmouseenter={toggelUserPanel}
+        role="button"
+        tabindex="0"
+      >
+        <div style:row-gap="5px">
+          <p class="_user_fullname">User full name</p>
+          <p class="_user_position">position</p>
+        </div>
+        <img
+          src={userLogo}
+          alt="user logo"
+          class="_user_logo {menuStates.online
+            ? '_user_online'
+            : '_user_offline'}"
+        />
       </div>
-      <img
-        src={userLogo}
-        alt="user logo"
-        class="_user_logo {menuStates.online
-          ? '_user_online'
-          : '_user_offline'}"
-      />
+
+      {#if isUserPanel}
+        <div
+          class="_user_panel_popover"
+          onmouseleave={closeUserPanel}
+          role="button"
+          tabindex="0"
+        >
+          <div class="_user_panel_popover_content">
+            <ToggleSwitch
+              name="darkMode"
+              label="Dark Mode"
+              disabled={false}
+              checked={menuStates.darkmode}
+              onCheck={(checked) => {
+                console.log(checked); // boolean ✅
+              }}
+            />
+            <hr class="_user_panel_hr" />
+            <button class="text-left" onclick={() => {}}>Open Teller</button>
+            <a href="#"> Teller Journal </a>
+            <a href="#"> Previous Transaction Summary </a>
+            <hr class="_user_panel_hr" />
+            <a href="#"> Terminal </a>
+            <a href="#"> Branch </a>
+            <a href="#"> User </a>
+            <hr class="_user_panel_hr" />
+            <a href="#"> Current Business Date </a>
+            <a href="#"> Today Transaction </a>
+            <a href="#"> Host Status </a>
+            <a href="#"> Portal Status </a>
+
+            <hr class="_user_panel_hr" />
+            <a href="#"> Change Password</a>
+            <a href="#"> View Login Record </a>
+            <p>Recent Visited Transaction</p>
+            <div class="_user_popover_frequent_container pl-6">
+              {#each frequentModules as module}
+                <a href={module.route} >
+                  {module.name}
+                </a>
+              {/each}
+            </div>
+            <hr class="_user_panel_hr" />
+            <a href="#" class="text-red-500"> Logout </a>
+          </div>
+        </div>
+      {/if}
     </div>
   </div>
 
@@ -92,18 +163,17 @@
   {#if isSubmenu && activeCategory && activeCategory.roots.length > 0}
     <div class="_sub_menu_container _expanded">
       <div class="_sub_menu_content">
-
-          {#each activeCategory.roots as root}
-            <p
-              class="_sub_menu_item {root.name.toLowerCase() ===
-              activeRoot?.name.toLowerCase()
-                ? '_active'
-                : ''}"
-              onmouseenter={() => openRoot(root.name)}
-            >
-              {root.name}
-            </p>
-          {/each}
+        {#each activeCategory.roots as root}
+          <p
+            class="_sub_menu_item {root.name.toLowerCase() ===
+            activeRoot?.name.toLowerCase()
+              ? '_active'
+              : ''}"
+            onmouseenter={() => openRoot(root.name)}
+          >
+            {root.name}
+          </p>
+        {/each}
       </div>
     </div>
   {/if}
