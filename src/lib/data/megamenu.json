@@ -232,5 +232,47 @@
         }
       ]
     }
+  ],
+  "frequentModules": [
+    {
+      "code": 1400,
+      "type": 4,
+      "parentCode": 1200,
+      "name": "Savings Account",
+      "route": "/transaction/open/savings",
+      "submodules": []
+    },
+    {
+      "code": 1400,
+      "type": 4,
+      "parentCode": 1200,
+      "name": "Savings Account 2",
+      "route": "/transaction/open/savings",
+      "submodules": []
+    },
+    {
+      "code": 1400,
+      "type": 4,
+      "parentCode": 1200,
+      "name": "Savings Account 3",
+      "route": "/transaction/open/savings",
+      "submodules": []
+    },
+    {
+      "code": 1400,
+      "type": 4,
+      "parentCode": 1200,
+      "name": "Savings Account 4",
+      "route": "/transaction/open/savings",
+      "submodules": []
+    },
+    {
+      "code": 1400,
+      "type": 4,
+      "parentCode": 1200,
+      "name": "Savings Account 5",
+      "route": "/transaction/open/savings",
+      "submodules": []
+    }
   ]
 }
