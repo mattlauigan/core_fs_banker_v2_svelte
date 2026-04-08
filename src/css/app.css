@@ -161,11 +161,11 @@ header {
 ._user_panel {
   @apply flex items-center mt-8 px-4 h-10 border border-accent-001 rounded-full gap-2.5 bg-user-panel-bg cursor-pointer;
 }
-._user_panel_drawer {
+._user_panel_popover {
   @apply absolute top-[110%] right-0 overflow-auto w-72;
 }
 
-._user_panel_drawer_content {
+._user_panel_popover_content {
   @apply bg-background-c-01 flex flex-col justify-end shadow-md p-4 rounded-lg text-[0.8rem];
 }
 
