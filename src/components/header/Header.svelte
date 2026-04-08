@@ -1,6 +1,7 @@
 <script lang="ts">
+
   import ToggleSwitch from "$components/toggleSwitch/ToggleSwitch.svelte";
-  import companyLogo from "$lib/assets/ms-logo.png";
+  import companyLogo from "$lib/assets/msp-logo.svg";
   import favicon from "$lib/assets/favicon.svg";
   import megamenu from "$lib/data/megamenu.json";
   import type { MenuState } from "$lib/ts/megamenu";
@@ -65,10 +66,10 @@
 >
   <div class="_header_container">
     <!-- LEFT LOGO -->
-    <div style:padding-top="10px">
+    <div class="pt-3">
       <span>
         <a href="/">
-          <img src={companyLogo} alt="Organization" style:height="50px" />
+          <img src={companyLogo} alt="Organization" class='h-14' />
         </a>
       </span>
     </div>
@@ -128,21 +129,21 @@
             />
             <hr class="_user_panel_hr" />
             <button class="text-left" onclick={() => {}}>Open Teller</button>
-            <a href="#"> Teller Journal </a>
-            <a href="#"> Previous Transaction Summary </a>
+            <a href="a"> Teller Journal </a>
+            <a href="b"> Previous Transaction Summary </a>
             <hr class="_user_panel_hr" />
-            <a href="#"> Terminal </a>
-            <a href="#"> Branch </a>
-            <a href="#"> User </a>
+            <a href="c"> Terminal </a>
+            <a href="d"> Branch </a>
+            <a href="e"> User </a>
             <hr class="_user_panel_hr" />
-            <a href="#"> Current Business Date </a>
-            <a href="#"> Today Transaction </a>
-            <a href="#"> Host Status </a>
-            <a href="#"> Portal Status </a>
+            <a href="f"> Current Business Date </a>
+            <a href="g"> Today Transaction </a>
+            <a href="h"> Host Status </a>
+            <a href="i"> Portal Status </a>
 
             <hr class="_user_panel_hr" />
-            <a href="#"> Change Password</a>
-            <a href="#"> View Login Record </a>
+            <a href="j"> Change Password</a>
+            <a href="k"> View Login Record </a>
             <p>Recent Visited Transaction</p>
             <div class="_user_popover_frequent_container pl-6">
               {#each frequentModules as module}
@@ -152,7 +153,7 @@
               {/each}
             </div>
             <hr class="_user_panel_hr" />
-            <a href="#" class="text-red-500"> Logout </a>
+            <a href="l" class="text-red-500"> Logout </a>
           </div>
         </div>
       {/if}
