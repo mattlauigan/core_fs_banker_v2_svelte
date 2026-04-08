@@ -1,73 +1,46 @@
 <script lang="ts">
-    import { page } from "$app/stores";
-    import Mascot from "$lib/assets/mascot.svg"
+  import { page } from "$app/stores";
+  import Mascot from "$lib/assets/mascot.svg";
 
-    const path = $page.params.catchall;
+  const path = $page.params.catchall;
 </script>
 
 <section class="_route-catchall">
-    
-        <div class="_catchall-mascot-container">
-            <img src={Mascot} alt="mascot" class='_catchall_mascot'/>
-        </div>
-        <div class='_catchall-message-container'>
-            <span class='_catchall-error-code'>404</span>
-            <strong class='_catchall-message'>This is not the web page you are looking for.</strong>
-        </div>
-    
+  <!-- <div class="_route_catchall_content"> -->
+    <div class="_catchall_mascot_container">
+      <img src={Mascot} alt="mascot" class="_catchall_mascot" />
+    </div>
+    <div class="_catchall_message_container">
+      <span class="_catchall_error_code">404</span>
+      <strong class="_catchall_message"
+        >This is not the web page you are looking for.</strong
+      >
+    </div>
+  <!-- </div> -->
 </section>
 
 <style>
-    ._route-catchall {
-        background-image: linear-gradient(to top ,var(--primary-color-900), var(--secondary-color-500), var(--primary-color-100));
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin: auto;
-        height: 40rem;
-        width: 100vw;
-    }
+  @import "tailwindcss";
+  ._route-catchall {
+    @apply relative flex flex-col justify-center items-center h-160 w-screen;
+    @apply bg-[radial-gradient(at_50%_75%,primary-200,-primary-500,-primary-950)];
+  }
 
-    ._catchall-mascot-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        transform: translate(50%, 90%);
+  ._catchall_mascot_container {
+    @apply absolute top-50 left-50 translate-x-full translate-y-1/2 z-20;
+  }
 
-    }
+  ._catchall_mascot {
+    @apply w-48 h-auto;
+  }
+  ._catchall_message_container {
+    @apply absolute top-0 left-1/2 translate-x-1/2 translate-y-1/2 z-10;
+  }
+  ._catchall_error_code {
+    @apply text-primary-900 text-shadow-[5px_5px_5px_-white-color] text-8xl font-bold;
+  }
 
-    ._catchall_mascot {
-        height: 20rem;
-        width: auto;
-    }
-
-    ._catchall-message-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        transform: translate(100%, 20%);
-    }
-
-    ._catchall-error-code {
-        color: var(--primary-color-800);
-        text-shadow: 5px 5px 5px var( --white-color);
-        font-size:6rem;
-        font-weight:bolder;
-    }
-
-    ._catchall-message {
-        display: flex;
-        padding: 3rem;
-        border-radius: 1rem;
-        font-size:2rem;
-        width: 18rem;
-        background-color: var(--primary-color-100);
-        color: var(--primary-color-900);
-        text-shadow: 2px 2px 2px var(--accent-003);
-
-    }    
-
-
-
+  ._catchall_message {
+    @apply flex p-12 rounded-lg text-2xl w-72 bg-primary-100 text-primary-900 text-shadow-[2px_2px_2px_-accent-003];
+  }
 </style>
