@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./catchall.css";
 
 @theme {
   --font-roboto: "Roboto", Arial, Helvetica, sans-serif;
