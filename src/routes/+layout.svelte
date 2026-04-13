@@ -4,8 +4,6 @@
 	let { children } = $props();
 
 	import Header from "../components/header/Header.svelte";
-
-	// import Header from '$components/header/Header.css'
 </script>
 
 <Header />

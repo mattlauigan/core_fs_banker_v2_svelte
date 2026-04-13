@@ -1,0 +1,41 @@
+._user_panel_container {
+  @apply relative flex flex-col mb-4;
+}
+._user_panel {
+  @apply flex items-center mt-8 px-4 h-10 border border-accent-001 rounded-full gap-2.5 bg-user-panel-bg cursor-pointer;
+}
+._user_panel_popover {
+  @apply absolute top-[110%] right-0 overflow-auto w-72 z-50;
+}
+
+._user_panel_popover_content {
+  @apply bg-background-c-01 flex flex-col justify-end shadow-md p-4 rounded-lg text-[0.8rem];
+}
+
+._user_panel_popover_frequent_container {
+  @apply flex flex-col pl-4;
+}
+
+._user_panel_popover_hr {
+  @apply border-none bg-accent-003 h-px my-2;
+}
+
+._user_fullname {
+  @apply m-0 text-sm;
+}
+
+._user_position {
+  @apply -mt-2 text-[0.7rem] text-accent-002;
+}
+
+._user_logo {
+  @apply w-8 h-8 rounded-[50%];
+}
+
+._user_logo._user_online {
+  @apply border-2 border-[#36B37E];
+}
+
+._user_logo._user_offline {
+  @apply border-2 border-[#FF5630];
+}

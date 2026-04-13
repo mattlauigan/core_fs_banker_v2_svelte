@@ -4,7 +4,6 @@
   let {
     name,
     label,
-
     checked = false,
     disabled = false,
     onCheck,

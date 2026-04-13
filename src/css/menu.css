@@ -1,0 +1,78 @@
+
+._header_container {
+  @apply flex justify-around px-6 transition-[height] duration-300 ease-in-out;
+}
+
+._categories_nav {
+  @apply flex justify-around mx-auto pt-[1.7rem];
+}
+
+._category_item {
+  @apply text-sm cursor-pointer m-0 p-4;
+}
+
+._category_item:hover,
+._category_item._active {
+  @apply rounded-md font-semibold text-primary-900;
+}
+
+._sub_menu_container {
+  @apply absolute left-0 top-full w-full m-0 z-40 grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out bg-background-c-02;
+}
+
+._sub_menu_container._expanded {
+  @apply grid grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-in-out p-0 m-0;
+}
+
+._sub_menu_container ._sub_menu_content {
+  @apply flex justify-center gap-y-8 gap-x-12 text-[0.8rem] py-4;
+}
+
+._sub_menu_item {
+  @apply cursor-pointer;
+}
+
+._sub_menu_item:hover,
+._sub_menu_item._active {
+  @apply text-secondary-500;
+}
+
+._modal_menu_container {
+  @apply absolute  h-[70vh] w-[70vw] py-6 px-14 flex top-[110%] mt-16 left-[50%] -translate-x-1/2 z-40 mx-auto rounded-lg overflow-auto shadow-md backdrop-blur-sm bg-background-c-01;
+}
+
+._modal_content {
+  @apply flex flex-col flex-wrap gap-4 md:snap-y;
+}
+
+._modal_content * {
+  @apply p-[0.2rem_0] m-0;
+}
+
+._menu-column {
+  @apply flex flex-col;
+}
+
+._menu-item {
+  @apply text-sm no-underline;
+}
+
+._menu-item--group {
+  @apply cursor-default;
+}
+
+._menu-item--link {
+  @apply cursor-pointer hover:no-underline;
+}
+
+._menu-item--lvl-1 {
+  @apply text-primary-900;
+}
+
+._menu-item--lvl-2 {
+  @apply text-scripts indent-4;
+}
+
+._menu-item--lvl-3 {
+  @apply text-primary-800 indent-8;
+}
