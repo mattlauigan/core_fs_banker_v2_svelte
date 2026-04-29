@@ -2,22 +2,24 @@ import { VITE_APP_URL } from "$env/static/private";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
-export type AxiosHeaderValue =
-  | AxiosHeaders
+
+
+export type HeaderValue =
+  | Headers
   | string
   | string[]
   | number
   | boolean
   | null;
 
-interface RawAxiosHeaders {
-  [key: string]: AxiosHeaderValue;
+interface RawHeaders {
+  [key: string]: HeaderValue;
 }
 
-export class AxiosHeaders {
+export class Headers {
   private headers: Record<string, string> = {};
 
-  constructor(headers?: RawAxiosHeaders | AxiosHeaders | string) {
+  constructor(headers?: RawHeaders | Headers | string) {
     if (!headers) return;
 
     if (typeof headers === "string") {
@@ -25,11 +27,9 @@ export class AxiosHeaders {
         const [key, value] = line.split(":").map((s) => s.trim());
         if (key && value) this.headers[key] = value;
       });
-    } else if (headers instanceof AxiosHeaders) {
+    } else if (headers instanceof Headers) {
       this.headers = { ...headers.headers };
-    } else {
-      this.headers = { ...headers };
-    }
+    } 
   }
 }
 
@@ -42,13 +42,12 @@ export type RequestConfig = {
   signal?: AbortSignal;
 };
 
-export interface HttpResponse<T = any, D = any> {
+export interface HttpResponse<T = unknown> {
   data: T;
   status: number;
   statusText: string;
-  headers: RawAxiosResponseHeaders | AxiosResponseHeaders;
-  config: InternalAxiosRequestConfig<D>;
-  request?: any;
+  headers: Headers;
+  request?: Request;
 }
 
 const controllers = new Set<AbortController>();
