@@ -2,6 +2,7 @@
   import ToggleSwitch from "$components/toggleSwitch/ToggleSwitch.svelte";
   import userLogo from "$lib/assets/user.png";
   import type { MenuState } from "$lib/ts/megamenu";
+  import DialogWindow from "$components/modal/DialogWindow.svelte";
 
   let {
     isPopOver = false,
@@ -10,12 +11,29 @@
     frequentModules,
   } = $props();
 
+  let dialogMessage = $state("");
+  let show = $state(false);
+
+  function toggleShow() {
+    if (online) {
+      dialogMessage = "Are you sure you want to Close teller?";
+    } else {
+      dialogMessage = "Are you sure you want to Open teller?";
+    }
+    show = !show;
+  }
+
   function toggelUserPanel() {
     isPopOver = !isPopOver;
   }
 
   function closeUserPanel() {
     isPopOver = false;
+  }
+
+  function DialogSubmit() {
+    online = !online;
+    show = false;
   }
 </script>
 
@@ -55,9 +73,8 @@
           }}
         />
         <hr class="_user_panel_popover_hr" />
-        <button
-          class="text-left cursor-pointer"
-          onclick={() => (online = !online)}>Open Teller</button
+        <button class="text-left cursor-pointer" onclick={toggleShow}
+          >Open Teller</button
         >
         <a href="a"> Teller Journal </a>
         <a href="b"> Previous Transaction Summary </a>
@@ -88,3 +105,13 @@
     </div>
   {/if}
 </div>
+
+{#if show}
+  <DialogWindow
+    title="Teller Open/Close"
+    {show}
+    message={dialogMessage}
+    isSubmit
+    onSubmit={DialogSubmit}
+  />
+{/if}

@@ -1,4 +1,4 @@
-import { VITE_APP_URL } from "$env/static/private";
+import { PUBLIC_APP_URL } from "$env/static/public";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
@@ -70,7 +70,7 @@ async function request<T>(config: RequestConfig): Promise<T> {
 
   const { url, method = "GET", data, params, headers = {}, signal } = config;
 
-  const finalUrl = `${VITE_APP_URL}${buildUrl(url, params)}`;
+  const finalUrl = `${PUBLIC_APP_URL}${buildUrl(url, params)}`;
 
   try {
     const res = await fetch(finalUrl, {

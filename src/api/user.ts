@@ -20,7 +20,7 @@
 //   utilHttp.get<User>(`${UserUrl.portal}/${id}`)
 
 const getUserStatus = (): Promise<string> => {
-  return Promise.resolve("online");
+  return Promise.resolve("offline");
 };
 
 const user = {

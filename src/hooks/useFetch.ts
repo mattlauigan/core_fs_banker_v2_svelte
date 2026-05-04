@@ -17,7 +17,7 @@ export function useFetch<T>(request: () => Promise<T>) {
 		} finally {
 			loading.set(false);
 		}
-	}
+	} 
 
 	return { data, loading, error, execute };
 }

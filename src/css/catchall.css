@@ -1,4 +1,4 @@
-@import "tailwindcss";
+
 
 ._route-catchall {
   @apply relative flex flex-col justify-center items-center h-160 w-screen;

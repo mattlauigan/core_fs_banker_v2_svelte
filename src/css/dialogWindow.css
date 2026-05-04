@@ -1,0 +1,12 @@
+._modal-backdrop {
+  @apply absolute top-[40%] mt-14 left-[50%] -translate-x-1/2 z-50 w-screen h-screen flex items-center justify-center;
+}
+
+._modal-content {
+  @apply relative bg-[--color-bg-01] rounded-lg shadow-lg p-6 w-[90%] max-w-md m-16;
+
+}
+
+._modal-content h2 {
+  @apply bg-primary-900 text-white text-lg font-bold p-4 rounded-lg w-auto;
+}

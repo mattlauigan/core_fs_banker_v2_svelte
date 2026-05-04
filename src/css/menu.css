@@ -8,7 +8,7 @@
 }
 
 ._category_item {
-  @apply text-sm cursor-pointer m-0 p-4;
+  @apply text-sm cursor-pointer m-0 px-4 pt-4;
 }
 
 ._category_item:hover,

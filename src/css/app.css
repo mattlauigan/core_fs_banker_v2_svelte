@@ -2,6 +2,8 @@
 @import "./catchall.css";
 @import "./userpanel.css";
 @import "./menu.css";
+@import "./dialogWindow.css";
+@import "./hero.css";
 
 @theme {
   --font-roboto: "Roboto", Arial, Helvetica, sans-serif;
@@ -9,6 +11,7 @@
   --color-background-c-01: #f0f0f1;
   --color-background-c-02: #f0f0f1;
   --color-scripts: #000810;
+  --color-purple-01: #8C00FF;
 
 
   --color-panel-header: #00101f;

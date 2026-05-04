@@ -1,0 +1,20 @@
+._hero_container {
+  @apply flex flex-col items-center justify-center h-full rounded-lg shadow-lg w-3xl m-auto mt-16 p-16 pt-10 text-right text-white;
+  @apply bg-linear-to-l from-[#330867] to-[#30cfd0] ;
+}
+
+._hero_container div {
+  @apply w-full text-left;
+}
+
+._hero_container h1 {
+  @apply text-2xl font-bold mb-1.5;
+}
+
+._hero_container h3 {
+  @apply text-lg mb-6;
+}
+
+._hero_container p {
+  @apply w-[50%] text-sm mt-5 hyphens-none;
+}
