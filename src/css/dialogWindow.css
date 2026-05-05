@@ -1,12 +1,25 @@
+@import "tailwindcss";
+
 ._modal-backdrop {
-  @apply absolute top-[40%] mt-14 left-[50%] -translate-x-1/2 z-50 w-screen h-screen flex items-center justify-center;
+  @apply relative mt-14 z-50 w-screen h-screen flex items-center justify-center backdrop-blur-sm bg-black/50;
+}
+
+._modal-backdrop dialog {
+  @apply fixed top-[40%] left-[50%] -translate-x-1/2 flex items-center justify-center rounded-lg shadow-lg bg-background-c-01;
 }
 
 ._modal-content {
-  @apply relative bg-[--color-bg-01] rounded-lg shadow-lg p-6 w-[90%] max-w-md m-16;
-
+  @apply relative w-[90%] max-w-md p-6 flex flex-row gap-y-2 flex-wrap ;
 }
 
 ._modal-content h2 {
-  @apply bg-primary-900 text-white text-lg font-bold p-4 rounded-lg w-auto;
+  @apply  text-lg font-bold rounded-lg w-auto -ml-2 mb-2 text-left;
+}
+
+._modal-content article {
+  @apply flex flex-row flex-wrap justify-start gap-4 text-sm w-full;
+}
+
+._modal-content ._modal-actions {
+  @apply flex flex-row gap-4 justify-end w-full mt-4;
 }

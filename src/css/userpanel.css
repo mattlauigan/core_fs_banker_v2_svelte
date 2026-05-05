@@ -1,8 +1,8 @@
 ._user_panel_container {
-  @apply relative flex flex-col mb-4;
+  @apply relative flex flex-col pt-2;
 }
 ._user_panel {
-  @apply flex items-center mt-8 px-4 h-10 border border-accent-001 rounded-full gap-2.5 bg-user-panel-bg cursor-pointer;
+  @apply flex items-center mt-4 px-4 h-10 border border-accent-001 rounded-full gap-2.5 bg-user-panel-bg cursor-pointer;
 }
 ._user_panel_popover {
   @apply absolute top-[110%] right-0 overflow-auto w-72 z-50;
@@ -18,6 +18,10 @@
 
 ._user_panel_popover_hr {
   @apply border-none bg-accent-003 h-px my-2;
+}
+
+._user_panel ._user_info {
+  @apply flex flex-col items-start gap-1.5;
 }
 
 ._user_fullname {

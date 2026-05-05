@@ -3,6 +3,7 @@
   import megamenu from "$lib/data/megamenu.json";
 
   let {
+    isScrolled = false,
     category = MenuCategory.default,
     root = null,
   } = $props();
@@ -25,7 +26,13 @@
     root = name.toLowerCase();
   }
 
-    const closeMenu = () => {
+  function closeSubmenu() {
+    category = MenuCategory.default;
+    root = null;
+    isSubmenu= false
+  }
+
+  const closeMenu = () => {
     isSubmenu = false;
     isMegamenu = false;
     category = MenuCategory.default;
@@ -42,7 +49,7 @@
       class="_category_item {category.name.toLowerCase() ===
       activeCategory?.name.toLowerCase()
         ? '_active'
-        : ''}"
+        : ''} {isScrolled ? '_scrolled' : ''}"
     >
       {category.name}
     </p>
@@ -50,7 +57,12 @@
 
   <!-- SUBMENU -->
   {#if isSubmenu && activeCategory && activeCategory.roots.length > 0}
-    <div class="_sub_menu_container _expanded">
+    <div
+      class="_sub_menu_container _expanded"
+      onmouseleave={closeMenu}
+      role="button"
+      tabindex="0"
+    >
       <div class="_sub_menu_content">
         {#each activeCategory.roots as root}
           <p
@@ -72,7 +84,7 @@
   {#if isMegamenu && activeRoot}
     <div
       class="_modal_menu_container"
-      onmouseleave={closeMenu}
+      onmouseleave={closeSubmenu}
       role="button"
       tabindex="0"
     >

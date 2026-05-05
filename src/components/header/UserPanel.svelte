@@ -5,6 +5,8 @@
   import DialogWindow from "$components/modal/DialogWindow.svelte";
 
   let {
+    username = "anonymous",
+    position = "admin",
     isPopOver = false,
     isDarkmode = false,
     online = false,
@@ -44,9 +46,9 @@
     role="button"
     tabindex="0"
   >
-    <div style:row-gap="5px">
-      <p class="_user_fullname">User full name</p>
-      <p class="_user_position">position</p>
+    <div class="_user_info">
+      <p class="_user_fullname">{username}</p>
+      <p class="_user_position">{position}</p>
     </div>
     <img
       src={userLogo}
@@ -104,14 +106,14 @@
       </div>
     </div>
   {/if}
-</div>
 
-{#if show}
-  <DialogWindow
-    title="Teller Open/Close"
-    {show}
-    message={dialogMessage}
-    isSubmit
-    onSubmit={DialogSubmit}
-  />
-{/if}
+  {#if show}
+    <DialogWindow
+      title="Teller Open/Close"
+      {show}
+      message={dialogMessage}
+      isConfirm
+      onSubmit={DialogSubmit}
+    />
+  {/if}
+</div>

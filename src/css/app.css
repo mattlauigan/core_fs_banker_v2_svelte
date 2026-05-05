@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @import "./catchall.css";
 @import "./userpanel.css";
-@import "./menu.css";
+@import "./header.css";
 @import "./dialogWindow.css";
 @import "./hero.css";
 
@@ -20,17 +20,17 @@
 
   --color-white: #f0f0f1;
 
-  --color-primary-950: #00101f;
-  --color-primary-900: #00437a;
-  --color-primary-800: #005495;
-  --color-primary-700: #0065b4;
-  --color-primary-600: #0080df;
-  --color-primary-500: #009aff;
-  --color-primary-400: #20a8ff;
-  --color-primary-300: #6dc4ff;
-  --color-primary-200: #b2deff;
-  --color-primary-100: #dceeff;
-  --color-primary-50: #eef7ff;
+  --color-primary-950: #440076;
+  --color-primary-900: #5d079c;
+  --color-primary-800: #7006c3;
+  --color-primary-700: #8c00ff;
+  --color-primary-600: #900fff;
+  --color-primary-500: #9f35ff;
+  --color-primary-400: #b86cff;
+  --color-primary-300: #d2a5ff;
+  --color-primary-200: #e6cdff;
+  --color-primary-100: #f1e3ff;
+  --color-primary-50: #f9f3ff;
 
   --color-secondary-950: #401120;
   --color-secondary-900: #742742;
