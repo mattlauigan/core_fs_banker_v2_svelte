@@ -2,6 +2,7 @@
   import Menu from "./Menu.svelte";
   import UserPanel from "$components/header/UserPanel.svelte";
   import companyLogo from "$lib/assets/msp-logo.svg";
+  import companyLogoDark from "$lib/assets/msp-logo-w.svg";
   import favicon from "$lib/assets/favicon.svg";
   import megamenu from "$lib/data/megamenu.json";
   import type { MenuState } from "$lib/ts/megamenu";
@@ -71,18 +72,27 @@
 <header
   class={menuStates.category !== "default" || isUserPanel ? "shadow-none" : ""}
 >
-  <div class="_header_container {!isScrolled ? 'bg-background-c-01' : 'bg-purple-01 shadow-md text-white'}">
+  <div
+    class="_header_container
+    {!isScrolled
+      ? ''
+      : '_scrolled'}"
+  >
     <!-- LEFT LOGO -->
     <div class="pt-3">
       <span>
         <a href="/">
-          <img src={companyLogo} alt="Organization" class="h-14" />
+          <img
+            src={!isScrolled ? companyLogo : companyLogoDark}
+            alt="Organization"
+            class="h-14 w-auto"
+          />
         </a>
       </span>
     </div>
 
     <!-- CATEGORIES NAV -->
-    <Menu category={menuStates.category} root={menuStates.root} />
+    <Menu category={menuStates.category} root={menuStates.root} {isScrolled}/>
     <!-- USER PANEL -->
     <UserPanel
       isPopOver={menuStates.popover.userPanel}
