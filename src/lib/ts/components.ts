@@ -37,5 +37,13 @@ export type ToggleSwitchProps = Required<
   Pick<InputProps, "name" | "checked" | "disabled" | "onCheck">
 > & {
   label?: string;
-  
+};
+
+export type ButtonProps = {
+  label?: string;
+  isPrimary?: boolean;
+  isLoading?: boolean;
+  isReadonly?: boolean;
+  isDisabled?: boolean;
+  onClick?: () => void;
 };

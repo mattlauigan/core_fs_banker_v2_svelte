@@ -1,12 +1,5 @@
 <script lang="ts">
-  type ButtonProps = {
-    label?: string;
-    isPrimary?: boolean;
-    isLoading?: boolean;
-    isReadonly?: boolean;
-    isDisabled?: boolean;
-    onClick?: () => void;
-  };
+  import type { ButtonProps } from "$lib/ts/components";
 
   let {
     label = "Button",
@@ -28,22 +21,3 @@
 >
   {label}
 </button>
-
-<style>
-  @import "tailwindcss";
-  @import "$css/app.css";
-
-  ._input_button {
-    @apply px-4 py-2 rounded-md cursor-pointer transition-colors duration-300;
-  }
-
-  ._input_button {
-    @apply bg-gray-200 text-primary-800 rounded-md hover:bg-primary-300 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed;
-  }
-
-  ._input_button._primary {
-    @apply bg-purple-700 text-white hover:bg-primary-300 hover:text-primary-800 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed;
-  }
-
-
-</style>
