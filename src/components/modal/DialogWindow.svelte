@@ -1,54 +1,64 @@
+
+
 <script lang="ts">
   // import { createEventDispatcher } from "svelte";
   import { fade } from "svelte/transition";
   import InputButton from "$components/input/InputButton.svelte";
+  import { BoxState } from "$lib/ts/enum";
+
+  type DialogAction = {
+    label: string;
+    handler: () => void;
+    primary?: boolean;
+  };
+
+
+
 
   type DialogWindowProps = {
     title?: string;
     show?: boolean;
-    message?: string | null;
-    isSubmit?: boolean;
-    isConfirm?: boolean;
+    message: string;
+    boxState?: BoxState;
     onSubmit?: () => void;
+    actions?: DialogAction[];
   };
-
-  // type DialogAction = {
-  //   label: string;
-  //   handler: () => void;
-  //   primary?: boolean;
-  // };
 
   let {
     title = "Information",
     show = false,
-    message = null,
-    isSubmit = false,
-    isConfirm = false,
+    message,
+    boxState = BoxState.OK,
     onSubmit = () => {},
+    actions = [{ label: "Ok", handler: close }],
   }: DialogWindowProps = $props();
-  // let actions = [];
 
   function close() {
     dialogElement?.close();
   }
 
-  // if (isSubmit === true) {
-  //   actions = [
-  //     { label: "Submit", handler: onSubmit, primary: true },
-  //     { label: "Close", handler: close },
-  //   ];
-  // } else if (isConfirm) {
-  //   actions = [
-  //     { label: "Yes", handler: onSubmit, primary: true },
-  //     { label: "No", handler: close }, // probably should close, not submit
-  //   ];
-  // } else {
-  //   actions = [{ label: "Ok", handler: close }];
-  // }
-
   let dialogElement: HTMLDialogElement | undefined = $state();
 
   $effect(() => {
+    if (boxState === "submit") {
+      actions = [
+        { label: "Submit", handler: onSubmit, primary: true },
+        { label: "Close", handler: close },
+      ];
+    } else if (boxState === "confirm") {
+      actions = [
+        { label: "Yes", handler: onSubmit, primary: true },
+        { label: "No", handler: close },
+      ];
+    } else if (boxState === "proceed") {
+      actions = [
+        { label: "Proceed", handler: onSubmit, primary: true },
+        { label: "Cancel", handler: close },
+      ];
+    } else {
+      actions = [{ label: "Ok", handler: close }];
+    }
+
     if (show) {
       dialogElement?.showModal();
     } else {
@@ -59,40 +69,29 @@
 
 {#if show}
   <div
-    class="_modal-backdrop"
+    class="_modal_backdrop"
     onkeydown={close}
     transition:fade
     role="button"
     tabindex="0"
+    style="color:red"
   >
     <dialog bind:this={dialogElement} onclose={() => (show = false)}>
-      <div class="_modal-content" transition:fade>
+      <div class="_modal_content" transition:fade>
         <h2>{title}</h2>
 
         <article>
-          {#if message !== null}
-            <p>{message}</p>
-          {:else}
-            <p>There seems to be a problem</p>
-          {/if}
+          <p>{message}</p>
         </article>
 
-        <div class="_modal-actions">
-          <!-- {#each actions as action}
-  <InputButton
-    label={action.label}
-    onClick={action.handler}
-    isPrimary={action.primary}
-  /> -->
-          {#if isSubmit}
-            <InputButton label="Submit" onClick={onSubmit} isPrimary />
-            <InputButton label="Close" onClick={close} />
-          {:else if isConfirm}
-            <InputButton label="Yes" onClick={onSubmit} isPrimary />
-            <InputButton label="No" onClick={onSubmit} />
-          {:else}
-            <InputButton label="Ok" onClick={close} />
-          {/if}
+        <div class="_modal_actions">
+          {#each actions as action}
+            <InputButton
+              label={action.label}
+              onClick={action.handler}
+              isPrimary={action.primary}
+            />
+          {/each}
         </div>
       </div>
     </dialog>

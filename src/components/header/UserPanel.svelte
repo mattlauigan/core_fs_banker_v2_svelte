@@ -3,6 +3,7 @@
   import userLogo from "$lib/assets/user.png";
   import type { MenuState } from "$lib/ts/megamenu";
   import DialogWindow from "$components/modal/DialogWindow.svelte";
+  import { BoxState } from "$lib/ts/enum";
 
   let {
     username = "anonymous",
@@ -112,7 +113,7 @@
       title="Teller Open/Close"
       {show}
       message={dialogMessage}
-      isConfirm
+      boxState={BoxState.CONFIRM}
       onSubmit={DialogSubmit}
     />
   {/if}

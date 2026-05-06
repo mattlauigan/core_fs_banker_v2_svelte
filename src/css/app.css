@@ -4,6 +4,7 @@
 @import "./header.css";
 @import "./dialogWindow.css";
 @import "./hero.css";
+@import "./inputButton.css";
 
 @theme {
   --font-roboto: "Roboto", Arial, Helvetica, sans-serif;
