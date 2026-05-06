@@ -1,5 +1,3 @@
-
-
 <script lang="ts">
   // import { createEventDispatcher } from "svelte";
   import { fade } from "svelte/transition";
@@ -12,9 +10,6 @@
     primary?: boolean;
   };
 
-
-
-
   type DialogWindowProps = {
     title?: string;
     show?: boolean;
@@ -26,10 +21,10 @@
 
   let {
     title = "Information",
-    show = false,
-    message,
-    boxState = BoxState.OK,
-    onSubmit = () => {},
+    show = $bindable(false),
+    message = $bindable("This is a dialog message."),
+    boxState = $bindable(BoxState.OK),
+    onSubmit = $bindable(() => {}),
     actions = [{ label: "Ok", handler: close }],
   }: DialogWindowProps = $props();
 
@@ -71,10 +66,8 @@
   <div
     class="_modal_backdrop"
     onkeydown={close}
-    transition:fade
     role="button"
     tabindex="0"
-    style="color:red"
   >
     <dialog bind:this={dialogElement} onclose={() => (show = false)}>
       <div class="_modal_content" transition:fade>

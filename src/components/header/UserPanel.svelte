@@ -1,9 +1,9 @@
 <script lang="ts">
   import ToggleSwitch from "$components/toggleSwitch/ToggleSwitch.svelte";
   import userLogo from "$lib/assets/user.png";
-  import type { MenuState } from "$lib/ts/megamenu";
-  import DialogWindow from "$components/modal/DialogWindow.svelte";
+  import { useDialog } from "$lib/stores/dialog.svelte";
   import { BoxState } from "$lib/ts/enum";
+  import { on } from "svelte/events";
 
   let {
     username = "anonymous",
@@ -14,16 +14,18 @@
     frequentModules,
   } = $props();
 
-  let dialogMessage = $state("");
-  let show = $state(false);
+  const myDialog = useDialog();
 
   function toggleShow() {
+    myDialog.boxState = BoxState.CONFIRM;
+
     if (online) {
-      dialogMessage = "Are you sure you want to Close teller?";
+      myDialog.message = "Open Teller?";
     } else {
-      dialogMessage = "Are you sure you want to Open teller?";
+      myDialog.message = "Are you sure you want to close teller?";
     }
-    show = !show;
+
+    myDialog.isOpen = true;
   }
 
   function toggelUserPanel() {
@@ -32,11 +34,6 @@
 
   function closeUserPanel() {
     isPopOver = false;
-  }
-
-  function DialogSubmit() {
-    online = !online;
-    show = false;
   }
 </script>
 
@@ -106,15 +103,5 @@
         <a href="l" class="text-red-500"> Logout </a>
       </div>
     </div>
-  {/if}
-
-  {#if show}
-    <DialogWindow
-      title="Teller Open/Close"
-      {show}
-      message={dialogMessage}
-      boxState={BoxState.CONFIRM}
-      onSubmit={DialogSubmit}
-    />
   {/if}
 </div>

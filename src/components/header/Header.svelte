@@ -7,6 +7,10 @@
   import megamenu from "$lib/data/megamenu.json";
   import type { MenuState } from "$lib/ts/megamenu";
   import { MenuCategory } from "$lib/ts/enum";
+  import DialogWindow from "$components/modal/DialogWindow.svelte";
+  import { useDialog } from "$lib/stores/dialog.svelte";
+
+  
 
   let menuStates: MenuState = $state({
     category: MenuCategory.default,
@@ -17,6 +21,8 @@
       userPanel: false,
     },
   });
+
+  const myDialog = useDialog();
 
   let isScrolled = $state(false);
 
@@ -74,9 +80,7 @@
 >
   <div
     class="_header_container
-    {!isScrolled
-      ? ''
-      : '_scrolled'}"
+    {!isScrolled ? '' : '_scrolled'}"
   >
     <!-- LEFT LOGO -->
     <div class="pt-3">
@@ -92,7 +96,7 @@
     </div>
 
     <!-- CATEGORIES NAV -->
-    <Menu category={menuStates.category} root={menuStates.root} {isScrolled}/>
+    <Menu category={menuStates.category} root={menuStates.root} {isScrolled} />
     <!-- USER PANEL -->
     <UserPanel
       isPopOver={menuStates.popover.userPanel}
@@ -101,4 +105,14 @@
       {frequentModules}
     />
   </div>
+
+  {#if myDialog.isOpen}
+    <DialogWindow
+      title="Teller Open/Close"
+      show = {myDialog.isOpen}
+      message={myDialog.message}
+      boxState={myDialog.boxState}
+      onSubmit={myDialog.onSubmit}
+    />
+  {/if}
 </header>
