@@ -1,5 +1,3 @@
-
-
 <script lang="ts">
   import { fade } from "svelte/transition";
   import InputButton from "$components/input/InputButton.svelte";
@@ -22,7 +20,7 @@
 
   let {
     title = "Information",
-    show = false,
+    show = $bindable(false),
     message,
     boxState = BoxState.OK,
     onSubmit = () => {},
@@ -30,6 +28,7 @@
   }: DialogWindowProps = $props();
 
   function close() {
+    show = false;
     dialogElement?.close();
   }
 
@@ -72,7 +71,7 @@
     tabindex="0"
     style="color:red"
   >
-    <dialog bind:this={dialogElement} onclose={() => (show = false)}>
+    <dialog class="_dialog_box" bind:this={dialogElement} onclose={close}>
       <div class="_modal_content" transition:fade>
         <h2>{title}</h2>
 
@@ -93,7 +92,3 @@
     </dialog>
   </div>
 {/if}
-
-<!-- <style>
-@import "$css/DialogWindow.css";
-</style> -->

@@ -1,5 +1,5 @@
 ._header_container {
-  @apply flex justify-around px-6 h-20 transition-colors duration-1000 ease-linear bg-background-c-01;
+  @apply relative flex justify-around px-6 h-20 transition-colors duration-1000 ease-linear bg-background-c-01;
 }
 
 ._header_container._scrolled {

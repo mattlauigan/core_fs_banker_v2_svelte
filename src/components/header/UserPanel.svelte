@@ -1,7 +1,6 @@
 <script lang="ts">
   import ToggleSwitch from "$components/toggleSwitch/ToggleSwitch.svelte";
   import userLogo from "$lib/assets/user.png";
-  import type { MenuState } from "$lib/ts/megamenu";
   import DialogWindow from "$components/modal/DialogWindow.svelte";
   import { BoxState } from "$lib/ts/enum";
 
@@ -19,9 +18,9 @@
 
   function toggleShow() {
     if (online) {
-      dialogMessage = "Are you sure you want to Close teller?";
+      dialogMessage = "Open Teller?";
     } else {
-      dialogMessage = "Are you sure you want to Open teller?";
+      dialogMessage = "Close Teller?";
     }
     show = !show;
   }
@@ -72,11 +71,11 @@
           disabled={false}
           checked={isDarkmode}
           onCheck={(checked) => {
-            console.log(checked); // boolean ✅
+            console.log(checked);
           }}
         />
         <hr class="_user_panel_popover_hr" />
-        <button class="text-left cursor-pointer" onclick={toggleShow}
+        <button class="text-left cursor-pointer" onclick={toggleShow} disabled={online}
           >Open Teller</button
         >
         <a href="a"> Teller Journal </a>
@@ -108,13 +107,11 @@
     </div>
   {/if}
 
-  {#if show}
-    <DialogWindow
-      title="Teller Open/Close"
-      {show}
-      message={dialogMessage}
-      boxState={BoxState.CONFIRM}
-      onSubmit={DialogSubmit}
-    />
-  {/if}
 </div>
+<DialogWindow
+  title="Confirm"
+  bind:show
+  message={dialogMessage}
+  boxState={BoxState.CONFIRM}
+  onSubmit={DialogSubmit}
+/>

@@ -4,9 +4,3 @@
 </script>
 
 <Hero />
-<Hero />
-<Hero />
-<Hero />
-<Hero />
-<Hero />
-<Hero />

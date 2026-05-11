@@ -12,3 +12,4 @@ export enum BoxState {
   CONFIRM = "confirm",
   PROCEED = "proceed",
 }
+
