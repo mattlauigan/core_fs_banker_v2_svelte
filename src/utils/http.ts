@@ -52,7 +52,6 @@ export interface HttpResponse<T = unknown> {
 
 const controllers = new Set<AbortController>();
 
-// 🔹 helper: build query string
 function buildUrl(url: string, params?: RequestConfig["params"]) {
   if (!params) return url;
 
@@ -63,7 +62,6 @@ function buildUrl(url: string, params?: RequestConfig["params"]) {
   return `${url}?${query}`;
 }
 
-// 🔹 core request
 async function request<T>(config: RequestConfig): Promise<T> {
   const controller = new AbortController();
   controllers.add(controller);
@@ -95,7 +93,6 @@ async function request<T>(config: RequestConfig): Promise<T> {
   }
 }
 
-// 🔹 shortcuts
 const get = <T>(url: string, config?: Omit<RequestConfig, "url" | "method">) =>
   request<T>({ url, method: "GET", ...config });
 
@@ -114,13 +111,11 @@ const put = <T>(
 const del = <T>(url: string, config?: Omit<RequestConfig, "url" | "method">) =>
   request<T>({ url, method: "DELETE", ...config });
 
-// 🔹 cancel all requests
 function cancelAll() {
   controllers.forEach((c) => c.abort());
   controllers.clear();
 }
 
-// 🔹 detect cancel
 function isCancel(error: unknown) {
   return error instanceof DOMException && error.name === "AbortError";
 }

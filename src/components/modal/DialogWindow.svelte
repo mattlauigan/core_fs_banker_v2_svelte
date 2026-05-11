@@ -1,7 +1,6 @@
 
 
 <script lang="ts">
-  // import { createEventDispatcher } from "svelte";
   import { fade } from "svelte/transition";
   import InputButton from "$components/input/InputButton.svelte";
   import { BoxState } from "$lib/ts/enum";
@@ -11,9 +10,6 @@
     handler: () => void;
     primary?: boolean;
   };
-
-
-
 
   type DialogWindowProps = {
     title?: string;

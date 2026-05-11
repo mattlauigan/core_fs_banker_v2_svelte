@@ -20,7 +20,7 @@ export type BaseInputProps = {
   minLength?: number;
   pattern?: string;
 
-  checked?: boolean; // for checkbox/radio
+  checked?: boolean; 
 };
 
 export type InputEvents = {

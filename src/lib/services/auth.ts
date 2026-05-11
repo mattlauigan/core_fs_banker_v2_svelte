@@ -25,7 +25,7 @@ export async function http<T>(
 			...headers
 		},
 		body: data ? JSON.stringify(data) : undefined,
-		credentials: 'include' // for cookies/session
+		credentials: 'include'
 	});
 
 	if (!res.ok) {

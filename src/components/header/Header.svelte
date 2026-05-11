@@ -24,42 +24,8 @@
     isScrolled = window.scrollY > 0;
   }
 
-  // let Categories = megamenu.categories;
   let frequentModules = megamenu.frequentModules;
 
-  // let activeCategory = $derived(
-  //   Categories.find((c) => c.name.toLowerCase() === menuStates.category),
-  // );
-
-  // let activeRoot = $derived(
-  //   activeCategory?.roots.find((r) => r.name.toLowerCase() === menuStates.root),
-  // );
-
-  // function toggelUserPanel() {
-  //   menuStates.popover.userPanel = !menuStates.popover.userPanel;
-  // }
-
-  // function closeUserPanel() {
-  //   menuStates.popover.userPanel = false;
-  // }
-
-  // function openCategory(name: string) {
-  //   menuStates.category = name.toLowerCase() as MenuCategory;
-  //   menuStates.root = null;
-  // }
-
-  // function openRoot(name: string) {
-  //   menuStates.root = name.toLowerCase();
-  // }
-
-  // const closeMenu = () => {
-  // isSubmenu = false;
-  //   // isMegamenu = false;
-  //   menuStates.category = MenuCategory.default;
-  // };
-
-  // let isSubmenu = $derived(menuStates.category !== MenuCategory.default);
-  // let isMegamenu = $derived(!!menuStates.root);
   let isUserPanel = $derived(menuStates.popover.userPanel);
 </script>
 
@@ -74,11 +40,8 @@
 >
   <div
     class="_header_container
-    {!isScrolled
-      ? ''
-      : '_scrolled'}"
+    {!isScrolled ? '' : '_scrolled'}"
   >
-    <!-- LEFT LOGO -->
     <div class="pt-3">
       <span>
         <a href="/">
@@ -91,9 +54,8 @@
       </span>
     </div>
 
-    <!-- CATEGORIES NAV -->
-    <Menu category={menuStates.category} root={menuStates.root} {isScrolled}/>
-    <!-- USER PANEL -->
+    <Menu category={menuStates.category} root={menuStates.root} {isScrolled} />
+
     <UserPanel
       isPopOver={menuStates.popover.userPanel}
       isDarkmode={menuStates.darkmode}
