@@ -1,10 +1,16 @@
-<script lang='ts'>
+<script lang="ts">
   type Props = {
     id: string;
     name: string;
     label: string;
     type?: string;
     placeholder?: string;
+    style?: string;
+    value?: string;
+    isOptional?: boolean;
+    disabled?: boolean;
+    readonly?: boolean;
+    hasError?: boolean;
   };
 
   let {
@@ -12,26 +18,42 @@
     name,
     label = "Label",
     type = "text",
-    placeholder = "asdasds",
+    placeholder = "",
+    style = "",
+    value = "",
+    isOptional = false,
+    readonly = false,
+    disabled = false,
+    hasError = false,
   }: Props = $props();
 </script>
 
-<div class="relative my-10 w-75">
+<div class="relative my-10 {style ? style : 'w-full'}">
   <input
     {type}
     {id}
     {name}
     {placeholder}
-    class="peer h-12 w-full border-b border-accent-003 bg-transparent text-[12px] tracking-[1.5px] text-scripts outline-none transition-colors duration-300 focus:border-primary-500 pl-1.5"
+    {disabled}
+    {readonly}
+    {value}
+    aria-invalid={hasError}
+    class="peer h-12 w-full border-b border-accent-003 bg-transparent text-[12px] tracking-[1.5px] text-scripts outline-none transition-colors duration-300 focus:border-primary-700 pl-1.5 disabled:border-accent-002 disabled:text-accent-002 disabled:cursor-not-allowed disabled:bg-linear-to-b disabled:from-transparent disabled:to-gray-200 aria-invalid:border-error-text "
   />
 
   <label
     for="username"
-    class="pointer-events-none absolute left-0 top-1.5 text-[12px] tracking-[1.5px] text-accent-003 transition-all duration-300 ease-in-out peer-placeholder-shown:top-3 peer-placeholder-shown:text-[12px] peer-focus:-top-3 peer-focus:text-[11px] peer-focus:text-primary-500 peer-not-placeholder-shown:-top-3 peer-not-placeholder-shown:text-[11px]"
+    aria-invalid={hasError}
+    class="pointer-events-none absolute left-0 top-1.5 text-[12px] tracking-[1.5px] text-accent-003 transition-all duration-300 ease-in-out peer-placeholder-shown:top-3 peer-placeholder-shown:text-[12px] peer-focus:-top-3 peer-focus:text-[11px] peer-focus:text-primary-700 peer-not-placeholder-shown:-top-3 peer-not-placeholder-shown:text-[11px] aria-invalid:text-error-text"
     >{label}
-    <span
-      class="absolute bottom-0 left-0 h-0.5 w-full origin-left scale-x-0 bg-primary-500 transition-transform duration-300 ease-in-out peer-focus:scale-x-100 text-black"
-      >a</span
-    >
+    {#if isOptional}
+      <span
+        aria-invalid={hasError}
+        class="text-gray-400 text-[10px] tracking-[1.5px] aria-invalid:text-error-hover"
+      >
+        (optional)
+      </span>
+    {/if}
+
   </label>
 </div>
