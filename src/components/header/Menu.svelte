@@ -29,7 +29,7 @@
   function closeSubmenu() {
     category = MenuCategory.default;
     root = null;
-    isSubmenu= false
+    isSubmenu = false;
   }
 
   const closeMenu = () => {
@@ -55,14 +55,9 @@
     </p>
   {/each}
 
-  <!-- SUBMENU -->
+  
   {#if isSubmenu && activeCategory && activeCategory.roots.length > 0}
-    <div
-      class="_sub_menu_container _expanded"
-      onmouseleave={closeMenu}
-      role="button"
-      tabindex="0"
-    >
+    <div class="_sub_menu_container _expanded" role="button" tabindex="0">
       <div class="_sub_menu_content">
         {#each activeCategory.roots as root}
           <p
@@ -79,8 +74,6 @@
     </div>
   {/if}
 
-  <!-- MEGA MENU -->
-
   {#if isMegamenu && activeRoot}
     <div
       class="_modal_menu_container"
@@ -91,7 +84,6 @@
       <div class="_modal_content">
         {#each activeRoot.menus as menu}
           <div class="_menu-column">
-            <!-- LEVEL 1 -->
             <a
               href={menu.route}
               class="_menu-item _menu-item--group _menu-item--lvl-1 {menu
@@ -102,7 +94,6 @@
               {menu.name.toUpperCase()}
             </a>
 
-            <!-- LEVEL 2 + 3 -->
             {#each menu.modules as module}
               <a
                 href={module.route}
