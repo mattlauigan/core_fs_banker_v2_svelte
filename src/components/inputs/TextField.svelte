@@ -16,7 +16,7 @@
   let {
     id,
     name,
-    label = "Label",
+    label,
     type = "text",
     placeholder = "",
     style = "",
