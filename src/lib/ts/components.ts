@@ -20,7 +20,7 @@ export type BaseInputProps = {
   minLength?: number;
   pattern?: string;
 
-  checked?: boolean; 
+  checked?: boolean;
 };
 
 export type InputEvents = {
@@ -46,4 +46,12 @@ export type ButtonProps = {
   isReadonly?: boolean;
   isDisabled?: boolean;
   onClick?: () => void;
+};
+
+export type IconProps = {
+  width?: number | string;
+  height?: number | string;
+  fill?: string;
+  className?: string;
+  containerClassName?: string;
 };
