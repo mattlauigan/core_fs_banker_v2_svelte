@@ -7,5 +7,5 @@
   }
 
   ._input_button._primary {
-    @apply bg-purple-700 text-white hover:bg-primary-300 hover:text-primary-800 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed;
+    @apply bg-primary-800 text-white hover:bg-primary-300 hover:text-primary-800 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed;
   }

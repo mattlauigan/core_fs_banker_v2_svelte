@@ -3,7 +3,7 @@
 }
 
 ._header_container._scrolled {
-  @apply bg-linear-to-b  from-primary-800 to-primary-500;
+  @apply bg-linear-to-b  from-primary-900 to-primary-700;
 }
 
 ._categories_nav {
