@@ -1,6 +1,7 @@
 <script lang="ts">
   import { MenuCategory } from "$lib/ts/enum";
   import megamenu from "$lib/data/megamenu.json";
+  import { resolveRoute } from "$app/paths";
 
   let {
     isScrolled = false,
@@ -55,7 +56,6 @@
     </p>
   {/each}
 
-  
   {#if isSubmenu && activeCategory && activeCategory.roots.length > 0}
     <div class="_sub_menu_container _expanded" role="button" tabindex="0">
       <div class="_sub_menu_content">
@@ -77,7 +77,7 @@
   {#if isMegamenu && activeRoot}
     <div
       class="_modal_menu_container"
-      onmouseleave={closeSubmenu}
+      // onmouseleave={closeSubmenu}
       role="button"
       tabindex="0"
     >
@@ -86,18 +86,20 @@
           <div class="_menu-column">
             <a
               href={menu.route}
-              class="_menu-item _menu-item--group _menu-item--lvl-1 {menu
-                .modules?.length !== 0
-                ? '_menu-item--link'
-                : ''}"
+              class="_menu-item _menu-item-group _menu-item-lvl-1"
+              aria-disabled={!!menu.modules}
             >
               {menu.name.toUpperCase()}
+              {#if !!!menu.modules}
+                &gt;
+              {/if}
             </a>
 
             {#each menu.modules as module}
               <a
                 href={module.route}
-                class="_menu-item _menu-item--link _menu-item--lvl-2"
+                class="_menu-item _menu-item-link _menu-item-lvl-2"
+                aria-disabled={module.submodules.length > 0}
               >
                 {module.name}
               </a>
@@ -106,7 +108,7 @@
                 {#each module.submodules as sub}
                   <a
                     href={sub.route}
-                    class="_menu-item _menu-item--link _menu-item--lvl-3"
+                    class="_menu-item _menu-item-link _menu-item-lvl-3"
                   >
                     {sub.name}
                   </a>

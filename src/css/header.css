@@ -3,7 +3,7 @@
 }
 
 ._header_container._scrolled {
-  @apply bg-linear-to-b  from-primary-900 to-primary-700;
+  @apply bg-linear-to-b from-primary-900 to-primary-700;
 }
 
 ._categories_nav {
@@ -11,7 +11,7 @@
 }
 
 ._category_item {
-  @apply text-sm cursor-pointer m-0 px-4;
+  @apply text-sm cursor-pointer m-0 px-4 tracking-wider;
 }
 
 ._category_item:hover,
@@ -41,24 +41,33 @@
 }
 
 ._sub_menu_item {
-  @apply cursor-pointer;
+  @apply cursor-pointer tracking-[1.5px] border-b transition-all duration-300 border-transparent;
 }
 
 ._sub_menu_item:hover,
 ._sub_menu_item._active {
-  @apply text-secondary-500;
+  @apply text-secondary-900 border-secondary-900 font-medium;
 }
 
 ._modal_menu_container {
   @apply absolute h-[70vh] w-[70vw] py-6 px-14 flex top-[110%] mt-16 left-[50%] -translate-x-1/2 z-40 mx-auto rounded-lg overflow-auto shadow-md backdrop-blur-sm bg-background-c-01;
 }
 
+/* ._modal_content {
+  @apply flex flex-col flex-wrap gap-8 md:snap-y w-full h-full;
+} */
+/* ._modal_content {
+  @apply grid grid-cols-4 gap-10;
+ } */
+
 ._modal_content {
-  @apply flex flex-col flex-wrap gap-4 md:snap-y;
+  @apply grid grid-flow-col auto-cols-max gap-x-10 gap-y-2 overflow-x-auto max-h-[60vh] w-fit grid-rows-[repeat(1,auto)] snap-y;
+  /* grid-template-rows: repeat(1, auto); */
+  
 }
 
 ._modal_content * {
-  @apply p-[0.2rem_0] m-0;
+  @apply p-1 m-0 w-full;
 }
 
 ._menu-column {
@@ -69,22 +78,28 @@
   @apply text-sm no-underline;
 }
 
-._menu-item--group {
-  @apply cursor-default;
+._menu-item-group {
+  @apply cursor-default flex flex-col;
 }
 
-._menu-item--link {
-  @apply cursor-pointer hover:no-underline;
+._menu-item-link {
+  @apply cursor-pointer hover:no-underline hover:not-aria-disabled:font-bold; 
 }
 
-._menu-item--lvl-1 {
-  @apply text-primary-900;
+._menu-item-lvl-1 {
+  @apply text-primary-900 hover:not-aria-disabled:bg-primary-900 hover:not-aria-disabled:text-white duration-100 transition-colors pl-2 aria-disabled:cursor-default; 
 }
 
-._menu-item--lvl-2 {
-  @apply text-scripts indent-4;
+._menu-item-lvl-2 {
+  @apply text-scripts indent-4 hover:not-aria-disabled:border-l-2 border-primary-700 pl-2;
 }
 
-._menu-item--lvl-3 {
-  @apply text-primary-800 indent-8;
+._menu-item-lvl-2 span {
+  @apply font-bold text-primary-700;
+  @apply border-l-50 border-solid border-l-transparent;
+  @apply border-r-50 border-solid border-r-transparent;
+}
+
+._menu-item-lvl-3 {
+  @apply text-primary-800 indent-8 pl-2;
 }
