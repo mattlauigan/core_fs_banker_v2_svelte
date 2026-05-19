@@ -14,6 +14,19 @@
     UserIcon,
     WarningIcon,
   } from "$components/icons";
+  // src/routes/dashboard/+page.server.js
+  import { redirect } from "@sveltejs/kit";
+  import useAuthStore from "../stores/auth";
+
+  const AuthStore = useAuthStore();
+
+
+
+  $effect(() => {
+    if ($AuthStore.isLoggedIn === false) {
+      throw redirect(302, "/auth/login");
+    }
+  });
 </script>
 
 <Hero />

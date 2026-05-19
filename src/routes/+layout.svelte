@@ -1,10 +1,22 @@
 <script lang="ts">
-	import './layout.css';
+  import "./layout.css";
+  import useAuthStore from "../stores/auth";
 
-	let { children } = $props();
+  const AuthStore = useAuthStore();
 
-	import Header from "../components/header/Header.svelte";
+  let { children } = $props();
+
+  if ($AuthStore.isLoggedIn) {
+    console.log("User is authenticated");
+  } else {
+    console.log("User is not authenticated");
+  }
+
+  import Header from "../components/header/Header.svelte";
 </script>
 
-<Header />
+{#if $AuthStore.isLoggedIn}
+  <Header />
+{/if}
+
 <div class="_content">{@render children()}</div>
