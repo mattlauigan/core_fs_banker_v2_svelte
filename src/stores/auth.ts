@@ -1,76 +1,88 @@
-import type { ErrorResponse, ResponseData } from "$types/types/app";
+import { writable } from "svelte/store";
+import type { Access } from "$types/data/auth";
 import { ls } from "$lib/services/ls";
-import {
-  LSKEY_TOKEN,
-  LSKEY_TOKENTEMP,
-  LSKEY_USERICON,
-} from "$lib/config/constants";
-import type { Access, Login } from "$types/data/auth";
-import { writable, get } from "svelte/store";
-import { HttpAction } from "$lib/ts/enums/http";
 import { Bitmap } from "../utils/bitmap";
+import { LSKEY_TOKEN } from "$lib/config/constants";
+import { goto } from "$app/navigation";
 
-type AuthState = {
-  isLoggedIn: boolean;
+export type UserState = {
+  isAuthenticated: boolean;
+  isRegistered: boolean;
   isChangePassword: boolean;
-
   accessData: Access | null;
-  error: ErrorResponse | null;
-};                    
+  error: string | null;
+};
 
-const initialState: AuthState = {
-  isLoggedIn:
-    typeof window !== "undefined" ? Boolean(ls.get(LSKEY_TOKEN)) : false,
-
+const initialState: UserState = {
+  isAuthenticated: false,
+  isRegistered: false,
   isChangePassword: false,
-
   accessData: null,
   error: null,
 };
 
-const useAuthStore =() => {
-  const store = writable<AuthState>(initialState);
-  const { subscribe, set, update } = writable<AuthState>(initialState);
+const userStore = () => {
+  const isBrowser = typeof window !== "undefined";
+
+  // 🔥 restore localStorage
+  const stored = isBrowser ? localStorage.getItem("token") : null;
+
+  const state = stored ? JSON.parse(stored) : initialState;
+
+  const store = writable<UserState>(state);
+
+  const { subscribe, set, update } = store;
 
   return {
     subscribe,
 
-    isAuthorized: () => {
-      if (typeof window === "undefined") return false;
+    register: () => {
+      update((state) => {
+        const updatedState = {
+          ...state,
+          isRegistered: true,
+          error: null,
+        };
 
-      return Boolean(ls.get(LSKEY_TOKEN));
+        ls.add("token", JSON.stringify(updatedState));
+        goto("/auth/login");
+
+        return updatedState;
+      });
     },
 
-    onError: (error: ErrorResponse | null) => {
+    login: () => {
+      update((state) => {
+        const updatedState = {
+          ...state,
+          isAuthenticated: true,
+          error: null,
+        };
+
+        ls.add("token", JSON.stringify(updatedState));
+
+        return updatedState;
+      });
+    },
+
+    logout: () => {
+      update((state) => {
+        const updatedState = {
+          ...state,
+          isAuthenticated: false,
+          error: null,
+        };
+
+        ls.add("token", JSON.stringify(updatedState));
+
+        return updatedState;
+      });
+    },
+
+    setAccessData: (accessData: Access) => {
       update((state) => ({
         ...state,
-        error,
-      }));
-    },
-
-    postLogin: (responseData: ResponseData<Login>) => {
-      if (responseData.st === HttpAction.CHANGE_PASSWORD) {
-        ls.add(LSKEY_TOKENTEMP, responseData.payload.token!);
-
-        update((state) => ({
-          ...state,
-          error: null,
-        }));
-      } else {
-        ls.add(LSKEY_TOKEN, responseData.payload.access_token!);
-
-        update((state) => ({
-          ...state,
-          isLoggedIn: true,
-          error: null,
-        }));
-      }
-    },
-
-    postChangePassword: () => {
-      update((state) => ({
-        ...state,
-        error: null,
+        accessData,
       }));
     },
 
@@ -81,49 +93,20 @@ const useAuthStore =() => {
       }));
     },
 
-    setAccessData: (data: Access) => {
-      data.modules = Bitmap.extract(data.bitmap);
-
+    setError: (error: string | null) => {
       update((state) => ({
         ...state,
-        accessData: data,
-        error: null,
+        error,
       }));
     },
 
-    reset: () => {
-      ls.remove(LSKEY_TOKEN);
-      ls.remove(LSKEY_TOKENTEMP);
-
-      localStorage.removeItem(LSKEY_USERICON);
-
-      set({
-        isLoggedIn: false,
-        isChangePassword: false,
-        accessData: null,
+    resetError: () => {
+      update((state) => ({
+        ...state,
         error: null,
-      });
+      }));
     },
-
-    revoke: () => {
-      ls.remove(LSKEY_TOKEN);
-      ls.remove(LSKEY_TOKENTEMP);
-
-      localStorage.removeItem(LSKEY_USERICON);
-
-      document.cookie =
-        "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
-      set({
-        isLoggedIn: false,
-        isChangePassword: false,
-        accessData: null,
-        error: null,
-      });
-    },
-
-    get: () => get(store),
   };
-}
+};
 
-export default useAuthStore;
+export default userStore;

@@ -1,22 +1,47 @@
 <script lang="ts">
+  const authStore = userStore();
   import "./layout.css";
-  import useAuthStore from "../stores/auth";
-
-  const AuthStore = useAuthStore();
-
+  import DialogWindow from "$components/modal/DialogWindow.svelte";
+  import Header from "../components/header/Header.svelte";
+  import userStore from "$stores/auth";
+  import { BoxState } from "$lib/ts/enum";
+  import { goto } from "$app/navigation";
+  let isSessionExpired = $state(false);
   let { children } = $props();
 
-  if ($AuthStore.isLoggedIn) {
-    console.log("User is authenticated");
-  } else {
-    console.log("User is not authenticated");
-  }
+  $effect(() => {
+    console.log("authStore state changed:", {
+      isAuthenticated: $authStore.isAuthenticated,
+      isRegistered: $authStore.isRegistered,
+    });
 
-  import Header from "../components/header/Header.svelte";
+    if ($authStore.isRegistered && !$authStore.isAuthenticated) {
+      isSessionExpired = true;
+    } else if (!$authStore.isRegistered && !$authStore.isAuthenticated) {
+      isSessionExpired = true;
+    }
+  });
+  const tick = () => new Promise((resolve) => setTimeout(resolve, 0));
+
+  const onSessionExpired = async () => {
+    isSessionExpired = false;
+
+    authStore.logout();
+    await tick();
+    goto("/auth/login", { replaceState: true });
+  };
 </script>
 
-{#if $AuthStore.isLoggedIn}
+{#if $authStore.isAuthenticated}
   <Header />
 {/if}
 
-<div class="_content">{@render children()}</div>
+<DialogWindow
+  title="Session Expired"
+  bind:show={isSessionExpired}
+  message="Your session has expired. Please login again to continue."
+  boxState={BoxState.OK}
+  onSubmit={onSessionExpired}
+/>
+
+{@render children()}

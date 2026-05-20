@@ -41,10 +41,12 @@ export type ToggleSwitchProps = Required<
 
 export type ButtonProps = {
   label?: string;
-  isPrimary?: boolean;
+  type?: "button" | "submit" | "reset";
+  primary?: boolean;
   isLoading?: boolean;
   isReadonly?: boolean;
   isDisabled?: boolean;
+  class?: string;
   onClick?: () => void;
 };
 

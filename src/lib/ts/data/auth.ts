@@ -9,8 +9,8 @@ export type Access = {
   modules: number[]
   bitmap: string
   // userleveldesc: string
-  // termcode: string
-  // termdesc: string
+  termcode: string
+  termdesc: string
   // role: string
   // fullname?: string
   // userid?: number
