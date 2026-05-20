@@ -16,6 +16,12 @@
   let dialogMessage = $state("");
   let show = $state(false);
 
+  function toggleDarkMode(value: boolean) {
+    isDarkmode = value;
+    
+    localStorage.theme = value ? "dark" : "light";
+  }
+
   function toggleShow() {
     if (online) {
       dialogMessage = "Open Teller?";
@@ -70,9 +76,7 @@
           label="Dark Mode"
           disabled={false}
           checked={isDarkmode}
-          onCheck={(checked) => {
-            console.log(checked);
-          }}
+          onCheck={(checked) => toggleDarkMode(checked)}
         />
         <hr class="_user_panel_popover_hr" />
         <button class="text-left cursor-pointer" onclick={toggleShow} disabled={online}
