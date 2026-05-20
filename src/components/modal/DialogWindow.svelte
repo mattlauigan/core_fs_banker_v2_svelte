@@ -1,6 +1,6 @@
 <script lang="ts">
   import { fade } from "svelte/transition";
-  import InputButton from "$components/input/InputButton.svelte";
+  import Button from "$components/inputs/Button.svelte";
   import { BoxState } from "$lib/ts/enum";
 
   type DialogAction = {
@@ -81,10 +81,10 @@
 
         <div class="_modal_actions">
           {#each actions as action}
-            <InputButton
+            <Button
               label={action.label}
               onClick={action.handler}
-              isPrimary={action.primary}
+              primary={action.primary}
             />
           {/each}
         </div>
