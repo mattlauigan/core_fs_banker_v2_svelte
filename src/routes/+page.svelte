@@ -14,6 +14,36 @@
     UserIcon,
     WarningIcon,
   } from "$components/icons";
+  import DialogWindow from "$components/modal/DialogWindow.svelte";
+  import { BoxState } from "$lib/ts/enum";
+  import userStore from "$stores/auth";
+  import { goto } from "$app/navigation";
+
+  const authStore = userStore();
+
+  let isExpired = $state(false);
+  let route = $state("/auth/login");
+
+  $effect(() => {
+    if ($authStore.isRegistered && !$authStore.isAuthenticated) {
+      isExpired = true;
+      console.log("session expired");
+    } else if (!$authStore.isRegistered && !$authStore.isAuthenticated) {
+      isExpired = true;
+      route = "/auth/register";
+      console.log("for registration");
+    }
+  });
+
+  const onSessionExpired = () => {
+    isExpired = false;
+
+    authStore.logout();
+
+    goto("/auth/login", {
+      replaceState: true,
+    });
+  };
 </script>
 
 <div class="_content">
@@ -35,3 +65,11 @@
   </div>
   <br />
 </div>
+
+<DialogWindow
+  title="Session Expired"
+  bind:show={isExpired}
+  message="Your session has expired. Please login again to continue."
+  boxState={BoxState.OK}
+  onSubmit={() => onSessionExpired()}
+/>
