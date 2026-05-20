@@ -4,7 +4,7 @@
 @import "./header.css";
 @import "./dialogWindow.css";
 @import "./hero.css";
-@import "./inputButton.css";
+@import "./button.css";
 @import "./inputField.css";
 
 @theme {
@@ -105,4 +105,12 @@ header {
 
 ._content {
   @apply relative flex flex-col mx-auto overflow-hidden z-1 mt-[8vh] pt-6;
+}
+
+._group_hr {
+  @apply flex flex-row  gap-4 my-6;
+}
+
+._group_vr {
+  @apply flex flex-col  gap-4 my-6;
 }
