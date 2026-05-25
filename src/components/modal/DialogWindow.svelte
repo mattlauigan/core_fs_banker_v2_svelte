@@ -82,6 +82,7 @@
         <div class="_modal_actions">
           {#each actions as action}
             <Button
+              type="button"
               label={action.label}
               onClick={action.handler}
               primary={action.primary}

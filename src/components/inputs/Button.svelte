@@ -14,6 +14,7 @@
 </script>
 
 <button
+
   type={type}
   aria-label={label}
   value={label}
@@ -23,3 +24,11 @@
 >
   {label}
 </button>
+
+<a
+  href="/auth/login"
+  aria-label={label}
+  class="_input_button _link text-center {customClass}"
+>
+  {label}
+  </a>

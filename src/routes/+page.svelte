@@ -18,6 +18,7 @@
   import { BoxState } from "$lib/ts/enum";
   import userStore from "$stores/auth";
   import { goto } from "$app/navigation";
+  import DialogWindowLink from "$components/modal/DialogWindowLink.svelte";
 
   const authStore = userStore();
 
@@ -66,10 +67,9 @@
   <br />
 </div>
 
-<DialogWindow
+<DialogWindowLink
   title="Session Expired"
   bind:show={isExpired}
   message="Your session has expired. Please login again to continue."
-  boxState={BoxState.OK}
-  onSubmit={() => onSessionExpired()}
+  {route}
 />
