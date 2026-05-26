@@ -33,11 +33,11 @@
     isSubmenu = false;
   }
 
-  const closeMenu = () => {
-    isSubmenu = false;
-    isMegamenu = false;
-    category = MenuCategoryEnum.default;
-  };
+  // const closeMenu = () => {
+  //   isSubmenu = false;
+  //   isMegamenu = false;
+  //   category = MenuCategoryEnum.default;
+  // };
 
   let isSubmenu = $derived(category !== MenuCategoryEnum.default);
   let isMegamenu = $derived(!!root);
@@ -77,7 +77,7 @@
   {#if isMegamenu && activeRoot}
     <div
       class="_modal_menu_container"
-      // onmouseleave={closeSubmenu}
+      onmouseleave={closeSubmenu}
       role="button"
       tabindex="0"
     >
