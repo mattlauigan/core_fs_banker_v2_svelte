@@ -6,10 +6,10 @@
   import favicon from "$lib/assets/favicon.svg";
   import megamenu from "$lib/data/megamenu.json";
   import type { MenuState } from "$lib/ts/megamenu";
-  import { MenuCategory } from "$lib/ts/enum";
+  import { MenuCategoryEnum } from "$lib/ts/enums/menu";
 
   let menuStates: MenuState = $state({
-    category: MenuCategory.default,
+    category: MenuCategoryEnum.default,
     root: null,
     online: false,
     darkmode: false,

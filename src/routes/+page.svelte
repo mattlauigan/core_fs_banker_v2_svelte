@@ -15,15 +15,13 @@
     WarningIcon,
   } from "$components/icons";
   import DialogWindow from "$components/modal/DialogWindow.svelte";
-  import { BoxState } from "$lib/ts/enum";
+  import { ModalTypeEnum } from "$lib/ts/enums/modal-type";
   import userStore from "$stores/auth";
   import { goto } from "$app/navigation";
-  import DialogWindowLink from "$components/modal/DialogWindowLink.svelte";
 
   const authStore = userStore();
 
-  let isExpired = $state(false);
-  let route = $state("/auth/login");
+  let isExpired = $state(!$authStore.isAuthenticated);
 
   $effect(() => {
     if ($authStore.isRegistered && !$authStore.isAuthenticated) {
@@ -31,14 +29,13 @@
       console.log("session expired");
     } else if (!$authStore.isRegistered && !$authStore.isAuthenticated) {
       isExpired = true;
-      route = "/auth/register";
       console.log("for registration");
     }
   });
 
   const onSessionExpired = () => {
     isExpired = false;
-
+    console.log("logging out");
     authStore.logout();
 
     goto("/auth/login", {
@@ -67,9 +64,10 @@
   <br />
 </div>
 
-<DialogWindowLink
+<DialogWindow
   title="Session Expired"
   bind:show={isExpired}
+  modalType={ModalTypeEnum.CONFIRM}
   message="Your session has expired. Please login again to continue."
-  {route}
+  onSubmit={onSessionExpired}
 />

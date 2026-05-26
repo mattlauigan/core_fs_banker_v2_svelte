@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-export enum HttpMethod {
+export enum HttpMethodEnum {
   DELETE = 'delete',
   GET = 'get',
   PATCH = 'patch',
@@ -7,13 +7,13 @@ export enum HttpMethod {
   PUT = 'put'
 }
 
-export enum HttpState {
+export enum HttpStateEnum {
   NONE = 'none',
   NOTIFY = 'notify',
   FORCE = 'force'
 }
 
-export enum HttpAction {
+export enum HttpActionEnum {
   CHANGE_PASSWORD = 'change_password',
   NONE = 'none'
 }

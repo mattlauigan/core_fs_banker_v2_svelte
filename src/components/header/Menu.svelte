@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { MenuCategory } from "$lib/ts/enum";
+  import { MenuCategoryEnum } from "$lib/ts/enums/menu";
   import megamenu from "$lib/data/megamenu.json";
   import { resolveRoute } from "$app/paths";
 
   let {
     isScrolled = false,
-    category = MenuCategory.default,
+    category = MenuCategoryEnum.default,
     root = null,
   } = $props();
 
@@ -15,7 +15,7 @@
   );
 
   function openCategory(name: string) {
-    category = name.toLowerCase() as MenuCategory;
+    category = name.toLowerCase() as MenuCategoryEnum;
     root = null;
   }
 
@@ -28,7 +28,7 @@
   }
 
   function closeSubmenu() {
-    category = MenuCategory.default;
+    category = MenuCategoryEnum.default;
     root = null;
     isSubmenu = false;
   }
@@ -36,10 +36,10 @@
   const closeMenu = () => {
     isSubmenu = false;
     isMegamenu = false;
-    category = MenuCategory.default;
+    category = MenuCategoryEnum.default;
   };
 
-  let isSubmenu = $derived(category !== MenuCategory.default);
+  let isSubmenu = $derived(category !== MenuCategoryEnum.default);
   let isMegamenu = $derived(!!root);
 </script>
 

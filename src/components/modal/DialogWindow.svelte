@@ -1,7 +1,7 @@
 <script lang="ts">
   import { fade } from "svelte/transition";
   import Button from "$components/inputs/Button.svelte";
-  import { BoxState } from "$lib/ts/enum";
+  import { ModalTypeEnum } from "$lib/ts/enums/modal-type";
 
   type DialogAction = {
     label: string;
@@ -13,7 +13,7 @@
     title?: string;
     show?: boolean;
     message: string;
-    boxState?: BoxState;
+    modalType?: ModalTypeEnum;
     onSubmit?: () => void;
     actions?: DialogAction[];
   };
@@ -22,7 +22,7 @@
     title = "Information",
     show = $bindable(false),
     message,
-    boxState = BoxState.OK,
+    modalType = ModalTypeEnum.INFO,
     onSubmit = () => {},
     actions = [{ label: "Ok", handler: close }],
   }: DialogWindowProps = $props();
@@ -35,17 +35,17 @@
   let dialogElement: HTMLDialogElement | undefined = $state();
 
   $effect(() => {
-    if (boxState === "submit") {
+    if (modalType === "submit") {
       actions = [
         { label: "Submit", handler: onSubmit, primary: true },
         { label: "Close", handler: close },
       ];
-    } else if (boxState === "confirm") {
+    } else if (modalType === "confirm") {
       actions = [
         { label: "Yes", handler: onSubmit, primary: true },
         { label: "No", handler: close },
       ];
-    } else if (boxState === "proceed") {
+    } else if (modalType === "proceed") {
       actions = [
         { label: "Proceed", handler: onSubmit, primary: true },
         { label: "Cancel", handler: close },

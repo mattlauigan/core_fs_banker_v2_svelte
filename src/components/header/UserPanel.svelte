@@ -2,7 +2,7 @@
   import ToggleSwitch from "$components/toggleSwitch/ToggleSwitch.svelte";
   import userLogo from "$lib/assets/user.png";
   import DialogWindow from "$components/modal/DialogWindow.svelte";
-  import { BoxState } from "$lib/ts/enum";
+  import { ModalTypeEnum } from "$lib/ts/enums/modal-type";
 
   let {
     username = "anonymous",
@@ -116,6 +116,6 @@
   title="Confirm"
   bind:show
   message={dialogMessage}
-  boxState={BoxState.CONFIRM}
+  modalType={ModalTypeEnum.CONFIRM}
   onSubmit={DialogSubmit}
 />
