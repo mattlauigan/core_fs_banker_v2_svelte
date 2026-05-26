@@ -2,6 +2,10 @@
   import { fade } from "svelte/transition";
   import Button from "$components/inputs/Button.svelte";
   import { ModalTypeEnum } from "$lib/ts/enums/modal-type";
+  import type { Component } from "svelte";
+  import InfoIcon from "$components/icons/InfoIcon.svelte";
+  import type { JsxAttribute } from "typescript";
+  import type { IconProps } from "$lib/ts/components";
 
   type DialogAction = {
     label: string;
@@ -9,13 +13,14 @@
     primary?: boolean;
   };
 
-  type DialogWindowProps = {
+  type DialogWindowProps<T> = {
     title?: string;
     show?: boolean;
     message: string;
     modalType?: ModalTypeEnum;
     onSubmit?: () => void;
     actions?: DialogAction[];
+    icon?: (object: T) => Component;
   };
 
   let {
@@ -25,12 +30,21 @@
     modalType = ModalTypeEnum.INFO,
     onSubmit = () => {},
     actions = [{ label: "Ok", handler: close }],
-  }: DialogWindowProps = $props();
+    icon = () => InfoIcon,
+  }: DialogWindowProps<IconProps> = $props();
 
   function close() {
     show = false;
     dialogElement?.close();
   }
+
+  const IconComponent = $derived(
+    icon?.({
+      width: 48,
+      height: 48,
+      className: "rounded-sm bg-red",
+    }),
+  );
 
   let dialogElement: HTMLDialogElement | undefined = $state();
 
@@ -73,6 +87,10 @@
   >
     <dialog class="_dialog_box" bind:this={dialogElement} onclose={close}>
       <div class="_modal_content" transition:fade>
+        {#if IconComponent}
+          <IconComponent width={48} height={48} containerClass="bg-gray-300" className='bg-red-200' />
+        {/if}
+
         <h2>{title}</h2>
 
         <article>

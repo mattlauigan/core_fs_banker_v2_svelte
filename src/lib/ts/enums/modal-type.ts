@@ -1,4 +1,19 @@
 /* eslint-disable no-unused-vars */
+import {
+  ConfirmationIcon,
+  CycleIcon,
+  DeleteIcon,
+  ErrorIcon,
+  InfoIcon,
+  NotificationIcon,
+  SearchIcon,
+  SettingsIcon,
+  SuccessIcon,
+  UserIcon,
+  WarningIcon,
+} from "$components/icons";
+import type { Component } from "svelte";
+
 export enum ModalTypeEnum {
   CONFIRM = "confirm",
   DELETE = "delete",
@@ -26,5 +41,28 @@ export class ModalType {
       ModalTypeEnum.SUCCESS,
       ModalTypeEnum.WARNING,
     ];
+  }
+
+  static ext(type: ModalTypeEnum): Component {
+    switch (type) {
+      case ModalTypeEnum.CONFIRM:
+        return ConfirmationIcon;
+      case ModalTypeEnum.DELETE:
+        return DeleteIcon;
+      case ModalTypeEnum.ERROR:
+        return ErrorIcon;
+      case ModalTypeEnum.NOTIF:
+        return NotificationIcon;
+      case ModalTypeEnum.PROCEED:
+        return ConfirmationIcon;
+      case ModalTypeEnum.SEARCH:
+        return SearchIcon;
+      case ModalTypeEnum.SUCCESS:
+        return SuccessIcon;
+      case ModalTypeEnum.WARNING:
+        return WarningIcon;
+      default:
+        return InfoIcon;
+    }
   }
 }
