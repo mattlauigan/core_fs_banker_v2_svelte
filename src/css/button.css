@@ -1,9 +1,9 @@
   ._input_button {
-    @apply px-4 py-2 rounded-md cursor-pointer transition-colors duration-300 tracking-[1.5px] text-base sm:text-xs;
+    @apply px-4 py-2 rounded-md cursor-pointer transition-colors  duration-300 tracking-[1.5px] sm:text-xs focus:border-none;
     @apply bg-gray-200 text-primary-800 rounded-md hover:bg-primary-300 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed;
     @apply dark:bg-primary-800 dark:text-white ;
   }
 
   ._input_button._primary {
-    @apply bg-primary-800 text-white hover:bg-primary-300 hover:text-primary-800 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed;
+    @apply focus:border-none bg-secondary-800 text-white hover:bg-secondary-300 hover:text-secondary-800 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed;
   }
