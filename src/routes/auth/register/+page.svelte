@@ -3,6 +3,8 @@
   import { goto } from "$app/navigation";
   import Button from "$components/inputs/Button.svelte";
   import TextField from "$components/inputs/TextField.svelte";
+  import DialogWindow from "$components/modal/DialogWindow.svelte";
+  import { ModalTypeEnum } from "$lib/ts/enums/modal-type";
 
   const AuthStore = UserStore();
   let username: string = $state("");
@@ -15,14 +17,16 @@
     });
 
     if ($AuthStore.isRegistered) {
-      goto("/auth/login");
+      goto("/auth/login", { replaceState: true });
     }
   });
 
-  async function handleRegistration() {
+  function handleRegistration() {
     AuthStore.register();
 
-    await goto("/login");
+    goto("/auth/login", {
+      replaceState: true,
+    });
   }
 </script>
 
@@ -81,6 +85,14 @@
     </div>
   </div>
 </div>
+
+<DialogWindow
+  title="Session Expired"
+  bind:show={$AuthStore.isRegistered}
+  modalType={ModalTypeEnum.INFO}
+  message="Your session has expired. Please login again to continue."
+  onSubmit={handleRegistration}
+/>
 
 <style>
   @import "../../../css/app.css";

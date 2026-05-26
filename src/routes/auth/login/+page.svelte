@@ -1,6 +1,6 @@
 <script lang="ts">
   import UserStore from "$stores/auth";
-  import { goto } from "$app/navigation";
+  import { goto, replaceState } from "$app/navigation";
   import Button from "$components/inputs/Button.svelte";
   import TextField from "$components/inputs/TextField.svelte";
 
@@ -14,15 +14,17 @@
       isRegistered: $AuthStore.isRegistered,
     });
     if (!$AuthStore.isRegistered) {
-      goto("/auth/register");
+      goto("/auth/register", { replaceState: true });
     } else if ($AuthStore.isAuthenticated) {
-      goto("/");
+      goto("/", {replaceState:true});
     }
   });
 
-  async function handleLogin() {
+  function handleLogin() {
     AuthStore.login();
-    await goto("/");
+    goto("/auth/login", {
+      replaceState: true,
+    });
   }
 </script>
 

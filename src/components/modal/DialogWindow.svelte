@@ -51,7 +51,7 @@
         { label: "Cancel", handler: close },
       ];
     } else {
-      actions = [{ label: "Ok", handler: close }];
+      actions = [{ label: "Ok", handler: onSubmit, primary: true }];
     }
 
     if (show) {
