@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 export enum ModalTypeEnum {
   CONFIRM = "confirm",
   DELETE = "delete",
@@ -27,16 +28,3 @@ export class ModalType {
     ];
   }
 }
-
-// <ConfirmationIcon width={48} height={48} />
-// <CycleIcon width={48} height={48} />
-// <ErrorIcon width={48} height={48} />
-// <InfoIcon width={48} height={48} />
-// <NotificationIcon width={48} height={48} />
-// <SearchIcon width={48} height={48} />
-// <SettingsIcon width={48} height={48} />
-// <SuccessIcon width={48} height={48} />
-// <UserIcon width={48} height={48} />
-// <WarningIcon width={48} height={48} />
-
-// <DeleteIcon width={48} height={48} />
