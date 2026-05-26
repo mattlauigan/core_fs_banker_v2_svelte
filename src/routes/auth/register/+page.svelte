@@ -54,7 +54,6 @@
           <p>Terminal</p>
           <p>Registration</p>
         </span>
-        <!-- <p class="font-sm font-medium">Welcome, please login</p> -->
       </span>
       <form autocomplete="off" onsubmit={handleRegistration}>
         <TextField
