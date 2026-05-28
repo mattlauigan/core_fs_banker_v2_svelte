@@ -1,7 +1,6 @@
 <script lang="ts">
   import { MenuCategoryEnum } from "$lib/ts/enums/menu";
   import megamenu from "$lib/data/megamenu.json";
-  import { resolveRoute } from "$app/paths";
 
   let {
     isScrolled = false,
@@ -32,12 +31,6 @@
     root = null;
     isSubmenu = false;
   }
-
-  // const closeMenu = () => {
-  //   isSubmenu = false;
-  //   isMegamenu = false;
-  //   category = MenuCategoryEnum.default;
-  // };
 
   let isSubmenu = $derived(category !== MenuCategoryEnum.default);
   let isMegamenu = $derived(!!root);
@@ -81,7 +74,6 @@
       role="button"
       tabindex="0"
     >
-      <div class="_modal_content">
         {#each activeRoot.menus as menu}
           <div class="_menu-column">
             <a
@@ -117,7 +109,6 @@
             {/each}
           </div>
         {/each}
-      </div>
     </div>
   {/if}
 </div>
