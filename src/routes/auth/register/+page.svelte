@@ -5,10 +5,12 @@
   import TextField from "$components/inputs/TextField.svelte";
   import DialogWindow from "$components/modal/DialogWindow.svelte";
   import { ModalTypeEnum } from "$lib/ts/enums/modal-type";
+  import type { Access } from "$lib/ts/data/auth";
 
   const AuthStore = UserStore();
   let username: string = $state("");
-  let password: string = $state("");
+  let termID: string = $state("");
+  let message: string = $state("Terminal Registration Successful")
 
   $effect(() => {
     console.log("AuthStore state changed:", {
@@ -23,6 +25,18 @@
 
   function handleRegistration() {
     AuthStore.register();
+    const data: Access = {
+      name: username,
+      branch: { id: 1, code: "33", zone_id: "23", name: "sample" },
+      bitmap: "110023010123",
+      modules: [101, 202],
+      username: username,
+      termcode: termID,
+      termdesc: termID,
+      role: { id: 1, name: "branch101" },
+    };
+
+    AuthStore.setAccessData(data);
 
     goto("/auth/login", {
       replaceState: true,
@@ -37,8 +51,8 @@
         <span
           class="text-primary-900 font-bold tracking-wide text-base md:text-sm sm:text-xs"
         >
-          <h2>Baug CARP Benificiaries</h2>
-          <h2>Multi-Purpose Coop</h2>
+          <h2>CoreFS Banker</h2>
+          <h2>Powering Smarter Financial Management</h2>
         </span>
         <span class="text-gray-500">
           <p class="text-base">{$AuthStore.accessData?.branch.name}</p>
@@ -64,12 +78,11 @@
           bind:value={username}
           required
         />
-
         <TextField
           id="terminalId"
           name="terminalId"
           label="Terminal ID"
-          bind:value={password}
+          bind:value={termID}
           style="dark w-full"
           required
         />
@@ -86,10 +99,10 @@
 </div>
 
 <DialogWindow
-  title="Session Expired"
+  title="Registration"
   bind:show={$AuthStore.isRegistered}
   modalType={ModalTypeEnum.INFO}
-  message="Your session has expired. Please login again to continue."
+  message={message}
   onSubmit={handleRegistration}
 />
 
