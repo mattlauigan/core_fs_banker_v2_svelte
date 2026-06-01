@@ -16,7 +16,7 @@
     if (!$AuthStore.isRegistered) {
       goto("/auth/register", { replaceState: true });
     } else if ($AuthStore.isAuthenticated) {
-      goto("/", {replaceState:true});
+      goto("/", { replaceState: true });
     }
   });
 
@@ -53,7 +53,7 @@
         </p>
         <p class="font-sm font-medium">Welcome, please login</p>
       </span>
-      <form autocomplete="off" onsubmit={handleLogin}>
+      <form autocomplete="off" method="POST" action="?">
         <TextField
           id="login-user"
           name="login-user"
