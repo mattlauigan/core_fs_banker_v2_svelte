@@ -1,12 +1,10 @@
 <script lang="ts">
   import UserStore from "$stores/auth";
-  import { goto, replaceState } from "$app/navigation";
+  import { goto } from "$app/navigation";
   import Button from "$components/inputs/Button.svelte";
   import TextField from "$components/inputs/TextField.svelte";
 
   const AuthStore = UserStore();
-  let username: string = $state("");
-  let password: string = $state("");
 
   $effect(() => {
     console.log("AuthStore state changed:", {
@@ -19,13 +17,6 @@
       goto("/", { replaceState: true });
     }
   });
-
-  function handleLogin() {
-    AuthStore.login();
-    goto("/auth/login", {
-      replaceState: true,
-    });
-  }
 </script>
 
 <div class="_login_page">
@@ -39,8 +30,8 @@
           <h2>Multi-Purpose Coop</h2>
         </span>
         <span class="text-accent-003">
-          <p class="text-base">{$AuthStore.accessData?.branch.name}</p>
-          <p class="font-sm">{$AuthStore.accessData?.termdesc}</p>
+          <p class="text-base"><!-- branch--></p>
+          <p class="font-sm"><!-- Terminal--></p>
         </span>
       </article>
     </div>
@@ -55,19 +46,17 @@
       </span>
       <form autocomplete="off" method="POST" action="?">
         <TextField
-          id="login-user"
-          name="login-user"
+          id="username"
+          name="username"
           label="Username"
           style="dark w-full"
-          bind:value={username}
           required
         />
 
         <TextField
-          id="login-password"
-          name="login-password"
+          id="password"
+          name="password"
           label="Password"
-          bind:value={password}
           style="dark w-full"
           type="password"
           required

@@ -1,59 +1,62 @@
-import type { Access } from "$lib/ts/data/auth";
+import type {
+  Login,
+  TerminalRegistration as TermRegData,
+} from "$lib/ts/data/auth";
+import type {
+  ChangePassword,
+  Login as LoginForm,
+  TerminalRegistration,
+} from "$lib/ts/forms/auth";
 import type { ErrorResponse, ResponseData } from "$lib/ts/types/app";
-import { http } from "../../utils/http";
+import { utilsHttp } from "../../utils/http";
 
-export type LoginFormData = {
-  username: string;
-  password: string;
-};
-
-export type ChangePasswordFormData = {
-  token: string;
-  password_old: string;
-  password: string;
-  password_confirmation: string;
-};
-
-export type LoginResponse = {
-  access_token: string;
-  token?: string;
-  username: string;
-};
-
-const change_password = (formData: ChangePasswordFormData) => {
-  return http
-    .put<ResponseData<LoginResponse>>("/auth/password", formData)
-    .then((response: ResponseData<LoginResponse>) => {
+const change_password = (formData: ChangePassword) => {
+  return utilsHttp
+    .put<ResponseData<Login>>("/auth/password", formData)
+    .then((response: ResponseData<Login>) => {
       return response;
     })
-    .catch((error) => {
+    .catch((error: ErrorResponse) => {
       throw error;
     });
 };
 
-const getinfo = (): Promise<Access> => {
+// const getinfo = (): Promise<Access> => {
+//   return new Promise((resolve, reject) => {
+//     http
+//       .get<ResponseData<Access>>("/app/v1/access/info")
+//       .then((res: ResponseData<Access>) => {
+//         resolve(res.payload);
+//       })
+//       .catch((error: ErrorResponse | null) => {
+//         reject(error);
+//       });
+//   });
+// };
+
+const login = (formData: LoginForm): Promise<ResponseData<Login>> => {
   return new Promise((resolve, reject) => {
-    http
-      .get<ResponseData<Access>>("/app/v1/access/info")
-      .then((res: ResponseData<Access>) => {
-        resolve(res.payload);
+    utilsHttp
+      .post<ResponseData<Login>>("/auth/login", formData)
+      .then((response: ResponseData<Login>) => {
+        resolve(response);
       })
-      .catch((error: ErrorResponse | null) => {
+      .catch((error: ErrorResponse) => {
         reject(error);
       });
   });
 };
 
-const login = (
-  formData: LoginFormData,
-): Promise<ResponseData<LoginResponse>> => {
+const terminal_registration = (
+  formData: TerminalRegistration,
+): Promise<ResponseData<TermRegData>> => {
   return new Promise((resolve, reject) => {
-    http
-      .post<ResponseData<LoginResponse>>("/auth/loginxxx", formData)
-      .then((response: ResponseData<LoginResponse>) => {
+    utilsHttp
+      .post<ResponseData<TermRegData>>("/auth/terminal-registration", formData)
+      .then((response: ResponseData<TermRegData>) => {
         resolve(response);
       })
-      .catch((error) => {
+      .catch((error: ErrorResponse) => {
         reject(error);
       });
   });
@@ -61,8 +64,9 @@ const login = (
 
 const authService = {
   change_password,
-  getinfo,
+  // getinfo,
   login,
+  terminal_registration,
 };
 
 export default authService;

@@ -5,12 +5,11 @@
   import TextField from "$components/inputs/TextField.svelte";
   import DialogWindow from "$components/modal/DialogWindow.svelte";
   import { ModalTypeEnum } from "$lib/ts/enums/modal-type";
-  import type { Access } from "$lib/ts/data/auth";
+  import type { TerminalRegistration } from "$lib/ts/data/auth";
+  // import type { Access } from "$lib/ts/data/auth";
 
   const AuthStore = UserStore();
-  let username: string = $state("");
-  let termID: string = $state("");
-  let message: string = $state("Terminal Registration Successful")
+  let message: string = $state("Terminal Registration Successful");
 
   $effect(() => {
     console.log("AuthStore state changed:", {
@@ -23,25 +22,9 @@
     }
   });
 
-  function handleRegistration() {
-    AuthStore.register();
-    const data: Access = {
-      name: username,
-      branch: { id: 1, code: "33", zone_id: "23", name: "sample" },
-      bitmap: "110023010123",
-      modules: [101, 202],
-      username: username,
-      termcode: termID,
-      termdesc: termID,
-      role: { id: 1, name: "branch101" },
-    };
-
-    AuthStore.setAccessData(data);
-
-    goto("/auth/login", {
-      replaceState: true,
-    });
-  }
+  goto("/auth/login", {
+    replaceState: true,
+  });
 </script>
 
 <div class="_register_page">
@@ -54,10 +37,10 @@
           <h2>CoreFS Banker</h2>
           <h2>Powering Smarter Financial Management</h2>
         </span>
-        <span class="text-gray-500">
+        <!-- <span class="text-gray-500">
           <p class="text-base">{$AuthStore.accessData?.branch.name}</p>
           <p class="font-sm">{$AuthStore.accessData?.termdesc}</p>
-        </span>
+        </span> -->
       </article>
     </div>
     <div class="_register_form">
@@ -69,20 +52,18 @@
           <p>Registration</p>
         </span>
       </span>
-      <form autocomplete="off" onsubmit={handleRegistration}>
+      <form autocomplete="off" method="POST" action="?">
         <TextField
           id="login-user"
           name="login-user"
           label="Username"
           style="dark w-full"
-          bind:value={username}
           required
         />
         <TextField
           id="terminalId"
           name="terminalId"
           label="Terminal ID"
-          bind:value={termID}
           style="dark w-full"
           required
         />
@@ -102,8 +83,8 @@
   title="Registration"
   bind:show={$AuthStore.isRegistered}
   modalType={ModalTypeEnum.INFO}
-  message={message}
-  onSubmit={handleRegistration}
+  {message}
+  onSubmit={() => {}}
 />
 
 <style>
