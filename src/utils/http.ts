@@ -118,7 +118,7 @@ function isCancel(error: unknown) {
   return error instanceof DOMException && error.name === "AbortError";
 }
 
-export const http = {
+export const utilsHttp = {
   get,
   post,
   put,
