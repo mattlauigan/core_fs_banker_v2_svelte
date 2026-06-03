@@ -1,3 +1,6 @@
+import type { Component } from "svelte";
+import type { ModalTypeEnum } from "./enums/modal";
+
 export type BaseInputProps = {
   id?: string;
   name?: string;
@@ -71,3 +74,24 @@ export type TextInputProps = {
   readonly?: boolean;
   hasError?: boolean;
 };
+
+export interface ModalActionItem {
+  label: string;
+  handler: () => void;
+  primary?: boolean;
+}
+
+export interface ModalSetupConfig {
+  icon:  Component; 
+  getActions: (onSubmit: () => void, close: () => void) => ModalActionItem[];
+}
+
+  export type DialogWindowProps<T> = {
+    title?: string;
+    show?: boolean;
+    message: string;
+    modalType?: ModalTypeEnum;
+    onSubmit?: () => void;
+    actions?: ModalActionItem[];
+    icon?: (object: T) => Component;
+  };

@@ -1,26 +1,11 @@
 <script lang="ts">
   import { fade } from "svelte/transition";
   import Button from "$components/primitives/Button.svelte";
-  import { ModalTypeEnum } from "$lib/ts/enums/modal-type";
+  import { ModalTypeEnum } from "$lib/ts/enums/modal";
   import type { Component } from "svelte";
   import InfoIcon from "$components/primitives/icons/InfoIcon.svelte";
-  import type { IconProps } from "$lib/ts/components";
-
-  type DialogAction = {
-    label: string;
-    handler: () => void;
-    primary?: boolean;
-  };
-
-  type DialogWindowProps<T> = {
-    title?: string;
-    show?: boolean;
-    message: string;
-    modalType?: ModalTypeEnum;
-    onSubmit?: () => void;
-    actions?: DialogAction[];
-    icon?: (object: T) => Component;
-  };
+  import type { DialogWindowProps, IconProps } from "$lib/ts/components";
+  import { getModalSetup } from "../../utils/modalConfig";
 
   let {
     title = "Information",
@@ -47,37 +32,11 @@
 
   let dialogElement: HTMLDialogElement | undefined = $state();
 
-  $effect(() => {
-    switch (modalType) {
-      case ModalTypeEnum.SUBMIT:
-        actions = [
-          { label: "Submit", handler: onSubmit, primary: true },
-          { label: "Close", handler: close },
-        ];
-        break;
-      case ModalTypeEnum.CONFIRM:
-        actions = [
-          { label: "Yes", handler: onSubmit, primary: true },
-          { label: "No", handler: close },
-        ];
-        break;
-      case ModalTypeEnum.PROCEED:
-        actions = [
-          { label: "Proceed", handler: onSubmit, primary: true },
-          { label: "Cancel", handler: close },
-        ];
-        break;
-      case ModalTypeEnum.DELETE:
-        actions = [
-          { label: "Delete", handler: onSubmit, primary: true },
-          { label: "Cancel", handler: close },
-        ];
-        break;
-      default:
-        actions = [{ label: "Ok", handler: onSubmit, primary: true }];
-    }
+  let setup = $derived(getModalSetup(modalType, onSubmit, close));
 
-    show ? dialogElement?.showModal() : dialogElement?.close();
+  $effect(() => {
+    if (show) dialogElement?.showModal();
+    else dialogElement?.close();
   });
 </script>
 
@@ -92,13 +51,8 @@
   >
     <dialog class="_dialog_box" bind:this={dialogElement} onclose={close}>
       <div class="_modal_content" transition:fade>
-        {#if IconComponent}
-          <IconComponent
-            width={48}
-            height={48}
-            containerClass="bg-gray-300"
-            className="bg-red-200"
-          />
+        {#if !!setup.Icon}
+          <IconComponent class="modal-icon" />
         {/if}
 
         <h2>{title}</h2>

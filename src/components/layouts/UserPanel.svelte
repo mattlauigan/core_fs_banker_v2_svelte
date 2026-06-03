@@ -2,7 +2,7 @@
   import ToggleSwitch from "$components/toggleSwitch/ToggleSwitch.svelte";
   import userLogo from "$lib/assets/user.png";
   import DialogWindow from "$components/layouts/DialogWindow.svelte";
-  import { ModalTypeEnum } from "$lib/ts/enums/modal-type";
+  import { ModalTypeEnum } from "$lib/ts/enums/modal";
 
   let {
     username = "anonymous",

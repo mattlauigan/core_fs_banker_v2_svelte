@@ -15,7 +15,7 @@
     WarningIcon,
   } from "$components/primitives/icons";
   import DialogWindow from "$components/layouts/DialogWindow.svelte";
-  import { ModalTypeEnum } from "$lib/ts/enums/modal-type";
+  import { ModalTypeEnum } from "$lib/ts/enums/modal";
   import userStore from "$stores/auth";
   import { goto } from "$app/navigation";
 

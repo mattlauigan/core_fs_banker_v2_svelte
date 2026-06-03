@@ -3,7 +3,7 @@
   import DialogWindow from "$components/layouts/DialogWindow.svelte";
   import TextInput from "$components/primitives/TextInput.svelte";
   import UserStore from "$stores/auth";
-  import { ModalTypeEnum } from "$lib/ts/enums/modal-type";
+  import { ModalTypeEnum } from "$lib/ts/enums/modal";
   import { goto } from "$app/navigation";
 
   const AuthStore = UserStore();

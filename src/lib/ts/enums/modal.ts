@@ -14,6 +14,7 @@ import {
 } from "$components/primitives/icons";
 import type { Component } from "svelte";
 
+
 export enum ModalTypeEnum {
   CONFIRM = "confirm",
   DELETE = "delete",
