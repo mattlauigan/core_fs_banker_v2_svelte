@@ -1,7 +1,7 @@
 <script lang="ts">
   const authStore = userStore();
   import "./layout.css";
-  import Header from "../components/header/Header.svelte";
+  import Header from "../components/layouts/Header.svelte";
   import userStore from "$stores/auth";
 
   let { children } = $props();

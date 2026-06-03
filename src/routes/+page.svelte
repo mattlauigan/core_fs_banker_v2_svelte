@@ -1,6 +1,6 @@
 <script lang="ts">
   import Hero from "$components/Hero.svelte";
-  import TextField from "$components/inputs/TextField.svelte";
+  import TextInput from "$components/primitives/TextInput.svelte";
   import {
     ConfirmationIcon,
     CycleIcon,
@@ -13,8 +13,8 @@
     SuccessIcon,
     UserIcon,
     WarningIcon,
-  } from "$components/icons";
-  import DialogWindow from "$components/modal/DialogWindow.svelte";
+  } from "$components/primitives/icons";
+  import DialogWindow from "$components/layouts/DialogWindow.svelte";
   import { ModalTypeEnum } from "$lib/ts/enums/modal-type";
   import userStore from "$stores/auth";
   import { goto } from "$app/navigation";
@@ -46,7 +46,7 @@
 
 <div class="_content">
   <Hero />
-  <TextField id="trial" name="trial" label="Trial 2" style="w-75" />
+  <TextInput id="trial" name="trial" label="Trial 2" style="w-75" />
   <div class="flex space-around w-full">
     <ConfirmationIcon width={48} height={48} />
     <CycleIcon width={48} height={48} />

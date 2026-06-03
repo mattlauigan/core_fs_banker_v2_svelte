@@ -1,8 +1,8 @@
 <script lang="ts">
   import UserStore from "$stores/auth";
   import { goto } from "$app/navigation";
-  import Button from "$components/inputs/Button.svelte";
-  import TextField from "$components/inputs/TextField.svelte";
+  import Button from "$components/primitives/Button.svelte";
+  import TextInput from "$components/primitives/TextInput.svelte";
 
   const AuthStore = UserStore();
 
@@ -45,7 +45,7 @@
         <p class="font-sm font-medium">Welcome, please login</p>
       </span>
       <form autocomplete="off" method="POST" action="?">
-        <TextField
+        <TextInput
           id="username"
           name="username"
           label="Username"
@@ -53,7 +53,7 @@
           required
         />
 
-        <TextField
+        <TextInput
           id="password"
           name="password"
           label="Password"

@@ -11,7 +11,7 @@ import {
   SuccessIcon,
   UserIcon,
   WarningIcon,
-} from "$components/icons";
+} from "$components/primitives/icons";
 import type { Component } from "svelte";
 
 export enum ModalTypeEnum {

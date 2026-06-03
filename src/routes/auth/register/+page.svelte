@@ -1,12 +1,10 @@
 <script lang="ts">
+  import Button from "$components/primitives/Button.svelte";
+  import DialogWindow from "$components/layouts/DialogWindow.svelte";
+  import TextInput from "$components/primitives/TextInput.svelte";
   import UserStore from "$stores/auth";
-  import { goto } from "$app/navigation";
-  import Button from "$components/inputs/Button.svelte";
-  import TextField from "$components/inputs/TextField.svelte";
-  import DialogWindow from "$components/modal/DialogWindow.svelte";
   import { ModalTypeEnum } from "$lib/ts/enums/modal-type";
-  import type { TerminalRegistration } from "$lib/ts/data/auth";
-  // import type { Access } from "$lib/ts/data/auth";
+  import { goto } from "$app/navigation";
 
   const AuthStore = UserStore();
   let message: string = $state("Terminal Registration Successful");
@@ -53,14 +51,14 @@
         </span>
       </span>
       <form autocomplete="off" method="POST" action="?">
-        <TextField
+        <TextInput
           id="login-user"
           name="login-user"
           label="Username"
           style="dark w-full"
           required
         />
-        <TextField
+        <TextInput
           id="terminalId"
           name="terminalId"
           label="Terminal ID"

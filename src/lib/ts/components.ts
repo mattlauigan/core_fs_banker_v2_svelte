@@ -57,3 +57,17 @@ export type IconProps = {
   className?: string;
   containerClassName?: string;
 };
+
+export type TextInputProps = {
+  id: string;
+  name: string;
+  label: string;
+  type?: string;
+  placeholder?: string;
+  style?: string;
+  value?: string;
+  required?: boolean;
+  disabled?: boolean;
+  readonly?: boolean;
+  hasError?: boolean;
+};
