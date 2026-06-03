@@ -48,30 +48,36 @@
   let dialogElement: HTMLDialogElement | undefined = $state();
 
   $effect(() => {
-    if (modalType === "submit") {
-      actions = [
-        { label: "Submit", handler: onSubmit, primary: true },
-        { label: "Close", handler: close },
-      ];
-    } else if (modalType === "confirm") {
-      actions = [
-        { label: "Yes", handler: onSubmit, primary: true },
-        { label: "No", handler: close },
-      ];
-    } else if (modalType === "proceed") {
-      actions = [
-        { label: "Proceed", handler: onSubmit, primary: true },
-        { label: "Cancel", handler: close },
-      ];
-    } else {
-      actions = [{ label: "Ok", handler: onSubmit, primary: true }];
+    switch (modalType) {
+      case ModalTypeEnum.SUBMIT:
+        actions = [
+          { label: "Submit", handler: onSubmit, primary: true },
+          { label: "Close", handler: close },
+        ];
+        break;
+      case ModalTypeEnum.CONFIRM:
+        actions = [
+          { label: "Yes", handler: onSubmit, primary: true },
+          { label: "No", handler: close },
+        ];
+        break;
+      case ModalTypeEnum.PROCEED:
+        actions = [
+          { label: "Proceed", handler: onSubmit, primary: true },
+          { label: "Cancel", handler: close },
+        ];
+        break;
+      case ModalTypeEnum.DELETE:
+        actions = [
+          { label: "Delete", handler: onSubmit, primary: true },
+          { label: "Cancel", handler: close },
+        ];
+        break;
+      default:
+        actions = [{ label: "Ok", handler: onSubmit, primary: true }];
     }
 
-    if (show) {
-      dialogElement?.showModal();
-    } else {
-      dialogElement?.close();
-    }
+    show ? dialogElement?.showModal() : dialogElement?.close();
   });
 </script>
 
