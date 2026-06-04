@@ -3,7 +3,6 @@
   import Button from "$components/primitives/Button.svelte";
   import { ModalTypeEnum } from "$lib/ts/enums/modal";
   import type { Component } from "svelte";
-  import InfoIcon from "$components/primitives/icons/InfoIcon.svelte";
   import type { DialogWindowProps, IconProps } from "$lib/ts/components";
   import { getModalSetup } from "../../utils/modalConfig";
 
@@ -14,7 +13,6 @@
     modalType = ModalTypeEnum.INFO,
     onSubmit = () => {},
     actions = [{ label: "Ok", handler: close }],
-    icon = () => InfoIcon,
   }: DialogWindowProps<IconProps> = $props();
 
   function close() {
@@ -22,17 +20,11 @@
     dialogElement?.close();
   }
 
-  const IconComponent = $derived(
-    icon?.({
-      width: 48,
-      height: 48,
-      className: "rounded-sm bg-red",
-    }),
-  );
-
   let dialogElement: HTMLDialogElement | undefined = $state();
 
-  let setup = $derived(getModalSetup(modalType, onSubmit, close));
+  const setup = $derived(getModalSetup(modalType, onSubmit, close));
+
+  const IconComponent = $derived(setup.Icon as Component<IconProps>);
 
   $effect(() => {
     if (show) dialogElement?.showModal();
@@ -52,7 +44,7 @@
     <dialog class="_dialog_box" bind:this={dialogElement} onclose={close}>
       <div class="_modal_content" transition:fade>
         {#if !!setup.Icon}
-          <IconComponent class="modal-icon" />
+          <IconComponent width={48} height={48} />
         {/if}
 
         <h2>{title}</h2>
