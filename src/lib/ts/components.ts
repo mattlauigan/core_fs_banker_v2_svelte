@@ -54,6 +54,13 @@ export type ButtonProps = {
   onClick?: () => void;
 };
 
+export interface Column<T> {
+  key: keyof T;
+  header: string;
+  sortable?: boolean;
+  width?: string;
+}
+
 export type IconProps = {
   width?: number | string;
   height?: number | string;
@@ -61,6 +68,18 @@ export type IconProps = {
   className?: string;
   containerClassName?: string;
 };
+
+export interface TableAction<T> {
+  icon: Component<IconProps>;
+  label: string;
+  onClick: (row: T) => void;
+}
+
+export interface TableProps<T> {
+  data: T[];
+  columns: Column<T>[];
+  actions?: TableAction<T>[];
+}
 
 export type TextAreaProps = {
   id: string;

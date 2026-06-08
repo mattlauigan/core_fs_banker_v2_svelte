@@ -19,6 +19,7 @@
   import userStore from "$stores/auth";
   import { goto } from "$app/navigation";
   import TextArea from "$components/primitives/TextArea.svelte";
+  import User from "$components/User.svelte";
 
   const authStore = userStore();
 
@@ -71,6 +72,8 @@
     style="w-64"
     required
   ></TextArea>
+
+  <User />
 </div>
 
 <DialogWindow
