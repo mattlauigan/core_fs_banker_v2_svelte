@@ -18,6 +18,7 @@
   import { ModalTypeEnum } from "$lib/ts/enums/modal";
   import userStore from "$stores/auth";
   import { goto } from "$app/navigation";
+  import TextArea from "$components/primitives/TextArea.svelte";
 
   const authStore = userStore();
 
@@ -62,6 +63,14 @@
     <DeleteIcon width={48} height={48} />
   </div>
   <br />
+
+  <TextArea
+    id="trial2"
+    name="trial2"
+    label="Trial TextArea"
+    style="w-64"
+    required
+  ></TextArea>
 </div>
 
 <DialogWindow

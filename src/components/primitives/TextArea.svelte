@@ -1,41 +1,39 @@
 <script lang="ts">
-  import type { TextInputProps } from "$lib/ts/components";
+  import type { TextAreaProps } from "$lib/ts/components";
 
   let {
     id,
     name,
     label,
-    type = "text",
     placeholder = "",
     style = "",
     value = $bindable(""),
-    max,
-    maxlength = 20,
-    min,
+    rows = 4,
+    cols = 20,
+    maxlength = 100,
     minlength = 1,
     required = false,
     readonly = false,
     disabled = false,
     hasError = false,
-  }: TextInputProps = $props();
+  }: TextAreaProps = $props();
 </script>
 
 <div class="relative my-10 {style ? style : 'w-full'}">
-  <input
-    {type}
+  <textarea
     {id}
     {name}
+    {rows}
+    {cols}
     {placeholder}
     {disabled}
     {readonly}
-    {max}
-    {maxlength}
-    {min}
-    {minlength}
     bind:value
     aria-invalid={hasError}
-    class="peer h-12 w-full border-b border-accent-002 bg-transparent text-[12px] tracking-[1.5px] text-scripts focus:text-accent-002 dark:text-white outline-none transition-colors duration-300 focus:border-primary-700 pl-1.5 disabled:border-accent-002 disabled:text-accent-002 disabled:cursor-not-allowed disabled:bg-linear-to-b disabled:from-transparent disabled:to-gray-200 aria-invalid:border-error-text"
-  />
+    {maxlength}
+    {minlength}
+    class="peer h-12 w-full border-b border-accent-003 bg-transparent text-[12px] tracking-[1.5px] text-scripts dark:text-white outline-none transition-colors duration-300 focus:text-accent-002 focus:border-primary-700 pl-1.5 disabled:border-accent-002 disabled:text-accent-002 disabled:cursor-not-allowed disabled:bg-linear-to-b disabled:from-transparent disabled:to-gray-200 aria-invalid:border-error-text"
+  ></textarea>
 
   <label
     for="username"
@@ -45,7 +43,7 @@
     {#if !required}
       <span
         aria-invalid={hasError}
-        class="text-gray-400 text-[10px] tracking-[1.5px] aria-invalid:text-error-hover"
+        class="text-accent-002 text-[10px] tracking-[1.5px] aria-invalid:text-error-hover"
       >
         (optional)
       </span>
