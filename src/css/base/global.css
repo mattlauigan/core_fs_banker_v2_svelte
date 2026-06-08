@@ -1,0 +1,13 @@
+html {
+  @apply font-roboto;
+  @apply transition-colors duration-500;
+  transition-timing-function: ease-in-out;
+}
+
+body {
+  @apply relative m-0 p-0 bg-[--color-bg-01] text-scripts;
+}
+
+header {
+  @apply fixed top-0 left-0 box-border flex flex-col w-screen bg-[--color-bg-01] z-50 translate-x-0 shadow-md;
+}

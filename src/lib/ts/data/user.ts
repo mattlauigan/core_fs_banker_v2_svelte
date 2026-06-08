@@ -1,8 +1,11 @@
-import type { Branch } from "./base";
+import type { Branch } from "./branch";
 import type { Date, DateTimeString } from "$types/types/app";
 
 export type BaseUser = {
   id: number;
+  name: string;
+  username: string;
+  status: string;
 };
 
 export interface UserIcon extends BaseUser {

@@ -1,7 +1,7 @@
-import type { MenuCategory } from "./enum";
+import type { MenuCategoryEnum } from "./enums/menu";
 
 export type MenuState = {
-  category: MenuCategory;
+  category: MenuCategoryEnum;
   root: string | null;
   online: boolean;
   darkmode: boolean;

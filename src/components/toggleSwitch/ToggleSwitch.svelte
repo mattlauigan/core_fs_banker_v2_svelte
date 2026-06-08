@@ -11,8 +11,8 @@
 
   function toggle(e: Event) {
     if (disabled) return;
-	const target = e.currentTarget as HTMLInputElement;
-	onCheck?.(target.checked);
+    const target = e.currentTarget as HTMLInputElement;
+    onCheck?.(target.checked);
   }
 </script>
 
@@ -33,14 +33,12 @@
       onchange={toggle}
     />
 
-    <!-- track -->
     <div
       class="w-11 h-6 bg-gray-300 rounded-full
 			peer-checked:bg-green-400
 			transition-colors duration-200"
     ></div>
 
-    <!-- thumb -->
     <div
       class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow
 			transition-transform duration-200

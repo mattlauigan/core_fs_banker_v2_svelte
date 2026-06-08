@@ -1,15 +1,16 @@
 import { writable } from "svelte/store";
-import type { Access } from "$types/data/auth";
+import type { TerminalRegistration } from "$types/data/auth";
 import { ls } from "$lib/services/ls";
-import { Bitmap } from "../utils/bitmap";
-import { LSKEY_TOKEN } from "$lib/config/constants";
-import { goto } from "$app/navigation";
+import { createCookie } from "../utils/cookies";
+import authService from "$lib/services/authService";
+import type { Login } from "$lib/ts/forms/auth";
+import type { RequestEvent } from "../routes/auth/login/$types";
 
 export type UserState = {
   isAuthenticated: boolean;
   isRegistered: boolean;
   isChangePassword: boolean;
-  accessData: Access | null;
+  accessData: TerminalRegistration | null;
   error: string | null;
 };
 
@@ -35,20 +36,13 @@ const userStore = () => {
 
   return {
     subscribe,
+    register: async (data: TerminalRegistration) => {
 
-    register: () => {
-      update((state) => {
-        const updatedState = {
-          ...state,
-          isRegistered: true,
-          error: null,
-        };
 
-        ls.add("token", JSON.stringify(updatedState));
-        goto("/auth/login");
 
-        return updatedState;
-      });
+      // const cookie = createCookie(cookie);
+
+      // return response;
     },
 
     login: () => {
@@ -79,7 +73,7 @@ const userStore = () => {
       });
     },
 
-    setAccessData: (accessData: Access) => {
+    setAccessData: (accessData: TerminalRegistration) => {
       update((state) => ({
         ...state,
         accessData,

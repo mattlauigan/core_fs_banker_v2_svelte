@@ -3,7 +3,6 @@
 </script>
 
 <section class="_route-catchall">
-  <!-- <div class="_route_catchall_content"> -->
   <div class="_catchall_mascot_container">
     <img src={Mascot} alt="mascot" class="_catchall_mascot" />
   </div>

@@ -1,6 +1,6 @@
 <script lang="ts">
   import Hero from "$components/Hero.svelte";
-  import TextField from "$components/inputs/TextField.svelte";
+  import TextInput from "$components/primitives/TextInput.svelte";
   import {
     ConfirmationIcon,
     CycleIcon,
@@ -13,12 +13,41 @@
     SuccessIcon,
     UserIcon,
     WarningIcon,
-  } from "$components/icons";
+  } from "$components/primitives/icons";
+  import DialogWindow from "$components/layouts/DialogWindow.svelte";
+  import { ModalTypeEnum } from "$lib/ts/enums/modal";
+  import userStore from "$stores/auth";
+  import { goto } from "$app/navigation";
+  import TextArea from "$components/primitives/TextArea.svelte";
+
+  const authStore = userStore();
+
+  let isExpired = $state(!$authStore.isAuthenticated);
+
+  $effect(() => {
+    if ($authStore.isRegistered && !$authStore.isAuthenticated) {
+      isExpired = true;
+      console.log("session expired");
+    } else if (!$authStore.isRegistered && !$authStore.isAuthenticated) {
+      isExpired = true;
+      console.log("for registration");
+    }
+  });
+
+  const onSessionExpired = () => {
+    isExpired = false;
+    console.log("logging out");
+    authStore.logout();
+
+    goto("/auth/login", {
+      replaceState: true,
+    });
+  };
 </script>
 
 <div class="_content">
   <Hero />
-  <TextField id="trial" name="trial" label="Trial 2" style="w-75" />
+  <TextInput id="trial" name="trial" label="Trial 2" style="w-75" />
   <div class="flex space-around w-full">
     <ConfirmationIcon width={48} height={48} />
     <CycleIcon width={48} height={48} />
@@ -34,4 +63,20 @@
     <DeleteIcon width={48} height={48} />
   </div>
   <br />
+
+  <TextArea
+    id="trial2"
+    name="trial2"
+    label="Trial TextArea"
+    style="w-64"
+    required
+  ></TextArea>
 </div>
+
+<DialogWindow
+  title="Session Expired"
+  bind:show={isExpired}
+  modalType={ModalTypeEnum.SEARCH}
+  message="Your session has expired. Please login again to continue."
+  onSubmit={onSessionExpired}
+/>

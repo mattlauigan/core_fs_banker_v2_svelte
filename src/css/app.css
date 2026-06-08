@@ -1,116 +1,21 @@
 @import "tailwindcss";
-@import "./catchall.css";
-@import "./userpanel.css";
-@import "./header.css";
-@import "./dialogWindow.css";
-@import "./hero.css";
-@import "./button.css";
-@import "./inputField.css";
-
-@theme {
-  --font-roboto: "Roboto", Arial, Helvetica, sans-serif;
-
-  --color-background-c-01: #f0f0f1;
-  --color-background-c-02: #f0f0f1;
-  --color-scripts: #000810;
-  --color-purple-01: #8C00FF;
 
 
-  --color-panel-header: #00101f;
-  --color-backdrop: rgba(2, 33, 62, 0.3);
-  --color-user-panel-bg: rgb(255, 255, 255, 0.4);
-
-  --color-white: #f0f0f1;
-
-  --color-primary-950: #1d1f49;
-  --color-primary-900: #2f3478;
-  --color-primary-800: #353a9e;
-  --color-primary-700: #3e42c4;
-  --color-primary-600: #4c53df;
-  --color-primary-500: #6979eb;
-  --color-primary-400: #869bf3;
-  --color-primary-300: #a8bef9;
-  --color-primary-200: #c9d9fc;
-  --color-primary-100: #e1ebfe;
-  --color-primary-50: #eff4fe;
-
-  --color-secondary-950: #2c2912;
-  --color-secondary-900: #4f4a26;
-  --color-secondary-800: #5b5628;
-  --color-secondary-700: #78732f;
-  --color-secondary-600: #8c8933;
-  --color-secondary-500: #a9a941;
-  --color-secondary-400: #bdbe57;
-  --color-secondary-300: #ced07d;
-  --color-secondary-200: #e0e2ad;
-  --color-secondary-100: #eff0d4;
-  --color-secondary-50: #f9f9ed;
-
-  --color-tertiary-500: #e0e0e0;
-
-  --color-accent-001: #424141;
-  --color-accent-002: #424141;
-  --color-accent-003: #9c9c9c;
-
-  --color-error-bg: #FFBABA;
-  --color-error-text: #D8000C;
-  --color-error-hover: #FFA4A4;
-
-  --color-warn-bg: #FEEFB3;
-  --color-warn-text: #9F6000;
-  --color-warn-hover: #FED7A0;
-
-  --color-success-bg: #4F8A10;
-  --color-success-text: #DFF2BF;
-  --color-success-hover: #B4F298;
-
-  --color-info-bg: #D9EDF7;
-  --color-info-text: #31708F;
-  --color-info-hover: #D5D8F7;
-
-}
-
-html {
-  @apply font-roboto;
-  @apply transition-colors duration-500;
-  transition-timing-function: ease-in-out;
-}
-
-/* html:has(#isDarkMode:checked) {
-  --color-bg-01: #000810;
-  --color-bg-02: #00101F;
-  --color-text: #F0F0F1;
-  --color-panel-header: #D1526D;
-  --color-user-panel-bg: #02213e;
-
-  --white-color: #F0F0F1;
+@import "./base/global.css";
+@import "./base/theme.css";
 
 
-
-  --accent-001: #404C57;
-  --accent-002: #D1526D;
-  --accent-003: #7F878F;
-
-} */
-
-body {
-  @apply relative m-0 p-0 bg-[--color-bg-01] text-scripts;
-}
-
-header {
-  @apply fixed top-0 left-0 box-border flex flex-col w-screen bg-[--color-bg-01] z-50 translate-x-0 shadow-md;
-}
+@import "./components/button.css";
+@import "./components/dialogWindow.css";
+@import "./components/inputField.css";
 
 
+@import "./layout/element.css";
+@import "./layout/header.css";
 
-._content {
-  @apply relative flex flex-col mx-auto overflow-hidden z-1 mt-[8vh] pt-6;
-}
 
-._group_hr {
-  @apply flex flex-row  gap-4 my-6;
-}
-
-._group_vr {
-  @apply flex flex-col  gap-4 my-6;
-}
+@import "./pages/catchall.css";
+@import "./pages/hero.css";
+@import "./pages/login.css";
+@import "./pages/register.css";
+@import "./pages/userpanel.css";
