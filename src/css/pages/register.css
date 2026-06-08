@@ -1,0 +1,15 @@
+._register_page {
+  @apply bg-linear-to-t from-primary-900 via-primary-950 to-primary-800 min-h-screen flex items-center justify-center overflow-hidden;
+}
+
+._register_container {
+  @apply bg-black/15 backdrop-blur-sm flex flex-row items-stretch w-[50vw] max-w-[70vw] rounded-lg shadow-lg overflow-hidden;
+}
+
+._register_info {
+  @apply flex flex-col text-scripts p-10 pt-80 w-full bg-linear-to-t from-primary-400 to-white basis-1/2;
+}
+
+._register_form {
+  @apply flex flex-col gap-4 w-full items-center justify-center basis-1/2 p-6;
+}

@@ -1,12 +1,10 @@
 <script lang="ts">
   import UserStore from "$stores/auth";
-  import { goto, replaceState } from "$app/navigation";
-  import Button from "$components/inputs/Button.svelte";
-  import TextField from "$components/inputs/TextField.svelte";
+  import { goto } from "$app/navigation";
+  import Button from "$components/primitives/Button.svelte";
+  import TextInput from "$components/primitives/TextInput.svelte";
 
   const AuthStore = UserStore();
-  let username: string = $state("");
-  let password: string = $state("");
 
   $effect(() => {
     console.log("AuthStore state changed:", {
@@ -16,16 +14,9 @@
     if (!$AuthStore.isRegistered) {
       goto("/auth/register", { replaceState: true });
     } else if ($AuthStore.isAuthenticated) {
-      goto("/", {replaceState:true});
+      goto("/", { replaceState: true });
     }
   });
-
-  function handleLogin() {
-    AuthStore.login();
-    goto("/auth/login", {
-      replaceState: true,
-    });
-  }
 </script>
 
 <div class="_login_page">
@@ -39,8 +30,8 @@
           <h2>Multi-Purpose Coop</h2>
         </span>
         <span class="text-accent-003">
-          <p class="text-base">{$AuthStore.accessData?.branch.name}</p>
-          <p class="font-sm">{$AuthStore.accessData?.termdesc}</p>
+          <p class="text-base"><!-- branch--></p>
+          <p class="font-sm"><!-- Terminal--></p>
         </span>
       </article>
     </div>
@@ -53,21 +44,19 @@
         </p>
         <p class="font-sm font-medium">Welcome, please login</p>
       </span>
-      <form autocomplete="off" onsubmit={handleLogin}>
-        <TextField
-          id="login-user"
-          name="login-user"
+      <form autocomplete="off" method="POST" action="?">
+        <TextInput
+          id="username"
+          name="username"
           label="Username"
           style="dark w-full"
-          bind:value={username}
           required
         />
 
-        <TextField
-          id="login-password"
-          name="login-password"
+        <TextInput
+          id="password"
+          name="password"
           label="Password"
-          bind:value={password}
           style="dark w-full"
           type="password"
           required
@@ -83,23 +72,3 @@
     </div>
   </div>
 </div>
-
-<style>
-  @import "../../../css/app.css";
-
-  ._login_page {
-    @apply bg-linear-to-t from-primary-900 via-primary-950 to-primary-800 min-h-screen flex items-center justify-center overflow-hidden;
-  }
-
-  ._login_container {
-    @apply bg-black/15 backdrop-blur-sm flex flex-row-reverse items-stretch w-[50vw]  max-w-[70vw] rounded-lg shadow-lg overflow-hidden;
-  }
-
-  ._login_info {
-    @apply flex flex-col text-scripts p-10 pt-80 w-full bg-linear-to-t from-primary-400 to-white basis-1/2;
-  }
-
-  ._login_form {
-    @apply flex flex-col gap-4 w-full items-center justify-center basis-1/2 p-6;
-  }
-</style>

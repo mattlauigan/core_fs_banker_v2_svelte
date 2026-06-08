@@ -1,14 +1,13 @@
 <script lang="ts">
+  import Button from "$components/primitives/Button.svelte";
+  import DialogWindow from "$components/layouts/DialogWindow.svelte";
+  import TextInput from "$components/primitives/TextInput.svelte";
   import UserStore from "$stores/auth";
+  import { ModalTypeEnum } from "$lib/ts/enums/modal";
   import { goto } from "$app/navigation";
-  import Button from "$components/inputs/Button.svelte";
-  import TextField from "$components/inputs/TextField.svelte";
-  import DialogWindow from "$components/modal/DialogWindow.svelte";
-  import { ModalTypeEnum } from "$lib/ts/enums/modal-type";
 
   const AuthStore = UserStore();
-  let username: string = $state("");
-  let password: string = $state("");
+  let message: string = $state("Terminal Registration Successful");
 
   $effect(() => {
     console.log("AuthStore state changed:", {
@@ -21,13 +20,9 @@
     }
   });
 
-  function handleRegistration() {
-    AuthStore.register();
-
-    goto("/auth/login", {
-      replaceState: true,
-    });
-  }
+  goto("/auth/login", {
+    replaceState: true,
+  });
 </script>
 
 <div class="_register_page">
@@ -37,13 +32,13 @@
         <span
           class="text-primary-900 font-bold tracking-wide text-base md:text-sm sm:text-xs"
         >
-          <h2>Baug CARP Benificiaries</h2>
-          <h2>Multi-Purpose Coop</h2>
+          <h2>CoreFS Banker</h2>
+          <h2>Powering Smarter Financial Management</h2>
         </span>
-        <span class="text-gray-500">
+        <!-- <span class="text-gray-500">
           <p class="text-base">{$AuthStore.accessData?.branch.name}</p>
           <p class="font-sm">{$AuthStore.accessData?.termdesc}</p>
-        </span>
+        </span> -->
       </article>
     </div>
     <div class="_register_form">
@@ -55,21 +50,18 @@
           <p>Registration</p>
         </span>
       </span>
-      <form autocomplete="off" onsubmit={handleRegistration}>
-        <TextField
+      <form autocomplete="off" method="POST" action="?">
+        <TextInput
           id="login-user"
           name="login-user"
           label="Username"
           style="dark w-full"
-          bind:value={username}
           required
         />
-
-        <TextField
+        <TextInput
           id="terminalId"
           name="terminalId"
           label="Terminal ID"
-          bind:value={password}
           style="dark w-full"
           required
         />
@@ -86,29 +78,10 @@
 </div>
 
 <DialogWindow
-  title="Session Expired"
+  title="Registration"
   bind:show={$AuthStore.isRegistered}
   modalType={ModalTypeEnum.INFO}
-  message="Your session has expired. Please login again to continue."
-  onSubmit={handleRegistration}
+  {message}
+  onSubmit={() => {}}
 />
 
-<style>
-  @import "../../../css/app.css";
-
-  ._register_page {
-    @apply bg-linear-to-t from-primary-900 via-primary-950 to-primary-800 min-h-screen flex items-center justify-center overflow-hidden;
-  }
-
-  ._register_container {
-    @apply bg-black/15 backdrop-blur-sm flex flex-row items-stretch w-[50vw]  max-w-[70vw] rounded-lg shadow-lg overflow-hidden;
-  }
-
-  ._register_info {
-    @apply flex flex-col text-scripts p-10 pt-80 w-full bg-linear-to-t from-primary-400 to-white basis-1/2;
-  }
-
-  ._register_form {
-    @apply flex flex-col gap-4 w-full items-center justify-center basis-1/2 p-6;
-  }
-</style>

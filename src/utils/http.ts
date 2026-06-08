@@ -2,15 +2,7 @@ import { PUBLIC_APP_URL } from "$env/static/public";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
-
-
-export type HeaderValue =
-  | Headers
-  | string
-  | string[]
-  | number
-  | boolean
-  | null;
+export type HeaderValue = Headers | string | string[] | number | boolean | null;
 
 interface RawHeaders {
   [key: string]: HeaderValue;
@@ -29,7 +21,7 @@ export class Headers {
       });
     } else if (headers instanceof Headers) {
       this.headers = { ...headers.headers };
-    } 
+    }
   }
 }
 
@@ -100,7 +92,13 @@ const post = <T>(
   url: string,
   data?: any,
   config?: Omit<RequestConfig, "url" | "method" | "data">,
-) => request<T>({ url, method: "POST", data, ...config });
+) =>
+  request<T>({
+    url: `${PUBLIC_APP_URL}/${url}`,
+    method: "POST",
+    data,
+    ...config,
+  });
 
 const put = <T>(
   url: string,
@@ -120,7 +118,7 @@ function isCancel(error: unknown) {
   return error instanceof DOMException && error.name === "AbortError";
 }
 
-export const http = {
+export const utilsHttp = {
   get,
   post,
   put,
