@@ -57,8 +57,8 @@
             {#if actions.length}
               <td class="px-4 py-3 flex gap-2">
                 {#each actions as action}
-                <!-- {@const Icon = action.icon} -->
-                 {const IconComponent = $derived(action.icon as Component<IconProps>);}
+                
+                {const IconComponent = $derived(action.icon as Component<IconProps>);}
                   <button
                     onclick={() => action.onClick(row)}
                     class="p-1 hover:bg-gray-100 rounded"
