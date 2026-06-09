@@ -1,7 +1,10 @@
 import {
   ConfirmationIcon,
+  DeleteIcon,
   InfoIcon,
+  NotificationIcon,
   SearchIcon,
+  SuccessIcon,
   WarningIcon,
 } from "$components/primitives/icons";
 import ErrorIcon from "$components/primitives/icons/errorIcon.svelte";
@@ -31,7 +34,7 @@ const MODAL_CONFIGS: Record<ModalTypeEnum, ModalSetupConfig> = {
     ],
   },
   [ModalTypeEnum.DELETE]: {
-    icon: WarningIcon,
+    icon: DeleteIcon,
     getActions: (onSubmit, close) => [
       { label: "Delete", handler: onSubmit, primary: true },
       { label: "Cancel", handler: close },
@@ -56,13 +59,13 @@ const MODAL_CONFIGS: Record<ModalTypeEnum, ModalSetupConfig> = {
     ],
   },
   [ModalTypeEnum.SUCCESS]: {
-    icon: InfoIcon,
+    icon: SuccessIcon,
     getActions: (onSubmit) => [
       { label: "Ok", handler: onSubmit, primary: true },
     ],
   },
   [ModalTypeEnum.NOTIF]: {
-    icon: InfoIcon,
+    icon: NotificationIcon,
     getActions: (onSubmit) => [
       { label: "Ok", handler: onSubmit, primary: true },
     ],

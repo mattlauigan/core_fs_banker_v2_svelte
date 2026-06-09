@@ -66,7 +66,7 @@ export type IconProps = {
   height?: number | string;
   fill?: string;
   className?: string;
-  containerClassName?: string;
+  containerClass?: string;
 };
 
 export interface TableAction<T> {

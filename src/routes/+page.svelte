@@ -79,7 +79,7 @@
 <DialogWindow
   title="Session Expired"
   bind:show={isExpired}
-  modalType={ModalTypeEnum.SEARCH}
+  modalType={ModalTypeEnum.INFO}
   message="Your session has expired. Please login again to continue."
   onSubmit={onSessionExpired}
 />

@@ -5,22 +5,22 @@
     width = 24,
     height = 24,
     fill = "#F44336",
-    className = "",
-    containerClassName = "",
+    className,
+    containerClass,
   }: IconProps = $props();
 </script>
 
-<div class={containerClassName}>
+<div class="{containerClass ?? "flex justify-center bg-error-bg w-fit mx-auto rounded-sm p-1.5" }">
   <svg
     x="0px"
     y="0px"
-    viewBox="-5 -8 110 110"
+    viewBox="0 0 110 110"
     style="enable-background:new 0 0 110 110;"
     xml:space="preserve"
     {fill}
     {width}
     {height}
-    class={"block shrink-0" + className}
+    class={"block shrink-0 " + className}
   >
     <path
       d="M85.1,30.7H67.1l-0.9-7.3c-0.3-2-2-3.6-4.1-3.6H47.8c-2.1,0-3.8,1.5-4.1,3.6l-0.9,7.3H24.9c-1.8,0-1.8,2.7,0,2.7h4.2
