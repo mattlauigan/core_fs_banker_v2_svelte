@@ -12,7 +12,7 @@
 
 @import "./layout/element.css";
 @import "./layout/header.css";
-
+@import "./layout/datatable.css";
 
 @import "./pages/catchall.css";
 @import "./pages/hero.css";

@@ -1,8 +1,7 @@
 <script lang="ts" generics="T">
   import type { Column, IconProps, TableAction } from "$lib/ts/components";
   import type { DisplayMedia } from "$lib/ts/enums/primitives";
-  import type { Component } from "svelte";
-  
+  import { onMount, type Component } from "svelte";
 
   type DataTableProps = {
     data: T[];
@@ -18,20 +17,24 @@
     actions = [],
     loading = false,
   }: DataTableProps = $props();
+
 </script>
 
-<div class="border rounded-lg bg-white overflow-hidden">
-  <table class="w-full border-collapse">
-    <thead class="bg-gray-100">
+<div class="_table_container">
+  <table class="_table_element">
+    <thead class="_table_head">
       <tr>
         {#each columns as column}
-          <th class="px-4 py-3 text-left border-b">
+          <th
+            class="_table_header _table_padding"
+          >
             {column.header}
           </th>
         {/each}
-
         {#if actions.length}
-          <th class="px-4 py-3 border-b">Actions</th>
+          <th class="_table_header"
+            ><span class="_table_action_header">•••</span></th
+          >
         {/if}
       </tr>
     </thead>
@@ -45,31 +48,31 @@
         </tr>
       {:else}
         {#each data as row}
-          <tr class="border-b hover:bg-gray-50">
+          <tr class="_table_data_row">
             {#each columns as column}
-              <td class="px-4 py-3">
+              <td class="_table_padding">
                 <render>
                   {row[column.key]}
                 </render>
               </td>
             {/each}
-
             {#if actions.length}
-              <td class="px-4 py-3 flex gap-2">
+              <td class="_table_data_action _table_padding">
                 {#each actions as action}
-                
-                {const IconComponent = $derived(action.icon as Component<IconProps>);}
-                  <button
-                    onclick={() => action.onClick(row)}
-                    class="p-1 hover:bg-gray-100 rounded"
-                  >
-                    
-                    {#if !!action.icon}
-                      <IconComponent width={48} height={48} />
-                    {/if}
-
-                  <!-- {<Icon />} -->
-                  </button>
+                  {@const IconComponent = action.icon as Component<IconProps>}
+                  <div class="_table_action_container">
+                    <button
+                      onclick={() => action.onClick(row)}
+                      class="cursor-pointer"
+                    >
+                      {#if !!action.icon}
+                        <IconComponent width={16} height={16} />
+                      {/if}
+                    </button>
+                    <div class="_table_tooltip">
+                      {action.label}
+                    </div>
+                  </div>
                 {/each}
               </td>
             {/if}
@@ -79,3 +82,5 @@
     </tbody>
   </table>
 </div>
+
+

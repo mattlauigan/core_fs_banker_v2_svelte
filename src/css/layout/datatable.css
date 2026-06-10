@@ -1,0 +1,41 @@
+  ._table_container {
+    @apply rounded-lg bg-white overflow-hidden;
+  }
+  ._table_element {
+    @apply w-full border-collapse border-spacing-1;
+  }
+
+  ._table_padding {
+    @apply px-4 py-3;
+  }
+  ._table_head {
+    @apply bg-gray-100 py-1;
+  }
+
+  ._table_header {
+    @apply text-center;
+  }
+
+  ._table_data_row {
+    @apply hover:bg-accent-003/10;
+  }
+
+  ._table_action_header {
+    @apply text-accent-003 tracking-wider;
+  }
+
+  ._table_action_container {
+    @apply relative inline-flex cursor-pointer mx-1;
+  }
+
+  ._table_data_action {
+    @apply flex justify-center gap-0.5;
+  }
+
+  ._table_tooltip {
+    @apply absolute left-1/2 -translate-x-1/2 pointer-events-none opacity-0 whitespace-nowrap rounded px-2 py-1 text-xs text-white bg-accent-001 transition-opacity duration-200 bottom-[calc(100%+6px)];
+  }
+
+  ._table_action_container:hover ._table_tooltip {
+    @apply opacity-100;
+  }
