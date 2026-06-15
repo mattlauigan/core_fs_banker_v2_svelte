@@ -1,5 +1,5 @@
 ._content {
-  @apply relative flex flex-col mx-auto overflow-hidden z-1 mt-[8vh] pt-6;
+  @apply relative flex flex-col mx-auto overflow-hidden z-1 mt-[8vh] pt-6 w-[90vw];
 }
 
 ._group_hr {

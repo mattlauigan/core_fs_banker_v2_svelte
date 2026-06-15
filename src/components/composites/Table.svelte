@@ -1,7 +1,7 @@
 <script lang="ts" generics="T">
   import type { Column, IconProps, TableAction } from "$lib/ts/components";
   import type { DisplayMedia } from "$lib/ts/enums/primitives";
-  import { onMount, type Component } from "svelte";
+  import { type Component } from "svelte";
 
   type DataTableProps = {
     data: T[];
@@ -13,11 +13,10 @@
 
   let {
     data = [],
-    columns = [],
+    columns,
     actions = [],
     loading = false,
   }: DataTableProps = $props();
-
 </script>
 
 <div class="_table_container">
@@ -25,15 +24,13 @@
     <thead class="_table_head">
       <tr>
         {#each columns as column}
-          <th
-            class="_table_header _table_padding"
-          >
-            {column.header}
+          <th class="_table_header _table_padding text-{column.alignment+' ' || 'left'} ">
+            {column.header + column.alignment} 
           </th>
         {/each}
         {#if actions.length}
           <th class="_table_header"
-            ><span class="_table_action_header">•••</span></th
+            ><span class="_table_action_header">• • •</span></th
           >
         {/if}
       </tr>
@@ -50,9 +47,12 @@
         {#each data as row}
           <tr class="_table_data_row">
             {#each columns as column}
-              <td class="_table_padding">
+              <td
+                class="_table_data_cell _table_padding {column.class ??
+                  'w-fit'} text-{column.alignment ?? 'left '}"
+              >
                 <render>
-                  {row[column.key]}
+                  {row[column.key]+column.alignment!}
                 </render>
               </td>
             {/each}
@@ -82,5 +82,3 @@
     </tbody>
   </table>
 </div>
-
-
