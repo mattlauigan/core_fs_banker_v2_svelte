@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Card from "$components/primitives/Card.svelte";
   import {
     ConfirmationIcon,
     CycleIcon,
@@ -46,7 +47,7 @@
   };
 </script>
 
-<div class="_content">
+<Card>
   <Hero />
   <TextInput id="trial" name="trial" label="Trial 2" style="w-75" />
   <div class="flex space-around w-full">
@@ -74,7 +75,7 @@
   ></TextArea>
 
   <User />
-</div>
+</Card>
 
 <DialogWindow
   title="Session Expired"
