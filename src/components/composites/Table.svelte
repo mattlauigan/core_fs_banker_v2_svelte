@@ -25,8 +25,6 @@
 </script>
 
 <div class="_table_wrapper">
-<input type="color">
-<span class='bg-[#FFF2DB]/10 text-[#FFF2DB]'>hello</span>
   <div class="_table_wrapper_scroll">
     <table>
       <thead>
