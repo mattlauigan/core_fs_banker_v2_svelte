@@ -5,7 +5,7 @@ html {
 }
 
 body {
-  @apply relative m-0 p-0 bg-[--color-bg-01] text-scripts;
+  @apply relative m-0 p-0 bg-background-c-01 text-scripts  pt-[10vh];
 }
 
 header {
