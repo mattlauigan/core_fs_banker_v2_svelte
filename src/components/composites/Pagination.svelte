@@ -31,8 +31,8 @@
   });
 </script>
 
-<div class="flex items-center justify-between px-4 py-3 ">
-  <div class="text-[.6rem] text-gray-600">
+<div class="bg-slate-100 flex items-center justify-between px-4 py-3 text-[.9rem]">
+  <div class=" text-slate-500 pl-2.5">
     Page {page} of {totalPages}
   </div>
 
@@ -40,25 +40,25 @@
     <button
       onclick={() => goToPage(1)}
       disabled={page === 1}
-      class="px-3 py-2 text-[.6rem] bg-white shadow-sm rounded disabled:opacity-50"
+      class="px-3 py-2  bg-white shadow-sm rounded disabled:opacity-50"
     >
-      First
+      &lt;&lt;
     </button>
 
     <button
       onclick={() => goToPage(page - 1)}
       disabled={page === 1}
-      class="px-3 py-2 text-[.6rem] bg-white shadow-sm rounded disabled:opacity-50"
+      class="px-3 py-2  bg-white shadow-sm rounded disabled:opacity-50"
     >
-      Previous
+      ← Prev
     </button>
 
     {#each pages as p}
       <button
         onclick={() => goToPage(p)}
-        class={`min-w-10 px-3 py-2 text-[.6rem]  rounded shadow-sm ${
+        class={`min-w-10 px-3 py-2   rounded shadow-sm ${
           p === page
-            ? "bg-blue-600 text-white -blue-600"
+            ? "bg-slate-800 text-white -blue-600"
             : "hover:bg-gray-100"
         }`}
       >
@@ -69,17 +69,17 @@
     <button
       onclick={() => goToPage(page + 1)}
       disabled={page === totalPages}
-      class="px-3 py-2 text-[.6rem] bg-white rounded disabled:opacity-50"
+      class="px-3 py-2  bg-white rounded disabled:opacity-50"
     >
-      Next
+      Next →
     </button>
 
     <button
       onclick={() => goToPage(totalPages)}
       disabled={page === totalPages}
-      class="px-3 py-2 text-[.6rem] bg-white rounded disabled:opacity-50"
+      class="px-3 py-2  bg-white rounded disabled:opacity-50"
     >
-      Last
+      &gt;&gt;
     </button>
   </div>
 </div>

@@ -4,7 +4,6 @@
   import type { Column, TableAction } from "$lib/ts/components";
   import type { DisplayMedia } from "$lib/ts/enums/primitives";
 
-
   type DataTableProps<T> = {
     data: T[];
     columns: Column<T>[];
@@ -25,7 +24,7 @@
 
   const totalPages = $derived(Math.ceil(data.length / pageSize));
 
-  const paginatedData : any = $derived(
+  const paginatedData: any = $derived(
     data.slice((currentPage - 1) * pageSize, currentPage * pageSize),
   );
 
@@ -45,7 +44,11 @@
 </script>
 
 <div class="_group_vr">
-  <Table data={paginatedData} {columns} {actions} />
-
-  <Pagination page={currentPage} {totalPages} onPageChange={handlePageChange} />
+  <Table data={paginatedData} {columns} {actions}>
+    <Pagination
+      page={currentPage}
+      {totalPages}
+      onPageChange={handlePageChange}
+    />
+  </Table>
 </div>

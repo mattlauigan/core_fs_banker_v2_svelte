@@ -20,7 +20,6 @@
   import userStore from "$stores/auth";
   import { ModalTypeEnum } from "$lib/ts/enums/modal";
   import { goto } from "$app/navigation";
-  import Tablescroll from "$components/composites/Tablescroll.svelte";
 
   const authStore = userStore();
 
@@ -75,7 +74,6 @@
   ></TextArea>
 
   <User />
-  <Tablescroll></Tablescroll>
 </div>
 
 <DialogWindow

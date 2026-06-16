@@ -15,12 +15,14 @@ export enum AlignMapEnum {
   right = "text-right",
 }
 
-export function getAlignmentClass(key: string | null | undefined): string {
-  const activeKey = key || "left";
+export class AlignMap {
+  static getAlignmentClass(key: string | null | undefined): string {
+    const activeKey = key || "left";
 
-  if (activeKey in AlignMapEnum) {
-    return AlignMapEnum[activeKey as keyof typeof AlignMapEnum];
+    if (activeKey in AlignMapEnum) {
+      return AlignMapEnum[activeKey as keyof typeof AlignMapEnum];
+    }
+
+    return AlignMapEnum.left;
   }
-
-  return AlignMapEnum.left;
 }
