@@ -1,6 +1,4 @@
 <script lang="ts">
-  import Hero from "$components/Hero.svelte";
-  import TextInput from "$components/primitives/TextInput.svelte";
   import {
     ConfirmationIcon,
     CycleIcon,
@@ -15,11 +13,14 @@
     WarningIcon,
   } from "$components/primitives/icons";
   import DialogWindow from "$components/layouts/DialogWindow.svelte";
-  import { ModalTypeEnum } from "$lib/ts/enums/modal";
-  import userStore from "$stores/auth";
-  import { goto } from "$app/navigation";
+  import Hero from "$components/Hero.svelte";
   import TextArea from "$components/primitives/TextArea.svelte";
+  import TextInput from "$components/primitives/TextInput.svelte";
   import User from "$components/User.svelte";
+  import userStore from "$stores/auth";
+  import { ModalTypeEnum } from "$lib/ts/enums/modal";
+  import { goto } from "$app/navigation";
+  import Tablescroll from "$components/composites/Tablescroll.svelte";
 
   const authStore = userStore();
 
@@ -74,6 +75,7 @@
   ></TextArea>
 
   <User />
+  <Tablescroll></Tablescroll>
 </div>
 
 <DialogWindow

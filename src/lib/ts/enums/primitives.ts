@@ -1,10 +1,26 @@
 /* eslint-disable no-unused-vars */
 
 export enum DisplayMedia {
-  base = 'table-cell',
-  xs = 'hidden xs:table-cell',
-  sm = 'hidden sm:table-cell',
-  md = 'hidden md:table-cell',
-  lg = 'hidden lg:table-cell',
-  xl = 'hidden xl:table-cell'
+  base = "table-cell",
+  xs = "hidden xs:table-cell",
+  sm = "hidden sm:table-cell",
+  md = "hidden md:table-cell",
+  lg = "hidden lg:table-cell",
+  xl = "hidden xl:table-cell",
+}
+
+export enum AlignMapEnum {
+  left = "text-left",
+  center = "text-center",
+  right = "text-right",
+}
+
+export function getAlignmentClass(key: string | null | undefined): string {
+  const activeKey = key || "left";
+
+  if (activeKey in AlignMapEnum) {
+    return AlignMapEnum[activeKey as keyof typeof AlignMapEnum];
+  }
+
+  return AlignMapEnum.left;
 }

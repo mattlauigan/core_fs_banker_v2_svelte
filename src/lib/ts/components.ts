@@ -1,7 +1,7 @@
 import type { Component } from "svelte";
 import type { ModalTypeEnum } from "./enums/modal";
 import type { Date } from "./types/app";
-import type { DisplayMedia } from "./enums/primitives";
+import type { AlignMapEnum } from "./enums/primitives";
 
 export type BaseInputProps = {
   id?: string;
@@ -60,7 +60,7 @@ export interface Column<T> {
   header: string;
   sortable?: boolean;
   class?: string;
-  alignment?: 'left' | 'center' | 'right' 
+  alignment?: keyof typeof AlignMapEnum;
 }
 
 export type IconProps = {

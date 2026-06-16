@@ -3,7 +3,7 @@
   }
 
   ._table_element {
-    @apply w-full border-separate border-spacing-y-2 rounded-lg;
+    @apply w-full border-separate border-spacing-y-2.5 rounded-lg;
   }
 
   ._table_padding {
@@ -11,19 +11,19 @@
   }
 
   ._table_head {
-    @apply bg-gray-100 py-1;
+    @apply bg-slate-50 border-b border-slate-200 text-xs uppercase tracking-wide text-slate-500;
   }
 
-  /* ._table_header {
-    @apply text-center;
-  } */
+  ._table_header {
+    @apply px-5 py-3.5 font-semibold whitespace-nowrap;
+  }
 
   ._table_data_row {
-    @apply  bg-gray-50 hover:bg-accent-003/10 shadow-sm rounded-md hover:[&_td]:border-b-2 hover:[&_td]:border-primary-300 transition-all delay-75 ease-linear;
+    @apply  bg-gray-50 hover:bg-accent-003/10 shadow-sm rounded-md hover:[&_td]:border-t-2 hover:[&_td]:border-primary-100 transition-all delay-75 ease-linear;
   }
 
   ._table_data_cell {
-    @apply wrap-break-word ;
+    @apply flex-wrap flex-row wrap-break-word ;
   }
 
   ._table_action_header {
@@ -31,11 +31,11 @@
   }
 
   ._table_action_container {
-    @apply relative inline-flex cursor-pointer mx-1;
+    @apply sticky right-0;
   }
 
   ._table_data_action {
-    @apply flex justify-center align-middle gap-0.5 h-full;
+    @apply flex justify-center align-middle gap-1.5 h-full;
   }
 
   ._table_tooltip {

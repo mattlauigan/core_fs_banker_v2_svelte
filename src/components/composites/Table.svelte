@@ -1,6 +1,9 @@
 <script lang="ts" generics="T">
   import type { Column, IconProps, TableAction } from "$lib/ts/components";
-  import type { DisplayMedia } from "$lib/ts/enums/primitives";
+  import {
+    getAlignmentClass,
+    type DisplayMedia,
+  } from "$lib/ts/enums/primitives";
   import { type Component } from "svelte";
 
   type DataTableProps = {
@@ -22,23 +25,27 @@
 <div class="_table_container">
   <table class="_table_element">
     <thead class="_table_head">
-      <tr>
+      <tr class='_table_data_row'>
         {#each columns as column}
-          <th class="_table_header _table_padding text-{column.alignment+' ' || 'left'} ">
-            {column.header + column.alignment} 
+          <th
+            class="_table_header _table_padding {getAlignmentClass(
+              column.alignment,
+            )} "
+          >
+            {column.header}
           </th>
         {/each}
         {#if actions.length}
-          <th class="_table_header"
-            ><span class="_table_action_header">• • •</span></th
+          <th class="_table_header _table_action_header" 
+            >• • •</th
           >
         {/if}
       </tr>
     </thead>
 
-    <tbody>
+    <tbody class="overflow overflow-x-auto whitespace-nowrap">
       {#if loading}
-        <tr>
+        <tr class='_table_data_row'>
           <td colspan={columns.length + 1} class="text-center p-6">
             Loading...
           </td>
@@ -49,15 +56,15 @@
             {#each columns as column}
               <td
                 class="_table_data_cell _table_padding {column.class ??
-                  'w-fit'} text-{column.alignment ?? 'left '}"
+                  'w-fit'} {getAlignmentClass(column.alignment)}"
               >
-                <render>
-                  {row[column.key]+column.alignment!}
+                <render class={getAlignmentClass(column.alignment)}>
+                  {row[column.key]}
                 </render>
               </td>
             {/each}
             {#if actions.length}
-              <td class="_table_data_action _table_padding">
+              <td class="_table_data_action _table_padding _table_data_cell">
                 {#each actions as action}
                   {@const IconComponent = action.icon as Component<IconProps>}
                   <div class="_table_action_container">
