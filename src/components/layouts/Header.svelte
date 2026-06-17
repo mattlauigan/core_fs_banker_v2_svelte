@@ -43,7 +43,7 @@
           <img
             src={!scrolled ? companyLogo : companyLogoDark}
             alt="Organization"
-            class="h-14 w-auto"
+            class="h-10 w-auto"
           />
         </a>
       </span>

@@ -43,7 +43,7 @@
   }
 </script>
 
-<div class="_group_vr">
+<div class="_group_vr w-19/20">
   <Table data={paginatedData} {columns} {actions}>
     <Pagination
       page={currentPage}

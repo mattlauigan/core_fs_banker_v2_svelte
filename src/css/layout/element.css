@@ -3,5 +3,5 @@
 }
 
 ._group_vr {
-  @apply flex flex-col gap-4 my-6;
+  @apply flex flex-col gap-4 my-6 mx-auto;
 }

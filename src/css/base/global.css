@@ -5,9 +5,6 @@ html {
 }
 
 body {
-  @apply relative m-0 p-0 bg-background-c-01 text-scripts  pt-[10vh];
+  @apply relative m-0 p-0 bg-background-c-01 text-scripts;
 }
 
-header {
-  @apply fixed top-0 left-0 box-border flex flex-col w-screen bg-[--color-bg-01] z-50 translate-x-0 shadow-md;
-}

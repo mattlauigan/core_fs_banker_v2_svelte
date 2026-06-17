@@ -1,13 +1,30 @@
 <script>
   import Card from "$components/primitives/Card.svelte";
-  import CardTitle from "$components/primitives/CardTitle.svelte";
+
+  import CardContainer from "$components/primitives/CardContainer.svelte";
+
+  import CardHeader from "$components/primitives/CardHeader.svelte";
   import User from "$components/User.svelte";
 </script>
 
-<Card>
-  <CardTitle label="Savings Account" />
-  <User />
-  <User />
-  <User />
-  <User />
-</Card>
+<CardContainer>
+  <CardHeader label="Savings Account" />
+  <Card>
+    <User />
+    <Card>
+      <User />
+    </Card>
+  </Card>
+</CardContainer>
+<!-- <script lang="ts">
+  import Ritals from "$components/composites/Ritals.svelte";
+
+  
+
+
+
+
+</script>
+
+
+<Ritals/> -->
