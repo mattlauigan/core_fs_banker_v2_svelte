@@ -38,7 +38,7 @@
   />
 
   <label
-    for="username"
+    for={name}
     aria-invalid={hasError}
     class="pointer-events-none absolute left-0 top-1.5 text-[12px] tracking-[1.5px] text-accent-003 transition-all duration-300 ease-in-out peer-placeholder-shown:top-3 peer-placeholder-shown:text-[12px] peer-focus:-top-4 peer-focus:text-[11px] peer-focus:text-primary-700 peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-[11px] aria-invalid:text-error-text"
     >{label.toLocaleUpperCase()}
