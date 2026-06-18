@@ -21,6 +21,7 @@
   import { ModalTypeEnum } from "$lib/ts/enums/modal";
   import { goto } from "$app/navigation";
   import CardContainer from "$components/primitives/CardContainer.svelte";
+  import PasswordInput from "$components/primitives/PasswordInput.svelte";
 
   const authStore = userStore();
 
@@ -66,6 +67,13 @@
   </div>
   <br />
 
+  <PasswordInput
+    id="trial2"
+    name="trial2"
+    label="Password"
+    style="w-64"
+    required
+  />
   <TextArea
     id="trial2"
     name="trial2"
