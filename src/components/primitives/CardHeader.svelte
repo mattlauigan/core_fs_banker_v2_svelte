@@ -30,11 +30,11 @@
   @import "tailwindcss";
 
   ._card_header_wrapper {
-    @apply sticky top-16 transition-all duration-300 ease-linear px-34 ;
+    @apply sticky top-16 transition-all duration-300 ease-linear px-34 py-2.5;
   }
 
   ._card_header_wrapper._scrolled {
-    @apply bg-slate-50/80 top-10 ;
+    @apply bg-slate-50/80 top-12;
   }
 
   ._card_header_label {
@@ -42,6 +42,6 @@
   }
 
   ._card_header_subtitle {
-    @apply text-sm text-slate-500 mb-5;
+    @apply text-sm text-slate-500;
   }
 </style>

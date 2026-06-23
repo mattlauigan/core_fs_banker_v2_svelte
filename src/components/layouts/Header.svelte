@@ -37,7 +37,7 @@
 
 <header class:shadow-none={menuStates.category !== "default" || isUserPanel}>
   <div class="_header_container" class:_scrolled={scrolled}>
-    <div class="pt-3">
+    <div class='flex h-full items-end'>
       <span>
         <a href="/">
           <img

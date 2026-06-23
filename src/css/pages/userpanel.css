@@ -1,8 +1,8 @@
 ._user_panel_container {
-  @apply relative flex flex-col pt-2;
+  @apply relative flex flex-col pt-2 w-fit;
 }
 ._user_panel {
-  @apply flex items-center mt-4 px-4 h-10 border border-accent-001 rounded-full gap-2.5 bg-user-panel-bg cursor-pointer;
+  @apply flex items-center mb-1.5 px-4 h-10 border border-primary-950/50 rounded-full gap-2.5 bg-user-panel-bg cursor-pointer w-full;
 }
 ._user_panel_popover {
   @apply absolute top-[110%] right-0 overflow-auto w-72 z-50;
@@ -17,23 +17,23 @@
 }
 
 ._user_panel_popover_hr {
-  @apply border-none bg-accent-003 h-px my-2;
+  @apply border-none bg-primary-50 h-px my-2;
 }
 
 ._user_panel ._user_info {
-  @apply flex flex-col items-start gap-1.5;
+  @apply flex flex-col items-start gap-1;
 }
 
 ._user_fullname {
-  @apply m-0 text-sm;
+  @apply m-0 text-[.8rem];
 }
 
 ._user_position {
-  @apply -mt-2 text-[0.7rem] text-accent-002;
+  @apply -mt-2 text-[0.7rem] text-secondary-700 tracking-wide; 
 }
 
 ._user_logo {
-  @apply w-8 h-8 rounded-[50%];
+  @apply w-6 h-6 rounded-full;
 }
 
 ._user_logo._user_online {

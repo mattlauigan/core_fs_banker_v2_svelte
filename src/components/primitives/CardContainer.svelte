@@ -14,8 +14,9 @@
 
 <style>
   @import "tailwindcss";
+  @import "$css/base/theme.css";
 
   ._card_container {
-    @apply min-h-screen bg-slate-100 flex-col items-center justify-center w-full font-sans mx-auto;
+    @apply min-h-screen bg-background-c-01  items-center  w-full mx-auto pt-12;
   }
 </style>
