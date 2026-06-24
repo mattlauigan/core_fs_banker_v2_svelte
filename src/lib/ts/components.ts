@@ -1,7 +1,11 @@
 import type { Component } from "svelte";
 import type { ModalTypeEnum } from "./enums/modal";
 import type { Date } from "./types/app";
-import type { AlignMapEnum } from "./enums/primitives";
+import type {
+  AlignMapEnum,
+  ButtonTypeEnum,
+  VariantEnum,
+} from "./enums/primitives";
 
 export type BaseInputProps = {
   id?: string;
@@ -45,9 +49,9 @@ export type ToggleSwitchProps = Required<
 };
 
 export type ButtonProps = {
-  label?: string;
-  type?: "button" | "submit" | "reset";
-  primary?: boolean;
+  label: string;
+  type?: keyof typeof ButtonTypeEnum;
+  variant?: keyof typeof VariantEnum;
   isLoading?: boolean;
   isReadonly?: boolean;
   isDisabled?: boolean;
@@ -62,6 +66,16 @@ export interface Column<T> {
   class?: string;
   alignment?: keyof typeof AlignMapEnum;
 }
+
+export type CheckboxProps = {
+  id: string;
+  label: string;
+  size?: "sm" | "md" | "lg";
+  disabled?: boolean;
+  indeterminate?: boolean;
+  checked?: boolean;
+  change?: (payload: { checked: boolean }) => void;
+};
 
 export type IconProps = {
   width?: number | string;

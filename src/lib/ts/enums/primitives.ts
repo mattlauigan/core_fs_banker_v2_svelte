@@ -8,6 +8,23 @@ export enum DisplayMedia {
   lg = "hidden lg:table-cell",
   xl = "hidden xl:table-cell",
 }
+export enum ButtonTypeEnum {
+  button,
+  submit,
+  reset,
+}
+
+export enum CheckBoxEnum {
+  left = "left",
+  right = "right",
+}
+
+export enum VariantEnum {
+  primary,
+  secondary,
+  warning,
+  danger,
+}
 
 export enum AlignMapEnum {
   left = "text-left",

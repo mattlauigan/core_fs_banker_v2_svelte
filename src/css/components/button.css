@@ -1,13 +1,13 @@
   ._input_button {
-    @apply py-2 px-5 rounded-md cursor-pointer transition-colors duration-300 tracking-[1.5px] sm:text-xs  w-fit border border-secondary-700 first-letter:uppercase;
-    @apply bg-background-c-01 text-secondary-800 rounded-md hover:bg-secondary-100 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed;
+    @apply py-2 px-5 rounded-md cursor-pointer transition-colors duration-300 tracking-[1.5px] sm:text-xs w-fit border border-secondary-700 first-letter:uppercase;
+    @apply bg-background-c-01 text-secondary-800 rounded-md hover:bg-secondary-100 disabled:bg-primary-100 disabled:text-primary-400 disabled:cursor-not-allowed disabled:border-primary-400;
     /* @apply dark:bg-primary-800 dark:text-white ; */
   }
 
   ._input_button._btn_primary {
-    @apply border-none bg-secondary-800 text-white w-fit hover:bg-secondary-300 hover:text-secondary-950 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed px-5;
+    @apply border-none bg-secondary-800 text-white w-fit px-5 hover:bg-secondary-300 hover:text-secondary-950 disabled:bg-slate-400 disabled:text-slate-100 disabled:cursor-not-allowed;
   }
 
   ._input_button._btn_secondary {
-    @apply border-none bg-primary-800 text-white w-fit hover:bg-primary-300 hover:text-secondary-950 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed px-5;
+    @apply border-none bg-primary-800 text-white w-fit px-5 hover:bg-primary-300 hover:text-secondary-950 disabled:bg-slate-300 disabled:text-slate-100 disabled:border disabled:border-slate-400 disabled:cursor-not-allowed;
   }
