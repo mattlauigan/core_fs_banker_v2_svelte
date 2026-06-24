@@ -34,7 +34,7 @@
     {minlength}
     bind:value
     aria-invalid={hasError}
-    class="peer h-12 w-full border-b border-accent-002 bg-transparent text-[12px] tracking-[1.5px] text-scripts focus:text-accent-002 dark:text-white outline-none transition-colors duration-300 focus:border-primary-700 pl-1.5 disabled:border-accent-002 disabled:text-accent-002 disabled:cursor-not-allowed disabled:bg-linear-to-b disabled:from-transparent disabled:to-gray-200 aria-invalid:border-error-text"
+    class="peer h-12 w-full border-b border-accent-002 bg-transparent text-[12px] tracking-[1.5px] text-accent-002 focus:text-accent-002 outline-none transition-colors duration-300 focus:border-primary-700 pl-1.5 disabled:border-accent-002 disabled:text-accent-002 disabled:cursor-not-allowed disabled:bg-linear-to-b disabled:from-transparent disabled:to-gray-200 aria-invalid:border-error-text"
   />
 
   <label
