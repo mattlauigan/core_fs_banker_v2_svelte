@@ -7,8 +7,6 @@
 
 @import "./components/button.css";
 @import "./components/dialogWindow.css";
-@import "./components/inputField.css";
-
 
 @import "./layout/element.css";
 @import "./layout/header.css";
@@ -20,3 +18,5 @@
 @import "./pages/login.css";
 @import "./pages/register.css";
 @import "./pages/userpanel.css";
+
+@import "./primitives/checkbox.css"

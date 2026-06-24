@@ -3,13 +3,13 @@
   }
 
   ._login_container {
-    @apply bg-black/15 backdrop-blur-sm flex flex-row-reverse items-stretch w-[50vw]  max-w-[70vw] rounded-lg shadow-lg overflow-hidden;
+    @apply bg-primary-800/50 backdrop-blur-sm flex flex-row-reverse items-stretch w-[50vw] max-w-[70vw] rounded-lg shadow-lg overflow-hidden;
   }
 
   ._login_info {
-    @apply flex flex-col text-scripts p-10 pt-80 w-full bg-linear-to-t from-primary-400 to-white basis-1/2;
+    @apply flex items-end text-scripts p-10 pb-24 w-full bg-linear-to-t from-primary-400 to-white basis-1/2;
   }
 
   ._login_form {
-    @apply flex flex-col gap-4 w-full items-center justify-center basis-1/2 p-6;
+    @apply flex flex-col gap-4 w-full items-center justify-center basis-1/2 p-6 py-16;
   }
