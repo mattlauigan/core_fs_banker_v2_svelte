@@ -5,10 +5,10 @@
     label = "Button",
     type = "button",
     onClick = () => {},
-    primary = false,
     isLoading = false,
     isReadonly = false,
     isDisabled = false,
+    variant,
     class: customClass = "",
   }: ButtonProps = $props();
 </script>
@@ -19,7 +19,7 @@
   value={label}
   onclick={onClick}
   disabled={isDisabled || isReadonly || isLoading}
-  class="_input_button {primary ? '_primary' : ''} {customClass}"
+  class="_input_button {variant && `_btn_${variant}`} {customClass}"
 >
   {label}
 </button>

@@ -5,16 +5,16 @@
     width = 24,
     height = 24,
     fill = "#3F51B5",
-    className = "",
-    containerClassName = "",
+    className,
+    containerClass,
   }: IconProps = $props();
 </script>
 
-<div class={containerClassName}>
+<div class="{containerClass ?? "flex justify-center bg-info-bg w-fit mx-auto rounded-sm p-1.5" }">
   <svg
     x="0px"
     y="0px"
-    viewBox="-5 -8 110 110"
+    viewBox="0 0 110 110"
     style="enable-background:new 0 0 110 110;"
     xml:space="preserve"
     {fill}

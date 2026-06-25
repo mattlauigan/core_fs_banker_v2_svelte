@@ -5,12 +5,12 @@
     width = 24,
     height = 24,
     fill = "#F44336",
-    className = "",
-    containerClassName = "",
+    className,
+    containerClass,
   }: IconProps = $props();
 </script>
 
-<div class={containerClassName}>
+<div class="{containerClass ?? "flex justify-center bg-error-bg w-fit mx-auto rounded-sm p-1.5" }">
   <svg
     x="0px"
     y="0px"

@@ -3,7 +3,7 @@
   import Button from "$components/primitives/Button.svelte";
   import { ModalTypeEnum } from "$lib/ts/enums/modal";
   import type { Component } from "svelte";
-  import type { DialogWindowProps, IconProps } from "$lib/ts/components";
+  import type { DialogWindowProps, IconProps, ModalActionItem } from "$lib/ts/components";
   import { getModalSetup } from "../../utils/modalConfig";
 
   let {
@@ -12,7 +12,6 @@
     message,
     modalType = ModalTypeEnum.INFO,
     onSubmit = () => {},
-    actions = [{ label: "Ok", handler: close }],
   }: DialogWindowProps<IconProps> = $props();
 
   function close() {
@@ -25,6 +24,7 @@
   const setup = $derived(getModalSetup(modalType, onSubmit, close));
 
   const IconComponent = $derived(setup.Icon as Component<IconProps>);
+  const actions = $derived(setup.actions as ModalActionItem[])
 
   $effect(() => {
     if (show) dialogElement?.showModal();
@@ -39,9 +39,8 @@
     transition:fade
     role="button"
     tabindex="0"
-    style="color:red"
   >
-    <dialog class="_dialog_box" bind:this={dialogElement} onclose={close}>
+    <dialog bind:this={dialogElement} onclose={close}>
       <div class="_modal_content" transition:fade>
         {#if !!setup.Icon}
           <IconComponent width={48} height={48} />

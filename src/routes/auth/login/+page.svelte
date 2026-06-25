@@ -3,6 +3,7 @@
   import { goto } from "$app/navigation";
   import Button from "$components/primitives/Button.svelte";
   import TextInput from "$components/primitives/TextInput.svelte";
+  import PasswordInput from "$components/primitives/PasswordInput.svelte";
 
   const AuthStore = UserStore();
 
@@ -53,21 +54,15 @@
           required
         />
 
-        <TextInput
+        <PasswordInput
           id="password"
           name="password"
           label="Password"
           style="dark w-full"
-          type="password"
           required
         />
 
-        <Button
-          label="Login"
-          type="submit"
-          primary
-          class="m-auto flex items-center justify-center mb-6"
-        />
+        <Button label="Login" type="submit" variant="primary" />
       </form>
     </div>
   </div>

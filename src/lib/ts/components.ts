@@ -1,6 +1,11 @@
 import type { Component } from "svelte";
 import type { ModalTypeEnum } from "./enums/modal";
 import type { Date } from "./types/app";
+import type {
+  AlignMapEnum,
+  ButtonTypeEnum,
+  VariantEnum,
+} from "./enums/primitives";
 
 export type BaseInputProps = {
   id?: string;
@@ -44,9 +49,9 @@ export type ToggleSwitchProps = Required<
 };
 
 export type ButtonProps = {
-  label?: string;
-  type?: "button" | "submit" | "reset";
-  primary?: boolean;
+  label: string;
+  type?: keyof typeof ButtonTypeEnum;
+  variant?: keyof typeof VariantEnum;
   isLoading?: boolean;
   isReadonly?: boolean;
   isDisabled?: boolean;
@@ -54,13 +59,43 @@ export type ButtonProps = {
   onClick?: () => void;
 };
 
+export interface Column<T> {
+  key: keyof T;
+  header: string;
+  sortable?: boolean;
+  class?: string;
+  alignment?: keyof typeof AlignMapEnum;
+}
+
+export type CheckboxProps = {
+  id: string;
+  label: string;
+  size?: "sm" | "md" | "lg";
+  disabled?: boolean;
+  indeterminate?: boolean;
+  checked?: boolean;
+  change?: (payload: { checked: boolean }) => void;
+};
+
 export type IconProps = {
   width?: number | string;
   height?: number | string;
   fill?: string;
   className?: string;
-  containerClassName?: string;
+  containerClass?: string;
 };
+
+export interface TableAction<T> {
+  icon: Component<IconProps>;
+  label: string;
+  onClick: (row: T) => void;
+}
+
+export interface TableProps<T> {
+  data: T[];
+  columns: Column<T>[];
+  actions?: TableAction<T>[];
+}
 
 export type TextAreaProps = {
   id: string;

@@ -1,6 +1,4 @@
 <script lang="ts">
-  import Hero from "$components/Hero.svelte";
-  import TextInput from "$components/primitives/TextInput.svelte";
   import {
     ConfirmationIcon,
     CycleIcon,
@@ -15,10 +13,15 @@
     WarningIcon,
   } from "$components/primitives/icons";
   import DialogWindow from "$components/layouts/DialogWindow.svelte";
-  import { ModalTypeEnum } from "$lib/ts/enums/modal";
-  import userStore from "$stores/auth";
-  import { goto } from "$app/navigation";
+  import Hero from "$components/Hero.svelte";
   import TextArea from "$components/primitives/TextArea.svelte";
+  import TextInput from "$components/primitives/TextInput.svelte";
+  import User from "$components/User.svelte";
+  import userStore from "$stores/auth";
+  import { ModalTypeEnum } from "$lib/ts/enums/modal";
+  import { goto } from "$app/navigation";
+  import CardContainer from "$components/primitives/CardContainer.svelte";
+  import PasswordInput from "$components/primitives/PasswordInput.svelte";
 
   const authStore = userStore();
 
@@ -45,7 +48,7 @@
   };
 </script>
 
-<div class="_content">
+<CardContainer>
   <Hero />
   <TextInput id="trial" name="trial" label="Trial 2" style="w-75" />
   <div class="flex space-around w-full">
@@ -64,6 +67,13 @@
   </div>
   <br />
 
+  <PasswordInput
+    id="trial2"
+    name="trial2"
+    label="Password"
+    style="w-64"
+    required
+  />
   <TextArea
     id="trial2"
     name="trial2"
@@ -71,12 +81,14 @@
     style="w-64"
     required
   ></TextArea>
-</div>
+
+  <User />
+</CardContainer>
 
 <DialogWindow
   title="Session Expired"
   bind:show={isExpired}
-  modalType={ModalTypeEnum.SEARCH}
+  modalType={ModalTypeEnum.INFO}
   message="Your session has expired. Please login again to continue."
   onSubmit={onSessionExpired}
 />

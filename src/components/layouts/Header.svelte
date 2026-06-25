@@ -18,10 +18,10 @@
     },
   });
 
-  let isScrolled = $state(false);
+  let scrolled = $state(false);
 
   function handleScroll() {
-    isScrolled = window.scrollY > 0;
+    scrolled = window.scrollY > 0;
   }
 
   let frequentModules = megamenu.frequentModules;
@@ -35,26 +35,25 @@
 
 <svelte:window onscroll={handleScroll} />
 
-<header
-  class={menuStates.category !== "default" || isUserPanel ? "shadow-none" : ""}
->
-  <div
-    class="_header_container
-    {!isScrolled ? '' : '_scrolled'}"
-  >
-    <div class="pt-3">
+<header class:shadow-none={menuStates.category !== "default" || isUserPanel}>
+  <div class="_header_container" class:_scrolled={scrolled}>
+    <div class='flex h-full items-end'>
       <span>
         <a href="/">
           <img
-            src={!isScrolled ? companyLogo : companyLogoDark}
+            src={!scrolled ? companyLogo : companyLogoDark}
             alt="Organization"
-            class="h-14 w-auto"
+            class="h-10 w-auto"
           />
         </a>
       </span>
     </div>
 
-    <Menu category={menuStates.category} root={menuStates.root} {isScrolled} />
+    <Menu
+      category={menuStates.category}
+      root={menuStates.root}
+      isScrolled={scrolled}
+    />
 
     <UserPanel
       isPopOver={menuStates.popover.userPanel}

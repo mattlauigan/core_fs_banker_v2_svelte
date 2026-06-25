@@ -19,10 +19,6 @@
       goto("/auth/login", { replaceState: true });
     }
   });
-
-  goto("/auth/login", {
-    replaceState: true,
-  });
 </script>
 
 <div class="_register_page">
@@ -32,8 +28,8 @@
         <span
           class="text-primary-900 font-bold tracking-wide text-base md:text-sm sm:text-xs"
         >
-          <h2>CoreFS Banker</h2>
-          <h2>Powering Smarter Financial Management</h2>
+          <h2 class="text-2xl">CoreFS Banker</h2>
+          <h2  class="text-primary-700">Powering Smarter Financial Management</h2>
         </span>
         <!-- <span class="text-gray-500">
           <p class="text-base">{$AuthStore.accessData?.branch.name}</p>
@@ -69,8 +65,7 @@
         <Button
           type="submit"
           label="Terminal Registration"
-          class="m-auto flex items-center justify-center mb-6"
-          primary
+          variant="primary"
         />
       </form>
     </div>
@@ -84,4 +79,3 @@
   {message}
   onSubmit={() => {}}
 />
-
