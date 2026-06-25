@@ -1,0 +1,21 @@
+{
+  "$schema": ["./node_modules/json-server/schema.json"],
+  "terminal_registration": {
+    "code": "SUCCESS",
+    "message": "Terminal registered successfully",
+    "warning": "",
+    "st": 1,
+    "ac": "ACT001",
+    "payload":
+    {
+      "registration_code": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+      "term_code": "term01",
+      "term_id": 1,
+      "id": 1,
+      "term_desc": "Matt Terminal"
+    }
+},
+  "profile": {
+    "name": "typicode"
+  }
+}
