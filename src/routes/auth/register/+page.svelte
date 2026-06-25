@@ -46,17 +46,17 @@
           <p>Registration</p>
         </span>
       </span>
-      <form autocomplete="off" method="POST" action="?">
+      <form autocomplete="off" method="POST" action="?/register">
         <TextInput
-          id="login-user"
-          name="login-user"
+          id="username"
+          name="username"
           label="Username"
           style="dark w-full"
           required
         />
         <TextInput
-          id="terminalId"
-          name="terminalId"
+          id="termcode"
+          name="termcode"
           label="Terminal ID"
           style="dark w-full"
           required
