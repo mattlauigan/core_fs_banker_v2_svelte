@@ -31,17 +31,17 @@ export const actions: Actions = {
       //   response.payload.registration_code,
       // );
 
-      const cookie = createCookie(cookies);
+      // const cookie = createCookie(cookies);
 
-      cookie.set("registration_code", response.payload.registration_code);
 
-      // userStore().register(e);
 
-      goto("/");
+      // cookie.set("registration_code", response.payload.registration_code);
+
 
       return response;
     } catch (error) {
-      return fail(400, { message: "Login failed" });
+      console.error("Registration error:", error); // add this
+      return fail(400, { message: error instanceof Error ? error.message : "Registration failed" });
     }
   },
 };
