@@ -1,3 +1,4 @@
+// import { env } from "$env/dynamic/private";
 import type {
   Login,
   TerminalRegistration as TermRegData,
@@ -37,7 +38,7 @@ const change_password = (formData: ChangePassword) => {
 const login = (formData: LoginForm): Promise<ResponseData<Login>> => {
   return new Promise((resolve, reject) => {
     utilsHttp
-      .post<ResponseData<Login>>("/auth/login", formData)
+      .get<ResponseData<Login>>("/auth/login")
       .then((response: ResponseData<Login>) => {
         resolve(response);
       })
@@ -48,11 +49,11 @@ const login = (formData: LoginForm): Promise<ResponseData<Login>> => {
 };
 
 const terminal_registration = (
-  formData: TerminalRegistration,
+  data: TerminalRegistration,
 ): Promise<ResponseData<TermRegData>> => {
   return new Promise((resolve, reject) => {
     utilsHttp
-      .post<ResponseData<TermRegData>>("/auth/terminal-registration", formData)
+      .get<ResponseData<TermRegData>>("terminal_registration")
       .then((response: ResponseData<TermRegData>) => {
         resolve(response);
       })

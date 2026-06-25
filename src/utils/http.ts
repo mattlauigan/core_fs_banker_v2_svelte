@@ -1,4 +1,4 @@
-import { PUBLIC_APP_URL } from "$env/static/public";
+import { PUBLIC_APP_URL } from '$env/static/public';
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
@@ -59,8 +59,7 @@ async function request<T>(config: RequestConfig): Promise<T> {
   controllers.add(controller);
 
   const { url, method = "GET", data, params, headers = {}, signal } = config;
-
-  const finalUrl = `${PUBLIC_APP_URL}${buildUrl(url, params)}`;
+  const finalUrl = `${PUBLIC_APP_URL}/${url}`;
 
   try {
     const res = await fetch(finalUrl, {
@@ -94,7 +93,7 @@ const post = <T>(
   config?: Omit<RequestConfig, "url" | "method" | "data">,
 ) =>
   request<T>({
-    url: `${PUBLIC_APP_URL}/${url}`,
+    url: url,
     method: "POST",
     data,
     ...config,
