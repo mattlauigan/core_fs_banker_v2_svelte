@@ -2,26 +2,24 @@
   import Button from "$components/primitives/Button.svelte";
   import DialogWindow from "$components/layouts/DialogWindow.svelte";
   import TextInput from "$components/primitives/TextInput.svelte";
-  // import UserStore from "$stores/auth";
+  import type { ActionResult } from "@sveltejs/kit";
+  import type { RegistrationData } from "$lib/ts/data/terminal";
+  import {  saveRegFromServer } from "$stores/authStore";
   import { ModalTypeEnum } from "$lib/ts/enums/modal";
+  import { enhance } from "$app/forms";
   import { goto } from "$app/navigation";
-  import { getRegistration } from "$stores/authStore";
-  import type { RegistrationState } from "$lib/ts/types/auth";
+  import { registrationStore } from "$stores/authStore";
 
   let message: string = $state("Terminal Registration Successful");
+  let isRegistered = $derived($registrationStore.isRegistered);
 
-  const reg: RegistrationState = getRegistration();
-
-  $effect(() => {
-    console.log("AuthStore state changed:", {
-      isRegistered: reg.isRegistered,
-      // isRegistered: $AuthStore.isRegistered,
-    });
-
-    if (reg.isRegistered) {
-      goto("/auth/login", { replaceState: true });
-    }
-  });
+  function handleResult() {
+    return async ({ result }: { result: ActionResult }) => {
+      if (result.type === "success") {
+        saveRegFromServer(result.data as RegistrationData);
+      }
+    };
+  }
 </script>
 
 <div class="_register_page">
@@ -36,10 +34,7 @@
             Powering Smarter Financial Management
           </h2>
         </span>
-        <!-- <span class="text-gray-500">
-          <p class="text-base">{$AuthStore.accessData?.branch.name}</p>
-          <p class="font-sm">{$AuthStore.accessData?.termdesc}</p>
-        </span> -->
+
       </article>
     </div>
     <div class="_register_form">
@@ -51,7 +46,12 @@
           <p>Registration</p>
         </span>
       </span>
-      <form autocomplete="off" method="POST" action="?/handleRegister">
+      <form
+        autocomplete="off"
+        method="POST"
+        action="?/handleRegister"
+        use:enhance={handleResult}
+      >
         <TextInput
           id="username"
           name="username"
@@ -75,8 +75,8 @@
 
 <DialogWindow
   title="Registration"
-  bind:show={reg.isRegistered}
+  bind:show={isRegistered}
   modalType={ModalTypeEnum.INFO}
   {message}
-  onSubmit={() => {}}
+  onSubmit={() => goto("/auth/login", { replaceState: true })}
 />

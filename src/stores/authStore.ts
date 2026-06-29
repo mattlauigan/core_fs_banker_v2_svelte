@@ -11,6 +11,8 @@ import type {
   UserState,
 } from "$lib/ts/types/auth";
 import { writable, derived, get } from "svelte/store";
+import { browser } from "$app/environment"
+import { ls } from "$lib/services/ls";
 
 function loadRegistration(): RegistrationState {
   try {
@@ -59,11 +61,20 @@ function loadUser(): UserData | null {
 }
 
 function saveAuth(state: AuthState): void {
+  if (!browser) return;
   localStorage.setItem(AUTH_KEY, JSON.stringify(state));
 }
 
 function saveRegistration(state: RegistrationState): void {
-  localStorage.setItem(AUTH_REG, JSON.stringify(state));
+  if (!browser) return;
+  ls.add(AUTH_REG, JSON.stringify(state))
+
+}
+
+export function saveRegFromServer(result: RegistrationData): void {
+  applyRegistrationResponse(
+    { registration_code: result.registration_code!, branch: result.branch, terminal: result.terminal },
+  );
 }
 
 function saveUser(user: UserData): void {
@@ -84,7 +95,7 @@ const initialRegistration = loadRegistration();
 // ─── Writable Stores ──────────────────────────────────────────────────────────
 
 const authStore = writable<AuthState>(initialAuth);
-const RegistrationStore = writable<RegistrationState>(initialRegistration);
+export const registrationStore = writable<RegistrationState>(initialRegistration);
 const userStore = writable<UserState>({
   profile: initialUser,
   isLoading: false,
@@ -128,27 +139,18 @@ function applyAuthResponse(response: AuthApiData, fallbackUser: string): void {
 
 function applyRegistrationResponse(
   response: RegistrationData,
-  fallbackTerm: string,
+  
 ): void {
-  // const expiresAt = response.expiresIn
-  //   ? Date.now() + response.expiresIn * 1000
-  //   : Date.now() + 24 * 60 * 60 * 1000; // default: 24h
-
   const newReg: RegistrationState = {
     registration_code: response.registration_code,
     branch: response.branch,
     terminal: response.terminal,
     isRegistered: true,
   };
-
-  // const newTerm: TerminalData = response.user ?? { name: fallbackTerm };
-
+  console.log('dito')
   // 1. Persist to localStorage
   saveRegistration(newReg);
-
-  // 2. Update stores
-  RegistrationStore.set(newReg);
-  // userStore.update((s) => ({ ...s, profile: newUser, error: null }));
+  registrationStore.set(newReg)
 }
 
 // ─── Actions ──────────────────────────────────────────────────────────────────
@@ -158,26 +160,13 @@ function applyRegistrationResponse(
  * POST /api/auth/register
  */
 export async function register(
-  payload: RegistrationFormData,
-  apiUrl = "/api/auth/register",
-): Promise<void> {
+  payload: RegistrationFormData
+): Promise<RegistrationData> {
   userStore.update((s) => ({ ...s, isLoading: true, error: null }));
 
   try {
-    // const res = await fetch(apiUrl, {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(payload),
-    // });
-
-    // if (!res.ok) {
-    //   const err = await res.json().catch(() => ({}));
-    //   throw new Error(err?.message ?? `Registration failed (${res.status})`);
-    // }
-
-    // const data: AuthApiData = await res.json();
-
     const res = await authService.terminal_registration(payload);
+    console.log('REGISTRATION', res.payload)
 
     if (res.code !== "SUCCESS") {
       throw new Error(res.message);
@@ -185,23 +174,22 @@ export async function register(
 
     const data: RegistrationData = await res.payload;
 
-    // Merge name from the form payload into the user profile
-    // since not all APIs echo it back
     if (data.terminal) {
       data.terminal.code = data.terminal.name ?? payload.termcode;
-      data.user.name = data.user.name ?? payload.username;
+
     } else {
       data.terminal = { name: payload.termcode };
-      data.user = { name: payload.username };
+
     }
 
-    applyRegistrationResponse(data, payload.username);
+    applyRegistrationResponse(data);
+    return res.payload
   } catch (err) {
     const message = err instanceof Error ? err.message : "Registration failed";
-    userStore.update((s) => ({ ...s, error: message }));
-    throw err; // re-throw so the form can handle it too
+    registrationStore.update((s) => ({ ...s, error: message }));
+    throw err; 
   } finally {
-    userStore.update((s) => ({ ...s, isLoading: false }));
+    registrationStore.update((s) => ({ ...s, isLoading: false }));
   }
 }
 
@@ -261,6 +249,6 @@ export function getToken(): string | null {
   return get(authStore).token;
 }
 
-export function getRegistration(): RegistrationState {
-  return get(RegistrationStore);
+export function getRegistrationState(): boolean {
+  return get(registrationStore).isRegistered;
 }

@@ -1,8 +1,5 @@
-import { goto } from "$app/navigation";
-import { fail, type RequestEvent } from "@sveltejs/kit";
-
 import type { Actions } from "$lib/ts/types/actions";
-import authService from "$lib/services/authService";
+import { fail, type RequestEvent } from "@sveltejs/kit";
 import { register } from "$stores/authStore";
 
 export const actions: Actions = {
@@ -18,23 +15,10 @@ export const actions: Actions = {
         });
       }
 
-      const response = await register({ username, termcode });
-      // ✅ Store + localStorage updated — redirect or show success
-      window.location.href = "/dashboard";
+      return await register({ username, termcode });
 
-      // utilsCookie.set(
-      //   e.cookies,
-      //   "registration_code",
-      //   response.payload.registration_code,
-      // );
-
-      // const cookie = createCookie(cookies);
-
-      // cookie.set("registration_code", response.payload.registration_code);
-
-      return response;
     } catch (error) {
-      console.error("Registration error:", error); // add this
+      console.error("Registration error:", error); 
       return fail(400, {
         message: error instanceof Error ? error.message : "Registration failed",
       });

@@ -16,9 +16,7 @@
         "id": 1,
         "code": "branch01",
         "name": "Branch Eastwood"
-      },
-      "registration_code": "string",
-      "error": "string"
+      }
     }
   },
   "profile": {

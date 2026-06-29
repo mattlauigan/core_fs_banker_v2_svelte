@@ -1,21 +1,17 @@
 <script lang="ts">
-  import UserStore from "$stores/auth";
+  import { registrationStore } from "$stores/authStore";
   import { goto } from "$app/navigation";
   import Button from "$components/primitives/Button.svelte";
   import TextInput from "$components/primitives/TextInput.svelte";
-  import PasswordInput from "$components/primitives/PasswordInput.svelte";
-
-  const AuthStore = UserStore();
+  import PasswordInput from "$components/primitives/PasswordInput.svelte";;
 
   $effect(() => {
     console.log("AuthStore state changed:", {
-      isAuthenticated: $AuthStore.isAuthenticated,
-      isRegistered: $AuthStore.isRegistered,
+      // isAuthenticated: $AuthStore.isAuthenticated,
+      isRegistered: $registrationStore.isRegistered,
     });
-    if (!$AuthStore.isRegistered) {
+    if (!$registrationStore.isRegistered) {
       goto("/auth/register", { replaceState: true });
-    } else if ($AuthStore.isAuthenticated) {
-      goto("/", { replaceState: true });
     }
   });
 </script>
@@ -30,9 +26,13 @@
           <h2>Baug CARP Benificiaries</h2>
           <h2>Multi-Purpose Coop</h2>
         </span>
-        <span class="text-accent-003">
-          <p class="text-base"><!-- branch--></p>
-          <p class="font-sm"><!-- Terminal--></p>
+        <span class="">
+          <p class="text-base text-primary-700">
+            {$registrationStore.branch?.name}
+          </p>
+          <p class="font-sm text-primary-500">
+            {$registrationStore.terminal?.name}
+          </p>
         </span>
       </article>
     </div>
@@ -50,7 +50,7 @@
           id="username"
           name="username"
           label="Username"
-          style="dark w-full"
+          style=" w-full"
           required
         />
 
@@ -58,7 +58,7 @@
           id="password"
           name="password"
           label="Password"
-          style="dark w-full"
+          style=" w-full"
           required
         />
 
