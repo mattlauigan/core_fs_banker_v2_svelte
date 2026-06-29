@@ -6,15 +6,21 @@
     "warning": "",
     "st": 1,
     "ac": "ACT001",
-    "payload":
-    {
-      "registration_code": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
-      "term_code": "term01",
-      "term_id": 1,
-      "id": 1,
-      "term_desc": "Matt Terminal"
+    "payload": {
+      "terminal": {
+        "id": 1,
+        "code": "term01",
+        "name": "Matt Terminal"
+      },
+      "branch": {
+        "id": 1,
+        "code": "branch01",
+        "name": "Branch Eastwood"
+      },
+      "registration_code": "string",
+      "error": "string"
     }
-},
+  },
   "profile": {
     "name": "typicode"
   }

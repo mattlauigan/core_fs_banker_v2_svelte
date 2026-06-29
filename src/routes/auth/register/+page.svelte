@@ -2,20 +2,23 @@
   import Button from "$components/primitives/Button.svelte";
   import DialogWindow from "$components/layouts/DialogWindow.svelte";
   import TextInput from "$components/primitives/TextInput.svelte";
-  import UserStore from "$stores/auth";
+  // import UserStore from "$stores/auth";
   import { ModalTypeEnum } from "$lib/ts/enums/modal";
   import { goto } from "$app/navigation";
+  import { getRegistration } from "$stores/authStore";
+  import type { RegistrationState } from "$lib/ts/types/auth";
 
-  const AuthStore = UserStore();
   let message: string = $state("Terminal Registration Successful");
+
+  const reg: RegistrationState = getRegistration();
 
   $effect(() => {
     console.log("AuthStore state changed:", {
-      isAuthenticated: $AuthStore.isAuthenticated,
-      isRegistered: $AuthStore.isRegistered,
+      isRegistered: reg.isRegistered,
+      // isRegistered: $AuthStore.isRegistered,
     });
 
-    if ($AuthStore.isRegistered) {
+    if (reg.isRegistered) {
       goto("/auth/login", { replaceState: true });
     }
   });
@@ -29,7 +32,9 @@
           class="text-primary-900 font-bold tracking-wide text-base md:text-sm sm:text-xs"
         >
           <h2 class="text-2xl">CoreFS Banker</h2>
-          <h2  class="text-primary-700">Powering Smarter Financial Management</h2>
+          <h2 class="text-primary-700">
+            Powering Smarter Financial Management
+          </h2>
         </span>
         <!-- <span class="text-gray-500">
           <p class="text-base">{$AuthStore.accessData?.branch.name}</p>
@@ -46,7 +51,7 @@
           <p>Registration</p>
         </span>
       </span>
-      <form autocomplete="off" method="POST" action="?/register">
+      <form autocomplete="off" method="POST" action="?/handleRegister">
         <TextInput
           id="username"
           name="username"
@@ -62,11 +67,7 @@
           required
         />
 
-        <Button
-          type="submit"
-          label="Terminal Registration"
-          variant="primary"
-        />
+        <Button type="submit" label="Terminal Registration" variant="primary" />
       </form>
     </div>
   </div>
@@ -74,7 +75,7 @@
 
 <DialogWindow
   title="Registration"
-  bind:show={$AuthStore.isRegistered}
+  bind:show={reg.isRegistered}
   modalType={ModalTypeEnum.INFO}
   {message}
   onSubmit={() => {}}

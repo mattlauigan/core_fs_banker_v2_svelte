@@ -3,12 +3,10 @@ import { fail, type RequestEvent } from "@sveltejs/kit";
 
 import type { Actions } from "$lib/ts/types/actions";
 import authService from "$lib/services/authService";
-
-import userStore from "$stores/auth";
-import { createCookie } from "../../../utils/cookies";
+import { register } from "$stores/authStore";
 
 export const actions: Actions = {
-  register: async ({ request, cookies }: RequestEvent) => {
+  handleRegister: async ({ request, cookies }: RequestEvent) => {
     try {
       const formData = await request.formData();
       const username = formData.get("username")?.toString() ?? "";
@@ -20,10 +18,9 @@ export const actions: Actions = {
         });
       }
 
-      const response = await authService.terminal_registration({
-        username,
-        termcode,
-      });
+      const response = await register({ username, termcode });
+      // ✅ Store + localStorage updated — redirect or show success
+      window.location.href = "/dashboard";
 
       // utilsCookie.set(
       //   e.cookies,
@@ -33,15 +30,14 @@ export const actions: Actions = {
 
       // const cookie = createCookie(cookies);
 
-
-
       // cookie.set("registration_code", response.payload.registration_code);
-
 
       return response;
     } catch (error) {
       console.error("Registration error:", error); // add this
-      return fail(400, { message: error instanceof Error ? error.message : "Registration failed" });
+      return fail(400, {
+        message: error instanceof Error ? error.message : "Registration failed",
+      });
     }
   },
 };

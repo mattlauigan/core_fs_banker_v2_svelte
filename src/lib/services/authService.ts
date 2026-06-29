@@ -1,17 +1,14 @@
-// import { env } from "$env/dynamic/private";
+import type { Login } from "$lib/ts/data/auth";
+import type { RegistrationData } from "$lib/ts/data/terminal";
 import type {
-  Login,
-  TerminalRegistration as TermRegData,
-} from "$lib/ts/data/auth";
-import type {
-  ChangePassword,
-  Login as LoginForm,
-  TerminalRegistration,
+  ChangePasswordFormData,
+  LoginFormData,
+  RegistrationFormData,
 } from "$lib/ts/forms/auth";
 import type { ErrorResponse, ResponseData } from "$lib/ts/types/app";
 import { utilsHttp } from "../../utils/http";
 
-const change_password = (formData: ChangePassword) => {
+const change_password = (formData: ChangePasswordFormData) => {
   return utilsHttp
     .put<ResponseData<Login>>("/auth/password", formData)
     .then((response: ResponseData<Login>) => {
@@ -35,7 +32,7 @@ const change_password = (formData: ChangePassword) => {
 //   });
 // };
 
-const login = (formData: LoginForm): Promise<ResponseData<Login>> => {
+const login = (formData: LoginFormData): Promise<ResponseData<Login>> => {
   return new Promise((resolve, reject) => {
     utilsHttp
       .get<ResponseData<Login>>("/auth/login")
@@ -49,12 +46,12 @@ const login = (formData: LoginForm): Promise<ResponseData<Login>> => {
 };
 
 const terminal_registration = (
-  data: TerminalRegistration,
-): Promise<ResponseData<TermRegData>> => {
+  data: RegistrationFormData,
+): Promise<ResponseData<RegistrationData>> => {
   return new Promise((resolve, reject) => {
     utilsHttp
-      .get<ResponseData<TermRegData>>("terminal_registration")
-      .then((response: ResponseData<TermRegData>) => {
+      .get<ResponseData<RegistrationData>>("terminal_registration")
+      .then((response: ResponseData<RegistrationData>) => {
         resolve(response);
       })
       .catch((error: ErrorResponse) => {
