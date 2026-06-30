@@ -1,11 +1,12 @@
-import type { UserData } from "../data/access";
+
 import type { Branch } from "../data/branch";
 import type { TerminalData } from "../data/terminal";
+import type { UserData } from "../data/user";
 
 export interface AuthState {
   token: string | null;
-  expiresAt: number | null; 
-  isAuthenticated: boolean;
+  expires_in: number | null; 
+  is_authenticated: boolean;
 }
 
 export interface RegistrationState {

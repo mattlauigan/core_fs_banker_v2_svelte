@@ -17,37 +17,9 @@
   import TextArea from "$components/primitives/TextArea.svelte";
   import TextInput from "$components/primitives/TextInput.svelte";
   import User from "$components/User.svelte";
-  // import userStore from "$stores/auth";
-  import { getRegistration } from "$stores/authStore";
   import { ModalTypeEnum } from "$lib/ts/enums/modal";
-  import { goto } from "$app/navigation";
   import CardContainer from "$components/primitives/CardContainer.svelte";
   import PasswordInput from "$components/primitives/PasswordInput.svelte";
-
-  // const authStore = userStore();
-  const reg = $derived(getRegistration());
-
-  // let isExpired = $state(!$authStore.isAuthenticated);
-
-  // $effect(() => {
-  //   if ($authStore.isRegistered && !$authStore.isAuthenticated) {
-  //     isExpired = true;
-  //     console.log("session expired");
-  //   } else if (!$authStore.isRegistered && !$authStore.isAuthenticated) {
-  //     isExpired = true;
-  //     console.log("for registration");
-  //   }
-  // });
-
-  const onSessionExpired = () => {
-    // isExpired = false;
-    console.log("logging out");
-    // authStore.logout();
-
-    goto("/auth/login", {
-      replaceState: true,
-    });
-  };
 </script>
 
 <CardContainer>
@@ -87,11 +59,11 @@
   <User />
 </CardContainer>
 
-<DialogWindow
+<!-- <DialogWindow
   title="Session Expired"
   // bind:show={isExpired}
   show={false}
   modalType={ModalTypeEnum.INFO}
   message="Your session has expired. Please login again to continue."
   onSubmit={onSessionExpired}
-/>
+/> -->

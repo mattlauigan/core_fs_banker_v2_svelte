@@ -21,7 +21,7 @@ export type Role = {
   name: string;
 };
 
-export interface User extends BaseUser {
+export interface UserData extends BaseUser {
   name: string;
   username: string;
   status: string;
@@ -31,14 +31,6 @@ export interface User extends BaseUser {
   created_at?: DateTimeString;
   branch: Branch;
   role: Role;
-  cashier?: UserCashier;
 }
 
-export type UserCashier = {
-  client_user_id: number;
-  ct_user_id: number;
-  ct_start_date?: DateTimeString;
-  ct_end_date?: DateTimeString;
-  effective_at?: Date;
-  dep_bank_acct_use_id?: string;
-};
+

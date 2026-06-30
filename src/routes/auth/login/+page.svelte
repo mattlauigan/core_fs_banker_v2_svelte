@@ -1,9 +1,12 @@
 <script lang="ts">
-  import { registrationStore } from "$stores/authStore";
+  import { registrationStore, saveAuthFromServer } from "$stores/authStore";
   import { goto } from "$app/navigation";
   import Button from "$components/primitives/Button.svelte";
   import TextInput from "$components/primitives/TextInput.svelte";
-  import PasswordInput from "$components/primitives/PasswordInput.svelte";;
+  import PasswordInput from "$components/primitives/PasswordInput.svelte";
+  import type { ActionResult } from "@sveltejs/kit";
+  import type { LoginData } from "$lib/ts/data/access";
+  import { enhance } from "$app/forms";
 
   $effect(() => {
     console.log("AuthStore state changed:", {
@@ -14,6 +17,14 @@
       goto("/auth/register", { replaceState: true });
     }
   });
+
+  function handleResult() {
+    return async ({ result }: { result: ActionResult }) => {
+      if (result.type === "success") {
+        saveAuthFromServer(result.data as LoginData);
+      }
+    };
+  }
 </script>
 
 <div class="_login_page">
@@ -45,7 +56,12 @@
         </p>
         <p class="font-sm font-medium">Welcome, please login</p>
       </span>
-      <form autocomplete="off" method="POST" action="?">
+      <form
+        autocomplete="off"
+        method="POST"
+        action="?/handleLogin"
+        use:enhance={handleResult}
+      >
         <TextInput
           id="username"
           name="username"

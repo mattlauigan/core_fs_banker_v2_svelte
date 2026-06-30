@@ -1,4 +1,4 @@
-import type { Login } from "$lib/ts/data/auth";
+import type { LoginData } from "$lib/ts/data/auth";
 import type { RegistrationData } from "$lib/ts/data/terminal";
 import type {
   ChangePasswordFormData,
@@ -10,8 +10,8 @@ import { utilsHttp } from "../../utils/http";
 
 const change_password = (formData: ChangePasswordFormData) => {
   return utilsHttp
-    .put<ResponseData<Login>>("/auth/password", formData)
-    .then((response: ResponseData<Login>) => {
+    .put<ResponseData<LoginData>>("/auth/password", formData)
+    .then((response: ResponseData<LoginData>) => {
       return response;
     })
     .catch((error: ErrorResponse) => {
@@ -32,11 +32,11 @@ const change_password = (formData: ChangePasswordFormData) => {
 //   });
 // };
 
-const login = (formData: LoginFormData): Promise<ResponseData<Login>> => {
+const login = (formData: LoginFormData): Promise<ResponseData<LoginData>> => {
   return new Promise((resolve, reject) => {
     utilsHttp
-      .get<ResponseData<Login>>("/auth/login")
-      .then((response: ResponseData<Login>) => {
+      .get<ResponseData<LoginData>>("/auth/login")
+      .then((response: ResponseData<LoginData>) => {
         resolve(response);
       })
       .catch((error: ErrorResponse) => {

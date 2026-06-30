@@ -1,7 +1,6 @@
-import type { Branch } from "./branch";
-
-export interface UserData {
-  id?: string | number;
-  name?: string;
-  branch?: Branch;
+export interface LoginData {
+  token_type: "Access" | "Bearer" | "Refresh";
+  expires_in: number
+  access_token: string
+  token?: string
 }

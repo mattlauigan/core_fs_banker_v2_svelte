@@ -56,7 +56,7 @@
           id="username"
           name="username"
           label="Username"
-          style="dark w-full"
+          style=" w-full"
           required
         />
         <TextInput

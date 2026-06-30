@@ -5,7 +5,7 @@ import { fail, type RequestEvent } from "@sveltejs/kit";
 import type { Actions } from "$lib/ts/types/actions";
 
 export const actions: Actions = {
-  login: async ({ request, cookies }: RequestEvent) => {
+  handleLogin: async ({ request, cookies }: RequestEvent) => {
     try {
       const formData = await request.formData();
 
