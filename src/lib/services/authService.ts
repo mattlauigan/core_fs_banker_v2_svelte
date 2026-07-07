@@ -35,7 +35,7 @@ const change_password = (formData: ChangePasswordFormData) => {
 const login = (formData: LoginFormData): Promise<ResponseData<LoginData>> => {
   return new Promise((resolve, reject) => {
     utilsHttp
-      .get<ResponseData<LoginData>>("/auth/login")
+      .get<ResponseData<LoginData>>("login")
       .then((response: ResponseData<LoginData>) => {
         resolve(response);
       })

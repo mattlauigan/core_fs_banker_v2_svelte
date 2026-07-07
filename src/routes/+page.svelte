@@ -59,11 +59,4 @@
   <User />
 </CardContainer>
 
-<!-- <DialogWindow
-  title="Session Expired"
-  // bind:show={isExpired}
-  show={false}
-  modalType={ModalTypeEnum.INFO}
-  message="Your session has expired. Please login again to continue."
-  onSubmit={onSessionExpired}
-/> -->
+

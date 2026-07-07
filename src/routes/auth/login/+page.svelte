@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { registrationStore, saveAuthFromServer } from "$stores/authStore";
+  import { authStore, registrationStore, saveAuthFromServer } from "$stores/authStore";
   import { goto } from "$app/navigation";
   import Button from "$components/primitives/Button.svelte";
   import TextInput from "$components/primitives/TextInput.svelte";
@@ -9,12 +9,14 @@
   import { enhance } from "$app/forms";
 
   $effect(() => {
-    console.log("AuthStore state changed:", {
-      // isAuthenticated: $AuthStore.isAuthenticated,
-      isRegistered: $registrationStore.isRegistered,
-    });
+    // console.log("AuthStore state changed:", {
+    //   // isAuthenticated: $AuthStore.isAuthenticated,
+    //   isRegistered: $registrationStore.isRegistered,
+    // });
     if (!$registrationStore.isRegistered) {
       goto("/auth/register", { replaceState: true });
+    } else if ($registrationStore.isRegistered && $authStore.is_authenticated) {
+      goto("/", { replaceState: true });
     }
   });
 

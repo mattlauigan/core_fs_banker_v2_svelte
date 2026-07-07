@@ -109,7 +109,7 @@ const initialRegistration = loadRegistration();
 
 // ─── Writable Stores ──────────────────────────────────────────────────────────
 
-const authStore = writable<AuthState>(initialAuth);
+export const authStore = writable<AuthState>(initialAuth);
 export const registrationStore =
   writable<RegistrationState>(initialRegistration);
 const userStore = writable<UserState>({
