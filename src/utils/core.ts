@@ -1,11 +1,14 @@
+import { goto } from "$app/navigation";
 import { page } from "$app/state";
 
-const getPath = (): string[] => {
-    return page.url.pathname.split("/").filter(Boolean);
-  // const route = pathArray.at(-1);
-  // return pathArray.slice(1, -1).join("/");
+const getPath = (): string => {
+  return page.url.pathname;
 }
 
+const navigatePath = (path: string): void => {
+  goto(path, { replaceState: true });
+}
 export const utilCore = {
   getPath,
+  navigatePath
 }

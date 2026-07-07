@@ -1,26 +1,28 @@
 <script lang="ts">
-  import { authStore, registrationStore, saveAuthFromServer } from "$stores/authStore";
-  import { goto } from "$app/navigation";
+  import {
+    authStore,
+    registrationStore,
+    saveAuthFromServer,
+  } from "$stores/authStore";
   import Button from "$components/primitives/Button.svelte";
-  import TextInput from "$components/primitives/TextInput.svelte";
   import PasswordInput from "$components/primitives/PasswordInput.svelte";
+  import TextInput from "$components/primitives/TextInput.svelte";
   import type { ActionResult } from "@sveltejs/kit";
   import type { LoginData } from "$lib/ts/data/access";
+  import { AuthPath } from "$lib/ts/enums/path/auth";
+  import { BasePath } from "$lib/ts/enums/path/base";
   import { enhance } from "$app/forms";
+  import { goto } from "$app/navigation";
 
   $effect(() => {
-    // console.log("AuthStore state changed:", {
-    //   // isAuthenticated: $AuthStore.isAuthenticated,
-    //   isRegistered: $registrationStore.isRegistered,
-    // });
     if (!$registrationStore.isRegistered) {
-      goto("/auth/register", { replaceState: true });
+      goto(AuthPath.register, { replaceState: true });
     } else if ($registrationStore.isRegistered && $authStore.is_authenticated) {
-      goto("/", { replaceState: true });
+      goto(BasePath.base, { replaceState: true });
     }
   });
 
-  function handleResult() {
+  function executePostLogin() {
     return async ({ result }: { result: ActionResult }) => {
       if (result.type === "success") {
         saveAuthFromServer(result.data as LoginData);
@@ -62,7 +64,7 @@
         autocomplete="off"
         method="POST"
         action="?/handleLogin"
-        use:enhance={handleResult}
+        use:enhance={executePostLogin}
       >
         <TextInput
           id="username"

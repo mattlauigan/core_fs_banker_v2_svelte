@@ -4,38 +4,35 @@
   import { authStore, registrationStore } from "$stores/authStore";
   import DialogWindow from "$components/layouts/DialogWindow.svelte";
   import { ModalTypeEnum } from "$lib/ts/enums/modal";
-  import { goto } from "$app/navigation";
   import { utilCore } from "../utils/core";
+  import { AuthPath } from "$lib/ts/enums/path/auth";
 
   let isRegistered = $derived($registrationStore.isRegistered);
   let isAuthenticated = $derived($authStore.is_authenticated);
-
+  let isExpired: boolean = $state(!$authStore.is_authenticated);
   let { children } = $props();
 
-  let isExpired = $state(!$authStore.is_authenticated);
+  $effect(() => {
+    let curPath = utilCore.getPath();
+    isExpired = !$authStore.is_authenticated && curPath !== AuthPath.login;
+  });
 
   function onSessionExpired() {
-    let here = utilCore.getPath();
-    console.log(JSON.stringify(here))
     isExpired = false;
-    goto("/auth/login", { replaceState: true });
+    utilCore.navigatePath(AuthPath.login);
   }
-
 </script>
 
 {#if isRegistered && isAuthenticated}
   <Header />
 {/if}
 
-
-
 {@render children()}
 
 <DialogWindow
   title="Session Expired"
   bind:show={isExpired}
-  // show={false}
-  modalType={ModalTypeEnum.INFO}
+  modalType={ModalTypeEnum.USER}
   message="Your session has expired. Please login again to continue."
   onSubmit={onSessionExpired}
 />

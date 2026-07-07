@@ -25,6 +25,7 @@ export enum ModalTypeEnum {
   SEARCH = "search",
   SUBMIT = "submit",
   SUCCESS = "success",
+  USER = "user",
   WARNING = "warning",
 }
 
@@ -39,6 +40,7 @@ export class ModalType {
       ModalTypeEnum.PROCEED,
       ModalTypeEnum.SEARCH,
       ModalTypeEnum.SUBMIT,
+      ModalTypeEnum.USER,
       ModalTypeEnum.SUCCESS,
       ModalTypeEnum.WARNING,
     ];
@@ -60,6 +62,8 @@ export class ModalType {
         return SearchIcon;
       case ModalTypeEnum.SUCCESS:
         return SuccessIcon;
+      case ModalTypeEnum.USER:
+        return UserIcon;
       case ModalTypeEnum.WARNING:
         return WarningIcon;
       default:

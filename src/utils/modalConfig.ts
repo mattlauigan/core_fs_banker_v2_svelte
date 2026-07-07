@@ -6,6 +6,7 @@ import {
   SearchIcon,
   SuccessIcon,
   WarningIcon,
+  UserIcon
 } from "$components/primitives/icons";
 import ErrorIcon from "$components/primitives/icons/errorIcon.svelte";
 import type { ModalSetupConfig } from "$lib/ts/components";
@@ -60,6 +61,12 @@ const MODAL_CONFIGS: Record<ModalTypeEnum, ModalSetupConfig> = {
   },
   [ModalTypeEnum.SUCCESS]: {
     icon: SuccessIcon,
+    getActions: (onSubmit) => [
+      { label: "Ok", handler: onSubmit, primary: true },
+    ],
+  },
+    [ModalTypeEnum.USER]: {
+    icon: UserIcon,
     getActions: (onSubmit) => [
       { label: "Ok", handler: onSubmit, primary: true },
     ],

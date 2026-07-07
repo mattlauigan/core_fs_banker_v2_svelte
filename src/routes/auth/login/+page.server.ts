@@ -1,9 +1,6 @@
-import { goto } from "$app/navigation";
-import authService from "$lib/services/authService";
+import type { Actions } from "$lib/ts/types/actions";
 import { fail, type RequestEvent } from "@sveltejs/kit";
 import { login } from "$stores/authStore";
-
-import type { Actions } from "$lib/ts/types/actions";
 
 export const actions: Actions = {
   handleLogin: async ({ request, cookies }: RequestEvent) => {
@@ -24,7 +21,7 @@ export const actions: Actions = {
       });
 
     } catch (error) {
-      console.error("Login error:", error); 
+      console.error("Login error:", error);
       return fail(400, {
         message: error instanceof Error ? error.message : "Registration failed",
       });

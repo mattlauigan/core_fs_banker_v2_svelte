@@ -1,15 +1,16 @@
 <script lang="ts">
-  import { fade } from "svelte/transition";
   import Button from "$components/primitives/Button.svelte";
-  import { ModalTypeEnum } from "$lib/ts/enums/modal";
   import type { Component } from "svelte";
   import type {
     DialogWindowProps,
     IconProps,
     ModalActionItem,
   } from "$lib/ts/components";
+  import { ModalTypeEnum } from "$lib/ts/enums/modal";
+  import { fade } from "svelte/transition";
   import { getModalSetup } from "../../utils/modalConfig";
 
+  let dialogElement: HTMLDialogElement | undefined = $state();
   let {
     title = "Information",
     show = $bindable(false),
@@ -18,15 +19,7 @@
     onSubmit = () => {},
   }: DialogWindowProps<IconProps> = $props();
 
-  function close() {
-    show = false;
-    dialogElement?.close();
-  }
-
-  let dialogElement: HTMLDialogElement | undefined = $state();
-
   const setup = $derived(getModalSetup(modalType, onSubmit, close));
-
   const IconComponent = $derived(setup.Icon as Component<IconProps>);
   const actions = $derived(setup.actions as ModalActionItem[]);
 
@@ -34,6 +27,11 @@
     if (show) dialogElement?.showModal();
     else dialogElement?.close();
   });
+
+  function close() {
+    show = false;
+    dialogElement?.close();
+  }
 </script>
 
 {#if show}
