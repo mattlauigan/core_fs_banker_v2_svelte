@@ -1,5 +1,4 @@
 import type { Branch } from "../data/branch";
-import type { UserData } from "./access";
 
 export type RegistrationData = {
   terminal: TerminalData;

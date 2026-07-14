@@ -1,4 +1,4 @@
-import { PUBLIC_APP_URL } from '$env/static/public';
+import { PUBLIC_APP_URL } from "$env/static/public";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
@@ -32,6 +32,7 @@ export type RequestConfig = {
   params?: Record<string, string | number>;
   headers?: Record<string, string>;
   signal?: AbortSignal;
+  fetch?: typeof fetch;
 };
 
 export interface HttpResponse<T = unknown> {
@@ -45,13 +46,15 @@ export interface HttpResponse<T = unknown> {
 const controllers = new Set<AbortController>();
 
 function buildUrl(url: string, params?: RequestConfig["params"]) {
-  if (!params) return url;
+  const fullUrl = `${PUBLIC_APP_URL}${url}`;
+
+  if (!params) return fullUrl;
 
   const query = new URLSearchParams(
     Object.entries(params).map(([k, v]) => [k, String(v)]),
   ).toString();
 
-  return `${url}?${query}`;
+  return `${fullUrl}?${query}`;
 }
 
 async function request<T>(config: RequestConfig): Promise<T> {
@@ -59,8 +62,7 @@ async function request<T>(config: RequestConfig): Promise<T> {
   controllers.add(controller);
 
   const { url, method = "GET", data, params, headers = {}, signal } = config;
-  const finalUrl = `${PUBLIC_APP_URL}/${url}`;
-
+  const finalUrl = buildUrl(url, params);
   try {
     const res = await fetch(finalUrl, {
       method,

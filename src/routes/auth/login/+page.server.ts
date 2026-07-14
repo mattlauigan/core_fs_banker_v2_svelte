@@ -3,7 +3,7 @@ import { fail, type RequestEvent } from "@sveltejs/kit";
 import { login } from "$stores/authStore";
 
 export const actions: Actions = {
-  handleLogin: async ({ request, cookies }: RequestEvent) => {
+  handleLogin: async ({ request }: RequestEvent) => {
     try {
       const formData = await request.formData();
       const username = formData.get("username")?.toString() ?? "";

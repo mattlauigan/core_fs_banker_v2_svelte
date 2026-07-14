@@ -1,5 +1,6 @@
 import type { LoginData } from "$lib/ts/data/auth";
 import type { RegistrationData } from "$lib/ts/data/terminal";
+import { AuthUrl } from "$lib/ts/enums/url/auth";
 import type {
   ChangePasswordFormData,
   LoginFormData,
@@ -35,7 +36,7 @@ const change_password = (formData: ChangePasswordFormData) => {
 const login = (formData: LoginFormData): Promise<ResponseData<LoginData>> => {
   return new Promise((resolve, reject) => {
     utilsHttp
-      .get<ResponseData<LoginData>>("login")
+      .post<ResponseData<LoginData>>(AuthUrl.login, formData)
       .then((response: ResponseData<LoginData>) => {
         resolve(response);
       })

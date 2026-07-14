@@ -1,5 +1,4 @@
 // src/stores/userStore.ts
-
 import authService from "$lib/services/authService";
 import type { AuthApiData, LoginData } from "$lib/ts/data/auth";
 import type { RegistrationData, TerminalData } from "$lib/ts/data/terminal";
@@ -204,11 +203,8 @@ export async function register(
  * Log in an existing user.
  * POST /api/auth/login
  */
-export async function login(
-  payload: LoginFormData,
-): Promise<LoginData> {
-  userStore.update((s) => ({ ...s, isLoading: true, error: null }));
-
+export async function login(payload: LoginFormData): Promise<LoginData> {
+  userStore.update(() => ({ profile: null, isLoading: true, error: null }));
   try {
     const res = await authService.login(payload);
     if (res.code !== "SUCCESS") {
@@ -216,6 +212,7 @@ export async function login(
     }
 
     const data: LoginData = await res.payload;
+
     applyAuthResponse({
       token: data.access_token!,
       expires_in: data.expires_in!,

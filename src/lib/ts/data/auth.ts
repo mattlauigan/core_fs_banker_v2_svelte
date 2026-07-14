@@ -1,6 +1,6 @@
 import type { Branch } from "./branch";
 import type { TerminalData } from "./terminal";
-import type { UserData } from "./user";
+import type { Role, UserData } from "./user";
 
 export interface RegistrationData {
   branch: Branch;
@@ -18,6 +18,14 @@ export interface LoginData {
   token?: string;
 }
 
+export type Access = {
+  name: string
+  username: string
+  branch: Branch
+  role: Role
+  modules: number[]
+  bitmap: string
+}
 export interface AuthApiData {
   token: string;
   expiresIn?: number; // seconds until expiry (e.g. 3600)
