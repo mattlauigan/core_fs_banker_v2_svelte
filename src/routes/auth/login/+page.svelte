@@ -5,14 +5,19 @@
     saveAuthFromServer,
   } from "$stores/authStore";
   import Button from "$components/primitives/Button.svelte";
+  import DialogWindow from "$components/layouts/DialogWindow.svelte";
   import PasswordInput from "$components/primitives/PasswordInput.svelte";
   import TextInput from "$components/primitives/TextInput.svelte";
   import type { ActionResult } from "@sveltejs/kit";
   import type { LoginData } from "$lib/ts/data/access";
   import { AuthPath } from "$lib/ts/enums/path/auth";
   import { BasePath } from "$lib/ts/enums/path/base";
+  import { ModalTypeEnum } from "$lib/ts/enums/modal";
   import { enhance } from "$app/forms";
-  import { goto } from "$app/navigation";
+  import { goto, invalidateAll } from "$app/navigation";
+
+  let message: string = $state("Terminal Registration Successful");
+  let show: boolean = $state(false);
 
   $effect(() => {
     if (!$registrationStore.isRegistered) {
@@ -28,6 +33,11 @@
         saveAuthFromServer(result.data as LoginData);
       }
     };
+  }
+
+    function onDialogRender() {
+    invalidateAll();
+    goto(AuthPath.base, { replaceState: true });
   }
 </script>
 
@@ -87,3 +97,11 @@
     </div>
   </div>
 </div>
+
+<DialogWindow
+  title="Registration"
+  bind:show
+  modalType={ModalTypeEnum.INFO}
+  {message}
+  onSubmit={onDialogRender}
+/>

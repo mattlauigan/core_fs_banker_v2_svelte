@@ -18,7 +18,6 @@ export const actions: Actions = {
       return await register({ username, termcode });
 
     } catch (error) {
-      console.error("Registration error:", error); 
       return fail(400, {
         message: error instanceof Error ? error.message : "Registration failed",
       });
