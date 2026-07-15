@@ -1,0 +1,37 @@
+{
+  "$schema": ["./node_modules/json-server/schema.json"],
+  "terminal_registration": {
+    "code": "SUCCESS",
+    "message": "Terminal registered successfully",
+    "warning": "",
+    "st": 1,
+    "ac": "ACT001",
+    "payload": {
+      "registration_code": "asdasdad",
+      "terminal": {
+        "id": 1,
+        "code": "term01",
+        "name": "Matt Terminal"
+      },
+      "branch": {
+        "id": 1,
+        "code": "branch01",
+        "name": "Branch Eastwood"
+      }
+    }
+  },
+  "login": {
+    "code": "SUCCESS",
+    "message": "Login Successfully",
+    "warning": "",
+    "st": 1,
+    "ac": "ACT001",
+    "payload": {
+      "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5ZTgzZjBmZS1mMGNhLTRjM2UtOWYzYy0zZjFhYmE0NTdhY2EiLCJqdGkiOiI3ZTk2MjMzMGM0ZDU2YjZmZGRjODI2NWI3ZjhkYWUyMTVkZGZhODE3MGUwMmZlMDk5MDVjZDg3OTc0MWYzZmExZTAyOWEyN2JkNGQ0YmYyNSIsImlhdCI6MTc4Mjc5NzY3NC4zMjY5MDEsIm5iZiI6MTc4Mjc5NzY3NC4zMjY5MDMsImV4cCI6MTc4MjgwNDg3NC4xNTA2MzksInN1YiI6IjEiLCJzY29wZXMiOlsiYWNjZXNzLmFwa3VwbG9hZCIsImFjY2Vzcy5icmFuY2hsaXN0IiwiYWNjZXNzLmRlbm9zZXR1cCIsImFjY2Vzcy5kaXNjc2V0dXAiLCJhY2Nlc3MuZWpyZXBvcnQiLCJhY2Nlc3MuaG9yaXpvbiIsImFjY2Vzcy5pbnN0aXR1dGlvbiIsImFjY2Vzcy5pbnZvaWNlbW9uaXRvciIsImFjY2Vzcy5wb3NsaXN0IiwiYWNjZXNzLnBvc21vbml0b3IiLCJhY2Nlc3MucmVwb3J0cyIsImFjY2Vzcy5zZXJpZXNldHVwIiwiYWNjZXNzLnNlcnZpY2V0eXBlc2V0dXAiLCJhY2Nlc3MudGFyaWZmc2V0dXAiLCJhY2Nlc3MudHJhbm1vbml0b3IiLCJhY2Nlc3MudXNlcnBvcnRhbCIsImFjY2Vzcy51c2VycG9zIiwiYWNjZXNzLnVzZXJyb2xlIiwiYWNjZXNzLmluZm8iXX0.itZ7A62nhAB3lyTafod55llgYsazVmpaZhWDOTNVwrHwrA9sjlvgbd5dTSFNGlIp99eSyr8_uRMTpM-WaAa4_5mVjPrbL8Q6lFZ2bWHcmg6ZS8AaOJ9HGgEmeHK87JCMh5pglakBLkzfPDU9yfQdf2bPzCzRCgugVlEWz1IGQI85kSr8SC9jcqP4wxjEtj93NMC2mZUAk4RowRtlaKsqp4jKH9HkUn6wqlUURZuo0UJJ6e83GPSwK9lNxWm5AtYpcX-QOX1F6AzPIvaiG-HgzOjClf6ZQg2Jsmz-LdAYekmvdmS7sYm7PtVJUFDfbkOajfrFAtXiWYeOX1scvz8HkXx3vOW0I3buJSuHMPu4R8-JmBVT4nGWqFTQ2Qv5bkGScjhBMRS3atFauL4BHWicfPdRB4HncSeH5ALucfO5y1noEYyfX9aPfEgE4qeVs7ohmpkdprHZGPrvpt1SenfFeXti8r2oqxHHuInmvYVRT8ZfS_fZWMMvrJ5wLE6hAM-hlYuRb3BSR7uEadCh8R1w3JXfOuDU9096OxnoJC_1Ez5kBpQc3mPXV7LktB_DlLItsdgsjLlUkohwFv5KI_c9VADy1x6bqOHg5QWexEPirtqlsXRh-T0d_1hxYDpc65LNAmzcrr2-JqUvtwRZQEe4FCMTpRcXl-8v1UeqqhZYOPg"
+      
+    }
+  },
+  "profile": {
+    "name": "typicode"
+  }
+}

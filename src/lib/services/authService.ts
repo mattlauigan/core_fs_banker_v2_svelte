@@ -1,19 +1,18 @@
+import type { Access, LoginData } from "$lib/ts/data/auth";
+import type { RegistrationData } from "$lib/ts/data/terminal";
+import { AuthUrl } from "$lib/ts/enums/url/auth";
 import type {
-  Login,
-  TerminalRegistration as TermRegData,
-} from "$lib/ts/data/auth";
-import type {
-  ChangePassword,
-  Login as LoginForm,
-  TerminalRegistration,
+  ChangePasswordFormData,
+  LoginFormData,
+  RegistrationFormData,
 } from "$lib/ts/forms/auth";
 import type { ErrorResponse, ResponseData } from "$lib/ts/types/app";
 import { utilsHttp } from "../../utils/http";
 
-const change_password = (formData: ChangePassword) => {
+const change_password = (formData: ChangePasswordFormData) => {
   return utilsHttp
-    .put<ResponseData<Login>>("/auth/password", formData)
-    .then((response: ResponseData<Login>) => {
+    .put<ResponseData<LoginData>>("/auth/password", formData)
+    .then((response: ResponseData<LoginData>) => {
       return response;
     })
     .catch((error: ErrorResponse) => {
@@ -21,24 +20,24 @@ const change_password = (formData: ChangePassword) => {
     });
 };
 
-// const getinfo = (): Promise<Access> => {
-//   return new Promise((resolve, reject) => {
-//     http
-//       .get<ResponseData<Access>>("/app/v1/access/info")
-//       .then((res: ResponseData<Access>) => {
-//         resolve(res.payload);
-//       })
-//       .catch((error: ErrorResponse | null) => {
-//         reject(error);
-//       });
-//   });
-// };
-
-const login = (formData: LoginForm): Promise<ResponseData<Login>> => {
+const getinfo = (): Promise<ResponseData<Access>> => {
   return new Promise((resolve, reject) => {
     utilsHttp
-      .post<ResponseData<Login>>("/auth/login", formData)
-      .then((response: ResponseData<Login>) => {
+      .get<ResponseData<Access>>("/app/v1/access/info")
+      .then((res: ResponseData<Access>) => {
+        resolve(res);
+      })
+      .catch((error: ErrorResponse | null) => {
+        reject(error);
+      });
+  });
+};
+
+const login = (formData: LoginFormData): Promise<ResponseData<LoginData>> => {
+  return new Promise((resolve, reject) => {
+    utilsHttp
+      .post<ResponseData<LoginData>>(AuthUrl.login, formData)
+      .then((response: ResponseData<LoginData>) => {
         resolve(response);
       })
       .catch((error: ErrorResponse) => {
@@ -47,13 +46,34 @@ const login = (formData: LoginForm): Promise<ResponseData<Login>> => {
   });
 };
 
+// const terminal_registration = (
+//   data: RegistrationFormData,
+// ): RegistrationData => {
+//   return {
+//     terminal: {
+//       id: 1,
+//       code: "TERMN01",
+//       name: "terminalniMatt"
+//     },
+//     branch: {
+//       id: 1,
+//       code: "001",
+//       name: "Eastwood City"
+//     },
+//     registration_code: "asjdhgasdbjahsbdbnlasdasdjnaksdknasdasd"
+
+//   }
+// }
+
+
 const terminal_registration = (
-  formData: TerminalRegistration,
-): Promise<ResponseData<TermRegData>> => {
+  data: RegistrationFormData,
+): Promise<ResponseData<RegistrationData>> => 
+  {
   return new Promise((resolve, reject) => {
     utilsHttp
-      .post<ResponseData<TermRegData>>("/auth/terminal-registration", formData)
-      .then((response: ResponseData<TermRegData>) => {
+      .get<ResponseData<RegistrationData>>("terminal_registration")
+      .then((response: ResponseData<RegistrationData>) => {
         resolve(response);
       })
       .catch((error: ErrorResponse) => {
@@ -64,7 +84,7 @@ const terminal_registration = (
 
 const authService = {
   change_password,
-  // getinfo,
+  getinfo,
   login,
   terminal_registration,
 };

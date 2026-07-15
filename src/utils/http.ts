@@ -1,4 +1,5 @@
 import { PUBLIC_APP_URL } from "$env/static/public";
+import { getToken } from "$stores/authStore";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
@@ -10,6 +11,8 @@ interface RawHeaders {
 
 export class Headers {
   private headers: Record<string, string> = {};
+
+
 
   constructor(headers?: RawHeaders | Headers | string) {
     if (!headers) return;
@@ -32,6 +35,7 @@ export type RequestConfig = {
   params?: Record<string, string | number>;
   headers?: Record<string, string>;
   signal?: AbortSignal;
+  fetch?: typeof fetch;
 };
 
 export interface HttpResponse<T = unknown> {
@@ -45,38 +49,38 @@ export interface HttpResponse<T = unknown> {
 const controllers = new Set<AbortController>();
 
 function buildUrl(url: string, params?: RequestConfig["params"]) {
-  if (!params) return url;
+  const fullUrl = `${PUBLIC_APP_URL}${url}`;
+
+  if (!params) return fullUrl;
 
   const query = new URLSearchParams(
     Object.entries(params).map(([k, v]) => [k, String(v)]),
   ).toString();
 
-  return `${url}?${query}`;
+  return `${fullUrl}?${query}`;
 }
 
 async function request<T>(config: RequestConfig): Promise<T> {
   const controller = new AbortController();
   controllers.add(controller);
-
   const { url, method = "GET", data, params, headers = {}, signal } = config;
-
-  const finalUrl = `${PUBLIC_APP_URL}${buildUrl(url, params)}`;
-
+  const finalUrl = buildUrl(url, params);
   try {
-    const res = await fetch(finalUrl, {
+  const res = await fetch(finalUrl, {
       method,
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${getToken()}`,
         ...headers,
       },
       body: data ? JSON.stringify(data) : undefined,
-      credentials: "include",
+      credentials: "same-origin",
       signal: signal ?? controller.signal,
     });
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
-      throw new Error(err.message || "Request failed");
+      throw new Error(err.message || "There seems to be a problem");
     }
 
     return res.json();
@@ -94,7 +98,7 @@ const post = <T>(
   config?: Omit<RequestConfig, "url" | "method" | "data">,
 ) =>
   request<T>({
-    url: `${PUBLIC_APP_URL}/${url}`,
+    url: url,
     method: "POST",
     data,
     ...config,

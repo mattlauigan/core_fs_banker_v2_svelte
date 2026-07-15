@@ -1,23 +1,34 @@
 <script lang="ts">
-  import UserStore from "$stores/auth";
-  import { goto } from "$app/navigation";
+  import {
+    authStore,
+    registrationStore,
+    saveAuthFromServer,
+  } from "$stores/authStore";
   import Button from "$components/primitives/Button.svelte";
-  import TextInput from "$components/primitives/TextInput.svelte";
   import PasswordInput from "$components/primitives/PasswordInput.svelte";
-
-  const AuthStore = UserStore();
+  import TextInput from "$components/primitives/TextInput.svelte";
+  import type { ActionResult } from "@sveltejs/kit";
+  import type { LoginData } from "$lib/ts/data/access";
+  import { AuthPath } from "$lib/ts/enums/path/auth";
+  import { BasePath } from "$lib/ts/enums/path/base";
+  import { enhance } from "$app/forms";
+  import { goto } from "$app/navigation";
 
   $effect(() => {
-    console.log("AuthStore state changed:", {
-      isAuthenticated: $AuthStore.isAuthenticated,
-      isRegistered: $AuthStore.isRegistered,
-    });
-    if (!$AuthStore.isRegistered) {
-      goto("/auth/register", { replaceState: true });
-    } else if ($AuthStore.isAuthenticated) {
-      goto("/", { replaceState: true });
+    if (!$registrationStore.isRegistered) {
+      goto(AuthPath.register, { replaceState: true });
+    } else if ($registrationStore.isRegistered && $authStore.is_authenticated) {
+      goto(BasePath.base, { replaceState: true });
     }
   });
+
+  function executePostLogin() {
+    return async ({ result }: { result: ActionResult }) => {
+      if (result.type === "success") {
+        saveAuthFromServer(result.data as LoginData);
+      }
+    };
+  }
 </script>
 
 <div class="_login_page">
@@ -30,9 +41,13 @@
           <h2>Baug CARP Benificiaries</h2>
           <h2>Multi-Purpose Coop</h2>
         </span>
-        <span class="text-accent-003">
-          <p class="text-base"><!-- branch--></p>
-          <p class="font-sm"><!-- Terminal--></p>
+        <span class="">
+          <p class="text-base text-primary-700">
+            {$registrationStore.branch?.name}
+          </p>
+          <p class="font-sm text-primary-500">
+            {$registrationStore.terminal?.name}
+          </p>
         </span>
       </article>
     </div>
@@ -45,12 +60,17 @@
         </p>
         <p class="font-sm font-medium">Welcome, please login</p>
       </span>
-      <form autocomplete="off" method="POST" action="?">
+      <form
+        autocomplete="off"
+        method="POST"
+        action="?/handleLogin"
+        use:enhance={executePostLogin}
+      >
         <TextInput
           id="username"
           name="username"
           label="Username"
-          style="dark w-full"
+          style=" w-full"
           required
         />
 
@@ -58,7 +78,7 @@
           id="password"
           name="password"
           label="Password"
-          style="dark w-full"
+          style=" w-full"
           required
         />
 

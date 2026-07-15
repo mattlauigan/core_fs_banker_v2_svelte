@@ -1,16 +1,16 @@
-export type ChangePassword = {
+export type ChangePasswordFormData = {
   token: string;
   password_old: string;
   password: string;
   password_confirmation: string;
 };
 
-export type Login = {
+export type LoginFormData = {
   username: string;
   password: string;
 };
 
-export type TerminalRegistration = {
+export type RegistrationFormData = {
   username: string;
   termcode: string;
 };

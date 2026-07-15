@@ -47,11 +47,6 @@ header {
 ._sub_menu_item {
   @apply cursor-pointer tracking-[1.5px] border-b transition-all duration-300 border-transparent;
 }
-_user
-._sub_menu_item:hover,
-._sub_menu_item._active {
-  @apply text-secondary-900 border-secondary-900 font-medium;
-}
 
 ._modal_menu_container {
   @apply absolute h-[50vh] w-[60vw] py-6 px-14 grid grid-cols-3 top-[110%] mt-16 left-[50%] -translate-x-1/2 z-40 mx-auto rounded-lg overflow-auto shadow-md backdrop-blur-sm bg-background-c-01;

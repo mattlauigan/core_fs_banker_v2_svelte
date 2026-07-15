@@ -2,23 +2,29 @@
   import Button from "$components/primitives/Button.svelte";
   import DialogWindow from "$components/layouts/DialogWindow.svelte";
   import TextInput from "$components/primitives/TextInput.svelte";
-  import UserStore from "$stores/auth";
+  import type { ActionResult } from "@sveltejs/kit";
+  import type { RegistrationData } from "$lib/ts/data/terminal";
+  import { AuthPath } from "$lib/ts/enums/path/auth";
   import { ModalTypeEnum } from "$lib/ts/enums/modal";
+  import { enhance } from "$app/forms";
   import { goto } from "$app/navigation";
+  import { registrationStore } from "$stores/authStore";
+  import { saveRegFromServer } from "$stores/authStore";
 
-  const AuthStore = UserStore();
   let message: string = $state("Terminal Registration Successful");
+  let isRegistered = $derived($registrationStore.isRegistered);
 
-  $effect(() => {
-    console.log("AuthStore state changed:", {
-      isAuthenticated: $AuthStore.isAuthenticated,
-      isRegistered: $AuthStore.isRegistered,
-    });
+  function executePostRegistration() {
+    return async ({ result }: { result: ActionResult }) => {
+      if (result.type === "success") {
+        saveRegFromServer(result.data as RegistrationData);
+      }
+    };
+  }
 
-    if ($AuthStore.isRegistered) {
-      goto("/auth/login", { replaceState: true });
-    }
-  });
+  function onDialogRender() {
+    goto(AuthPath.login, { replaceState: true });
+  }
 </script>
 
 <div class="_register_page">
@@ -29,12 +35,10 @@
           class="text-primary-900 font-bold tracking-wide text-base md:text-sm sm:text-xs"
         >
           <h2 class="text-2xl">CoreFS Banker</h2>
-          <h2  class="text-primary-700">Powering Smarter Financial Management</h2>
+          <h2 class="text-primary-700">
+            Powering Smarter Financial Management
+          </h2>
         </span>
-        <!-- <span class="text-gray-500">
-          <p class="text-base">{$AuthStore.accessData?.branch.name}</p>
-          <p class="font-sm">{$AuthStore.accessData?.termdesc}</p>
-        </span> -->
       </article>
     </div>
     <div class="_register_form">
@@ -46,12 +50,17 @@
           <p>Registration</p>
         </span>
       </span>
-      <form autocomplete="off" method="POST" action="?/register">
+      <form
+        autocomplete="off"
+        method="POST"
+        action="?/handleRegister"
+        use:enhance={executePostRegistration}
+      >
         <TextInput
           id="username"
           name="username"
           label="Username"
-          style="dark w-full"
+          style=" w-full"
           required
         />
         <TextInput
@@ -62,11 +71,7 @@
           required
         />
 
-        <Button
-          type="submit"
-          label="Terminal Registration"
-          variant="primary"
-        />
+        <Button type="submit" label="Terminal Registration" variant="primary" />
       </form>
     </div>
   </div>
@@ -74,8 +79,8 @@
 
 <DialogWindow
   title="Registration"
-  bind:show={$AuthStore.isRegistered}
+  bind:show={isRegistered}
   modalType={ModalTypeEnum.INFO}
   {message}
-  onSubmit={() => {}}
+  onSubmit={onDialogRender}
 />

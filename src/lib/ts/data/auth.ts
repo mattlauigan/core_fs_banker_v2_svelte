@@ -1,15 +1,37 @@
 import type { Branch } from "./branch";
-import type { Terminal } from "./terminal";
-import type { BaseUser } from "./user";
+import type { TerminalData } from "./terminal";
+import type { Role, UserData } from "./user";
 
-export type Login = {
-  access_token: string;
-  token?: string;
-};
-
-export type TerminalRegistration = {
+export interface RegistrationData {
   branch: Branch;
-  terminal: Terminal;
+  terminal: TerminalData;
+  term_code: string;
+  term_id: number;
+  term_desc: string;
   registration_code: string;
-  user: BaseUser
-};
+}
+
+export interface LoginData {
+  token_type: string;
+  expires_in: number;
+  access_token: string;
+  refresh_token?: string;
+}
+
+export type Access = {
+  id: number
+  name: string
+  username: string
+  status: string
+  modules: number[]
+  
+  branch: Branch
+  role: Role
+  bitmap: string
+}
+export interface AuthApiData {
+  token: string;
+  expiresIn?: number; // seconds until expiry (e.g. 3600)
+  user?: UserData; // some APIs return user data alongside the token
+  terminal?: TerminalData;
+}

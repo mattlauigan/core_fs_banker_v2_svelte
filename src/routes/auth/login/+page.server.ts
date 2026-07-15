@@ -1,16 +1,12 @@
-import { goto } from "$app/navigation";
-import authService from "$lib/services/authService";
-import { fail, type RequestEvent } from "@sveltejs/kit";
-
 import type { Actions } from "$lib/ts/types/actions";
+import { fail, type RequestEvent } from "@sveltejs/kit";
+import { login } from "$stores/authStore";
 
 export const actions: Actions = {
-  login: async ({ request, cookies }: RequestEvent) => {
+  handleLogin: async ({ request }: RequestEvent) => {
     try {
       const formData = await request.formData();
-
       const username = formData.get("username")?.toString() ?? "";
-
       const password = formData.get("password")?.toString() ?? "";
 
       if (!username || !password) {
@@ -19,21 +15,16 @@ export const actions: Actions = {
         });
       }
 
-      const response = await authService.login({
-        username,
-        password,
+      return await login({
+        username: username,
+        password: password,
       });
 
-      cookies.set("token", response.payload.access_token, {
-        path: "/auth/loginssss",
-        httpOnly: true,
-        sameSite: "strict",
-        secure: false,
-      });
-
-      goto("/");
     } catch (error) {
-      return fail(400, { message: "Login failed" });
+      console.error("Login error:", error);
+      return fail(400, {
+        message: error instanceof Error ? error.message : "Registration failed",
+      });
     }
   },
 };
