@@ -11,11 +11,9 @@
   let menuStates: MenuState = $state({
     category: MenuCategoryEnum.default,
     root: null,
-    online: false,
+    
     darkmode: false,
-    popover: {
-      userPanel: false,
-    },
+    popover: false,
   });
 
   let scrolled = $state(false);
@@ -26,7 +24,7 @@
 
   let frequentModules = megamenu.frequentModules;
 
-  let isUserPanel = $derived(menuStates.popover.userPanel);
+  let isUserPanel = $derived(menuStates.popover);
 </script>
 
 <svelte:head>
@@ -56,9 +54,8 @@
     />
 
     <UserPanel
-      isPopOver={menuStates.popover.userPanel}
+      isPopOver={menuStates.popover}
       isDarkmode={menuStates.darkmode}
-      online={menuStates.online}
       {frequentModules}
     />
   </div>

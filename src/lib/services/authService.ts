@@ -1,4 +1,4 @@
-import type { LoginData } from "$lib/ts/data/auth";
+import type { Access, LoginData } from "$lib/ts/data/auth";
 import type { RegistrationData } from "$lib/ts/data/terminal";
 import { AuthUrl } from "$lib/ts/enums/url/auth";
 import type {
@@ -20,18 +20,18 @@ const change_password = (formData: ChangePasswordFormData) => {
     });
 };
 
-// const getinfo = (): Promise<Access> => {
-//   return new Promise((resolve, reject) => {
-//     http
-//       .get<ResponseData<Access>>("/app/v1/access/info")
-//       .then((res: ResponseData<Access>) => {
-//         resolve(res.payload);
-//       })
-//       .catch((error: ErrorResponse | null) => {
-//         reject(error);
-//       });
-//   });
-// };
+const getinfo = (): Promise<ResponseData<Access>> => {
+  return new Promise((resolve, reject) => {
+    utilsHttp
+      .get<ResponseData<Access>>("/app/v1/access/info")
+      .then((res: ResponseData<Access>) => {
+        resolve(res);
+      })
+      .catch((error: ErrorResponse | null) => {
+        reject(error);
+      });
+  });
+};
 
 const login = (formData: LoginFormData): Promise<ResponseData<LoginData>> => {
   return new Promise((resolve, reject) => {
@@ -46,9 +46,30 @@ const login = (formData: LoginFormData): Promise<ResponseData<LoginData>> => {
   });
 };
 
+// const terminal_registration = (
+//   data: RegistrationFormData,
+// ): RegistrationData => {
+//   return {
+//     terminal: {
+//       id: 1,
+//       code: "TERMN01",
+//       name: "terminalniMatt"
+//     },
+//     branch: {
+//       id: 1,
+//       code: "001",
+//       name: "Eastwood City"
+//     },
+//     registration_code: "asjdhgasdbjahsbdbnlasdasdjnaksdknasdasd"
+
+//   }
+// }
+
+
 const terminal_registration = (
   data: RegistrationFormData,
-): Promise<ResponseData<RegistrationData>> => {
+): Promise<ResponseData<RegistrationData>> => 
+  {
   return new Promise((resolve, reject) => {
     utilsHttp
       .get<ResponseData<RegistrationData>>("terminal_registration")
@@ -63,7 +84,7 @@ const terminal_registration = (
 
 const authService = {
   change_password,
-  // getinfo,
+  getinfo,
   login,
   terminal_registration,
 };

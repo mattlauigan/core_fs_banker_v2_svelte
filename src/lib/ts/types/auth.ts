@@ -18,6 +18,7 @@ export interface RegistrationState {
 
 export interface UserState {
   profile?: UserData | null;
+  isOnline: boolean;
   isLoading: boolean;
   error: string | null;
 }

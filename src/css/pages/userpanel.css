@@ -24,6 +24,10 @@
   @apply flex flex-col items-start gap-1;
 }
 
+._user_panel ._user_info ._loading p {
+  @apply w-48 h-8 bg-primary-300 rounded-sm;
+}
+
 ._user_fullname {
   @apply m-0 text-[.8rem];
 }

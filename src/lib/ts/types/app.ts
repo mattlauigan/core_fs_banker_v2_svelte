@@ -1,5 +1,5 @@
 export type BaseResponse = {
-  code: string;
+  code: string | number;
   message?: string;
   warning?: string;
   st?: number | string;

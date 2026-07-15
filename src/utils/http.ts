@@ -1,4 +1,5 @@
 import { PUBLIC_APP_URL } from "$env/static/public";
+import { getToken } from "$stores/authStore";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
@@ -10,6 +11,8 @@ interface RawHeaders {
 
 export class Headers {
   private headers: Record<string, string> = {};
+
+
 
   constructor(headers?: RawHeaders | Headers | string) {
     if (!headers) return;
@@ -60,24 +63,24 @@ function buildUrl(url: string, params?: RequestConfig["params"]) {
 async function request<T>(config: RequestConfig): Promise<T> {
   const controller = new AbortController();
   controllers.add(controller);
-
   const { url, method = "GET", data, params, headers = {}, signal } = config;
   const finalUrl = buildUrl(url, params);
   try {
-    const res = await fetch(finalUrl, {
+  const res = await fetch(finalUrl, {
       method,
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${getToken()}`,
         ...headers,
       },
       body: data ? JSON.stringify(data) : undefined,
-      credentials: "include",
+      credentials: "same-origin",
       signal: signal ?? controller.signal,
     });
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
-      throw new Error(err.message || "Request failed");
+      throw new Error(err.message || "There seems to be a problem");
     }
 
     return res.json();

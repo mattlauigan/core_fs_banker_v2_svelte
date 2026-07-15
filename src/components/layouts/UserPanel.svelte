@@ -5,33 +5,38 @@
   import { ModalTypeEnum } from "$lib/ts/enums/modal";
   import QuickLink from "$components/primitives/QuickLink.svelte";
   import { ls } from "$lib/services/ls";
+  import { userStore } from "$stores/authStore";
+  
 
   let {
-    username = "anonymous",
-    position = "admin",
     isPopOver = false,
     isDarkmode = false,
-    online = false,
     frequentModules,
   } = $props();
 
+  let username = $derived($userStore.profile?.name || "anonymous")
+  let position = $derived($userStore.profile?.role.name || "-")
+  let userId = $derived($userStore.profile?.role.id)
+  let isUserOnline = $derived($userStore.isOnline)
+
+
   let dialogMessage = $state("");
   let show = $state(false);
-  let userId = $state("sampleID"); //change when authstore is finish
+  
 
   function toggleDarkMode(value: boolean) {
     isDarkmode = value;
     ls.add(
-      `user_${userId}_pref`,
+      `user${userId}_pref`,
       JSON.stringify({ theme: value ? "dark" : "light" }),
     );
   }
 
   function toggleShow() {
-    if (online) {
+    if (!isUserOnline) {
       dialogMessage = "Open Teller?";
     } else {
-      dialogMessage = "Close Teller?";
+      dialogMessage = "Are you sure you want to Close Teller?";
     }
     show = !show;
   }
@@ -44,9 +49,9 @@
     isPopOver = false;
   }
 
-  function DialogSubmit() {
-    online = !online;
-    show = false;
+  function DialogSubmit() {    
+   userStore.update((s) => ({ ...s, isOnline: !s.isOnline }));
+   show = !show
   }
 </script>
 
@@ -57,14 +62,14 @@
     role="button"
     tabindex="0"
   >
-    <div class="_user_info">
-      <p class="_user_fullname">{username}</p>
-      <p class="_user_position">{position}</p>
+    <div class="_user_info" class:_loading={$userStore.isLoading}>
+      <p class="_user_fullname" >{username}</p>
+      <p class="_user_position">{position }</p>
     </div>
     <img
       src={userLogo}
       alt="user logo"
-      class="_user_logo {online ? '_user_online' : '_user_offline'}"
+      class="_user_logo {isUserOnline ? '_user_online' : '_user_offline'}"
     />
   </div>
 
@@ -87,10 +92,15 @@
         <button
           class="text-left cursor-pointer"
           onclick={toggleShow}
-          disabled={online}>Open Teller</button
+          disabled={isUserOnline}>Open Teller</button
         >
 
         <QuickLink route="a" label="Teller Journal" />
+                <button
+          class="text-left cursor-pointer"
+          onclick={toggleShow}
+          disabled={!isUserOnline}>Balances & Close Teller</button
+        >
         <QuickLink route="b" label="Previous Transaction Summary" />
 
         <hr class="_user_panel_popover_hr" />

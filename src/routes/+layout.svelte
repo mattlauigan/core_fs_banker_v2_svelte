@@ -1,20 +1,27 @@
 <script lang="ts">
   import "./layout.css";
-  import Header from "../components/layouts/Header.svelte";
-  import { authStore, registrationStore } from "$stores/authStore";
   import DialogWindow from "$components/layouts/DialogWindow.svelte";
-  import { ModalTypeEnum } from "$lib/ts/enums/modal";
-  import { utilCore } from "../utils/core";
+  import Header from "../components/layouts/Header.svelte";
   import { AuthPath } from "$lib/ts/enums/path/auth";
+  import { ModalTypeEnum } from "$lib/ts/enums/modal";
+  import { authStore, registrationStore } from "$stores/authStore";
+  import { utilCore } from "../utils/core";
+  import { getAccessInfo } from "$stores/authStore";
+  import { onMount } from "svelte";
 
   let isRegistered = $derived($registrationStore.isRegistered);
   let isAuthenticated = $derived($authStore.is_authenticated);
   let isExpired: boolean = $state(!$authStore.is_authenticated);
   let { children } = $props();
 
+  onMount(async () => getAccessInfo());
+
   $effect(() => {
     let curPath = utilCore.getPath();
-    isExpired = !$authStore.is_authenticated && curPath !== AuthPath.login;
+    isExpired =
+      !$authStore.is_authenticated &&
+      curPath !== AuthPath.register &&
+      curPath !== AuthPath.login;
   });
 
   function onSessionExpired() {

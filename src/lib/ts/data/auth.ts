@@ -15,15 +15,18 @@ export interface LoginData {
   token_type: string;
   expires_in: number;
   access_token: string;
-  token?: string;
+  refresh_token?: string;
 }
 
 export type Access = {
+  id: number
   name: string
   username: string
+  status: string
+  modules: number[]
+  
   branch: Branch
   role: Role
-  modules: number[]
   bitmap: string
 }
 export interface AuthApiData {
