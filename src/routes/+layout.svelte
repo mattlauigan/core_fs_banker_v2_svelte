@@ -8,24 +8,32 @@
   import { utilCore } from "../utils/core";
   import { getAccessInfo } from "$stores/authStore";
   import { onMount } from "svelte";
+  import type { DialogWindowBaseProps } from "$lib/ts/components";
 
   let isRegistered = $derived($registrationStore.isRegistered);
   let isAuthenticated = $derived($authStore.is_authenticated);
-  let isExpired: boolean = $state(!$authStore.is_authenticated);
+  // let isExpired: boolean = $state(!$authStore.is_authenticated);
+
+  let DialogElement: DialogWindowBaseProps = {
+    title: "Session Expired",
+    message: "our session has expired. Please login again to continue.",
+    show: false,
+  };
+
   let { children } = $props();
 
   onMount(async () => getAccessInfo());
 
   $effect(() => {
     let curPath = utilCore.getPath();
-    isExpired =
+    DialogElement.show =
       !$authStore.is_authenticated &&
       curPath !== AuthPath.register &&
       curPath !== AuthPath.login;
   });
 
   function onSessionExpired() {
-    isExpired = false;
+    DialogElement.show = false;
     utilCore.navigatePath(AuthPath.login);
   }
 </script>
@@ -37,9 +45,9 @@
 {@render children()}
 
 <DialogWindow
-  title="Session Expired"
-  bind:show={isExpired}
+  title={DialogElement.title}
+  bind:show={DialogElement.show}
   modalType={ModalTypeEnum.USER}
-  message="Your session has expired. Please login again to continue."
+  message={DialogElement.message}
   onSubmit={onSessionExpired}
 />

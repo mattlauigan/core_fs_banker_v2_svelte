@@ -1,3 +1,4 @@
+export const LSKEY_USER_THEMES = 'user-themes'
 export const LSKEY_AUTH_KEY = 'auth';
 export const LSKEY_REG = 'registration'
 export const LSKEY_TOKEN = 'token';

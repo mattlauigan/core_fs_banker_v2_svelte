@@ -143,10 +143,14 @@ export interface ModalSetupConfig {
   getActions: (onSubmit: () => void, close: () => void) => ModalActionItem[];
 }
 
-export type DialogWindowProps<T> = {
+export type DialogWindowBaseProps = {
   title?: string;
   show?: boolean;
   message: string;
+}
+
+export interface DialogWindowProps<T> extends DialogWindowBaseProps {
+
   modalType?: ModalTypeEnum;
   onSubmit?: () => void;
   actions?: ModalActionItem[];

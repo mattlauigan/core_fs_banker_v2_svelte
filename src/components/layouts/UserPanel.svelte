@@ -5,40 +5,76 @@
   import { ModalTypeEnum } from "$lib/ts/enums/modal";
   import QuickLink from "$components/primitives/QuickLink.svelte";
   import { ls } from "$lib/services/ls";
-  import { userStore } from "$stores/authStore";
-  
+  import { authStore, saveAuthFromServer, userStore } from "$stores/authStore";
+  import { LSKEY_USER_THEMES } from "$lib/config/constants";
+  import type { DialogWindowBaseProps } from "$lib/ts/components";
+  import { goto } from "$app/navigation";
+  import { AuthPath } from "$lib/ts/enums/path/auth";
 
-  let {
-    isPopOver = false,
-    isDarkmode = false,
-    frequentModules,
-  } = $props();
+  let { isPopOver = false, isDarkmode = false, frequentModules } = $props();
 
-  let username = $derived($userStore.profile?.name || "anonymous")
-  let position = $derived($userStore.profile?.role.name || "-")
-  let userId = $derived($userStore.profile?.role.id)
-  let isUserOnline = $derived($userStore.isOnline)
+  let username = $derived<string>($userStore.profile?.name || "anonymous");
+  let position = $derived<string>($userStore.profile?.role.name || "-");
+  let userId = $derived<number | undefined>($userStore.profile?.role.id);
+  let isUserOnline = $derived<boolean>($userStore.isOnline);
 
-
-  let dialogMessage = $state("");
-  let show = $state(false);
-  
+  let dialogElement: DialogWindowBaseProps & {
+    modalType: ModalTypeEnum;
+    fn?: () => void;
+  } = $state({
+    title: "Confirm",
+    message: "",
+    show: false,
+    modalType: ModalTypeEnum.INFO,
+    fn: () => {},
+  });
 
   function toggleDarkMode(value: boolean) {
     isDarkmode = value;
+    const lsUserId = `user_${userId}`;
     ls.add(
-      `user${userId}_pref`,
-      JSON.stringify({ theme: value ? "dark" : "light" }),
+      LSKEY_USER_THEMES,
+      JSON.stringify({ [lsUserId]: value ? "dark" : "light" }),
     );
+  }
+
+  function handleLogout() {
+    if ($userStore.isOnline) {
+      dialogElement.title = "Warning";
+      dialogElement.modalType = ModalTypeEnum.WARNING;
+      dialogElement.message = "Teller is online";
+      dialogElement.fn = () => {
+        dialogElement.show = false;
+      };
+    } else {
+      dialogElement.message = "Are you sure you want to Logout?";
+      dialogElement.fn = onLogout;
+    }
+    dialogElement.show = !dialogElement.show;
+    
+  }
+
+  function onLogout() {
+    authStore.update((state) => ({
+      ...state,
+      is_authenicated: false,
+      expires_in: null,
+    }));
+    console.log('gege')
+    goto(AuthPath.login, { replaceState: true });
+    console.log('sese')
+    dialogElement.show = !dialogElement.show;
+    
   }
 
   function toggleShow() {
     if (!isUserOnline) {
-      dialogMessage = "Open Teller?";
+      dialogElement.message = "Open Teller?";
     } else {
-      dialogMessage = "Are you sure you want to Close Teller?";
+      dialogElement.message = "Are you sure you want to Close Teller?";
     }
-    show = !show;
+    dialogElement.show = !dialogElement.show;
+    dialogElement.fn = DialogSubmit;
   }
 
   function toggelUserPanel() {
@@ -49,9 +85,9 @@
     isPopOver = false;
   }
 
-  function DialogSubmit() {    
-   userStore.update((s) => ({ ...s, isOnline: !s.isOnline }));
-   show = !show
+  function DialogSubmit() {
+    userStore.update((s) => ({ ...s, isOnline: !s.isOnline }));
+    dialogElement.show = !dialogElement.show;
   }
 </script>
 
@@ -63,8 +99,8 @@
     tabindex="0"
   >
     <div class="_user_info" class:_loading={$userStore.isLoading}>
-      <p class="_user_fullname" >{username}</p>
-      <p class="_user_position">{position }</p>
+      <p class="_user_fullname">{username}</p>
+      <p class="_user_position">{position}</p>
     </div>
     <img
       src={userLogo}
@@ -96,7 +132,7 @@
         >
 
         <QuickLink route="a" label="Teller Journal" />
-                <button
+        <button
           class="text-left cursor-pointer"
           onclick={toggleShow}
           disabled={!isUserOnline}>Balances & Close Teller</button
@@ -128,15 +164,21 @@
           {/each}
         </div>
         <hr class="_user_panel_popover_hr" />
-        <QuickLink label="Logout" route="l" style="text-red-500" />
+        <!-- <QuickLink label="Logout" route="l" style="text-red-500" /> -->
+
+        <button
+          class="text-left cursor-pointer text-red-500"
+          onclick={handleLogout}
+          >Logout
+        </button>
       </div>
     </div>
   {/if}
 </div>
 <DialogWindow
-  title="Confirm"
-  bind:show
-  message={dialogMessage}
-  modalType={ModalTypeEnum.CONFIRM}
-  onSubmit={DialogSubmit}
+  title={dialogElement.title}
+  bind:show={dialogElement.show}
+  message={dialogElement.message}
+  modalType={dialogElement.modalType}
+  onSubmit={dialogElement.fn}
 />
